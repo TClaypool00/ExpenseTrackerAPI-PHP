@@ -36,10 +36,9 @@ class Users
 
     public function read_single(){
         $query = "SELECT 
-            u.userId,
             u.firstName,
             u.lastName,
-            u.emailAddress,
+            u.email,
             u.password,
             u.isAdmin,
             u.address,
@@ -52,22 +51,21 @@ class Users
                 LIMIT 0,1";
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParams(1, $this->UserId);
+        $stmt->bindParam(1, $this->userId);
 
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->userId = $row["userId"];
-        $this->firstName = $row["firstName"];
-        $this->lastName = $row['lastName'];
-        $this->email = $row["email"];
-        $this->password = $row["password"];
-        $this->isAdmin = $row["isAdmin"];
-        $this->address = $row["address"];
-        $this->city = $row["city"];
-        $this->state = $row["state"];
-        $this->zip = $row["zip"];
+        $this->firstName = $row["firstName"] ?? null;
+        $this->lastName = $row['lastName'] ?? null;
+        $this->email = $row["email"] ?? null;
+        $this->password = $row["password"] ?? null;
+        $this->isAdmin = $row["isAdmin"] ?? null;
+        $this->address = $row["address"] ?? null;
+        $this->city = $row["city"] ?? null;
+        $this->state = $row["state"] ?? null;
+        $this->zip = $row["zip"] ?? null;
     }
 
     // Create User
