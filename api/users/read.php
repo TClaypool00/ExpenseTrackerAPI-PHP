@@ -9,7 +9,7 @@ include_once "../objects/users.php";
 
 // create an instance of the database and object files
 $database = new Database();
-$db = $database->getConnection();
+$db = $database->connect();
 
 $users = new Users($db);
 
@@ -26,16 +26,16 @@ if ($num > 0) {
         extract($row);
 
         $user_item = array(
-            "UserId" => $UserId,
-            "FirstName" => $FirstName,
-            "LastName" => $LastName,
-            "EmailAddress" => $EmailAddress,
-            "Password" => $Password,
-            "IsAdmin" => $IsAdmin,
-            "Address" => $Address,
-            "City" => $City,
-            "State" => $State,
-            "Zip" => $Zip
+            "userId" => $userId,
+            "firstName" => $firstName,
+            "lastName" => $lastName,
+            "emailAddress" => $emailAddress,
+            "password" => $password,
+            "isAdmin" => $isAdmin,
+            "address" => $address,
+            "city" => $city,
+            "state" => $state,
+            "zip" => $zip
         );
 
         array_push($user_arr["records"], $user_item);
