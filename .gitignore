@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 config/database.php
 .vscode/launch.json
+.vscode/launch.json
