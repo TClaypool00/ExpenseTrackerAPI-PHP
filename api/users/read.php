@@ -4,8 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include database and object files
-include_once '../../config/database.php';
-include_once "../objects/users.php";
+include_once "../../models/users.php";
+include_once "../../config/Database.php";
 
 // create an instance of the database and object files
 $database = new Database();
@@ -29,7 +29,7 @@ if ($num > 0) {
             "userId" => $userId,
             "firstName" => $firstName,
             "lastName" => $lastName,
-            "emailAddress" => $emailAddress,
+            "email" => $email,
             "password" => $password,
             "isAdmin" => $isAdmin,
             "address" => $address,
