@@ -111,4 +111,51 @@ class Users
 
         return false;
     }
+
+    public function update(){
+        $query = 'UPDATE ' . $this->tableName . '
+            SET
+                firstName = :firstName,
+                lastName = :lastName,
+                email = :email,
+                password = :password,
+                isAdmin = :isAdmin,
+                address = :address,
+                city = :city,
+                state = :state,
+                zip = :zip
+            WHERE
+                userId = :userId';
+            
+            $stmt = $this->conn->prepare($query);
+    
+            // Clean Data
+            $this->userId = htmlspecialchars(strip_tags($this->userId));
+            $this->firstName = htmlspecialchars(strip_tags($this->firstName));
+            $this->lastName = htmlspecialchars(strip_tags($this->lastName));
+            $this->email = htmlspecialchars(strip_tags($this->email));
+            $this->password = htmlspecialchars(strip_tags($this->password));
+            $this->isAdmin = htmlspecialchars(strip_tags($this->isAdmin));
+            $this->address = htmlspecialchars(strip_tags($this->address));
+            $this->city = htmlspecialchars(strip_tags($this->city));
+            $this->state = htmlspecialchars(strip_tags($this->state));
+            $this->zip = htmlspecialchars(strip_tags($this->zip));
+    
+            // Bind data
+            $stmt->bindParam(":userId", $this->userId);
+            $stmt->bindParam(':firstName', $this->firstName);
+            $stmt->bindParam(':lastName', $this->lastName);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':password', $this->password);
+            $stmt->bindParam(':isAdmin', $this->isAdmin);
+            $stmt->bindParam(':address', $this->address);
+            $stmt->bindParam(':city', $this->city);
+            $stmt->bindParam(':state', $this->state);
+            $stmt->BindParam(':zip', $this->zip);
+    
+            if($stmt->execute())
+                return true;
+    
+            return false;
+    }
 }
