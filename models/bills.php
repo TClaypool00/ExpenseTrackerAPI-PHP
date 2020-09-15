@@ -15,4 +15,17 @@ class Bills {
     {
         $this->conn = $db;
     }
+
+    public function getAll() {
+        $query = "SELECT * FROM " . $this->table_name . "
+            ORDER BY billName ASC";
+        
+        // Prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        // Execute statement
+        $stmt->execute();
+
+        return $stmt;
+    }
 }
