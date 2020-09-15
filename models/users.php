@@ -158,4 +158,19 @@ class Users
     
             return false;
     }
+
+    public function delete (){
+        $query = "DELETE FROM " . $this->tableName . " WHERE userId = :userId";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+        $stmt->bindParam(":userId", $this->userId);
+
+        if($stmt->execute())
+            return true;
+
+        return false;
+    }
 }
