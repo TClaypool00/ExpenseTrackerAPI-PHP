@@ -11,3 +11,14 @@ CREATE TABLE users (
     state VARCHAR(30) NOT NULL,
     zip INT(5) NOT NULL
 );
+
+CREATE TABLE bills (
+    -- Add AUTO_INCREMENT after PRIMARY KEY
+    billId INT(4) PRIMARY KEY,
+    billName VARCHAR(50) NOT NULL,
+    BillDate DATE NOT NULL DEFAULT GETUTCDATE(),
+    billPrice DECIMAL(5) NOT NULL,
+    isLate BIT NOT NULL,
+    userId INT(6),
+    FOREIGN KEY (userId) REFERENCES users(userId)
+);
