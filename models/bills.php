@@ -28,4 +28,32 @@ class Bills {
 
         return $stmt;
     }
+
+    public function getById() {
+        $query = "SELECT 
+        b.billId,
+        b.billName,
+        b.billDate,
+        b.billPrice,
+        b.isLate,
+        b.userId
+    FROM " . $this->table_name . "b
+        WHERE
+            b.billId = ?
+            LIMIT 0,1";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $this->billId);
+
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->billName = $row["billName"] ?? null;
+        $this->billPrice = $row["billPrice"] ?? null;
+        $this->billDate = $row["billDate"] ?? null;
+        $this->isLate = $row["isLate"] ?? null;
+        $this->userId = $row["userId"] ?? null;
+    }
 }
