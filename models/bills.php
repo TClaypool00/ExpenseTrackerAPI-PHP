@@ -31,16 +31,15 @@ class Bills {
 
     public function getById() {
         $query = "SELECT 
-        b.billId,
         b.billName,
         b.billDate,
         b.billPrice,
         b.isLate,
         b.userId
-    FROM " . $this->table_name . "b
-        WHERE
-            b.billId = ?
-            LIMIT 0,1";
+        FROM " . $this->table_name . " b
+            WHERE
+                b.billId = ?
+                LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
 
@@ -55,5 +54,35 @@ class Bills {
         $this->billDate = $row["billDate"] ?? null;
         $this->isLate = $row["isLate"] ?? null;
         $this->userId = $row["userId"] ?? null;
+    }
+
+    public function create() {
+        $query = 'INSERT INTO ' . $this->table_name . '
+            SET
+                billName = :billName,
+                billPrice = :billPrice,
+                billDate = :billDate,
+                isLate = :isLate,
+                userId = :userId';
+            
+        $stmt = $this->conn->prepare($query);
+
+        // Clean data
+        $this->billName = htmlspecialchars(strip_tags($this->billName));
+        $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
+        $this->billDate = htmlspecialchars(strip_tags($this->billDate));
+        $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+        $stmt->bindParam(':billName', $this->billName);
+        $stmt->bindParam(':billPrice', $this->billPrice);
+        $stmt->bindParam(':billDate', $this->billDate);
+        $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':userId', $this->userId);
+
+        if($stmt->execute())
+            return true;
+        
+        return false;
     }
 }
