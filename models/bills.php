@@ -85,4 +85,39 @@ class Bills {
         
         return false;
     }
+
+    public function update() {
+        $query = "UPDATE " . $this->table_name . "
+            SET
+                billName = :billName,
+                billPrice = :billPrice,
+                billDate = :billDate,
+                isLate = :isLate,
+                userId = :userId
+            WHERE
+                billId= :billId";
+        
+                $stmt = $this->conn->prepare($query);
+
+                // Clean data
+                $this->billId = htmlspecialchars(strip_tags($this->billId));
+                $this->billName = htmlspecialchars(strip_tags($this->billName));
+                $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
+                $this->billDate = htmlspecialchars(strip_tags($this->billDate));
+                $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+                $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+                // Bind data
+                $stmt->bindParam(':billId', $this->billId);
+                $stmt->bindParam(':billName', $this->billName);
+                $stmt->bindParam(':billPrice', $this->billPrice);
+                $stmt->bindParam(':billDate', $this->billDate);
+                $stmt->bindParam(':isLate', $this->isLate);
+                $stmt->bindParam(':userId', $this->userId);
+        
+                if($stmt->execute())
+                    return true;
+                
+                return false;
+    }
 }
