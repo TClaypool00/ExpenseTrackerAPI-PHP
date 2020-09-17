@@ -120,4 +120,17 @@ class Bills {
                 
                 return false;
     }
+
+    public function delete() {
+        $query = "DELETE FROM " . $this->table_name . " WHERE billId = :billId";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":billId", $this->billId);
+
+        if($stmt->execute())
+            return true;
+
+        return false;
+    }
 }
