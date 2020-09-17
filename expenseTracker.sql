@@ -22,3 +22,13 @@ CREATE TABLE bills (
     userId INT(6),
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
+
+CREATE TABLE subscriptions (
+    -- Add AUTO_INCREMENT after PRIMARY KEY
+    subId INT(4) NOT NULL PRIMARY KEY,
+    companyName VARCHAR(50) NOT NULL,
+    dueDate DATE NOT NULL DEFAULT GETUTCDATE(),
+    amountDue DECIMAL(6) NOT NULL,
+    userId INT(6),
+    FOREIGN KEY (userId) REFERENCES users(userId)
+);
