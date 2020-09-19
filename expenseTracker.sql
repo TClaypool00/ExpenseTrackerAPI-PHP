@@ -24,6 +24,8 @@ CREATE TABLE bills (
 );
 
 CREATE TABLE subscriptions (
+    -- Not in 3rd normalization, implement later
+    
     -- Add AUTO_INCREMENT after PRIMARY KEY
     subId INT(4) NOT NULL PRIMARY KEY,
     companyName VARCHAR(50) NOT NULL,
