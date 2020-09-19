@@ -3,7 +3,7 @@
 include "../../partialFiles/create_headers.php";
 
 // Creating a new instance of a bill
-include "../../partialFiles/newBill.php";
+include "../../partialFiles/objects_partial_files/newBill.php";
 
 $data = json_decode(file_get_contents("php://input"));
 

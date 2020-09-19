@@ -3,7 +3,7 @@
 include "../../partialFiles/get_by_id_headers.php";
 
 // Creating a new intance of a bill
-include "../../partialFiles/newBill.php";
+include "../../partialFiles/objects_partial_files/newBill.php";
 
 $bill->billId = isset($_GET["billId"]) ? $_GET["billId"] : die();
 

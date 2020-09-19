@@ -3,7 +3,7 @@
 include "../../partialFiles/get_all_headers.php";
 
 // Create a new instance of a bill
-include "../../partialFiles/newBill.php";
+include "../../partialFiles/objects_partial_files/newBill.php";
 
 // Get all bills
 $allBills = $bill->getall();
