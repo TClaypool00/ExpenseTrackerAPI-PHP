@@ -17,10 +17,10 @@ if($num > 0) {
 
         $item = array(
             "subId" => $subId,
-            "companyName" => $companyName,
             "dueDate" => $dueDate,
             "amountDue" => $amountDate,
-            "userId" => $userId
+            "userId" => $userId,
+            "storeId" => $storeId
         );
 
         array_push($sub_array["records"], $item);

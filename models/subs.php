@@ -4,10 +4,10 @@ class Subscriptions {
     private $table_name = "subscriptions";
 
     public $subId;
-    public $companyName;
     public $dueDate;
     public $amountDue;
     public $userId;
+    public $storeId;
 
     public function __construct($db)
     {
@@ -16,7 +16,7 @@ class Subscriptions {
 
     public function getAll() {
         $query = "SELECT * FROM " . $this->table_name . "
-            ORDER BY companyName ASC";
+            ORDER BY dueDate ASC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -26,10 +26,10 @@ class Subscriptions {
 
     public function getById() {
         $query = "SELECT
-            s.companyName,
             s.dueDate,
             s.amountDue,
-            s.userId
+            s.userId,
+            s.storeId
             FROM " . $this->table_name . " s
                 WHERE
                     s.subId = ? 
@@ -40,33 +40,33 @@ class Subscriptions {
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->companyName = $row["companyName"] ?? null;
         $this->dueDate = $row["dueDate"] ?? null;
         $this->amountDue = $row["amountDue"] ?? null;
         $this->userId = $row["userId"] ?? null;
+        $this->storeId = $row["storeId"] ?? null;
     }
 
     public function create() {
         $query = "INSERT INTO " . $this->table_name . "
             SET
-                companyName = :companyName,
                 dueDate = :dueDate,
                 amountDue = :amountDue,
-                userId = :userId";
+                userId = :userId,
+                storeId = :storeId";
         
         $stmt = $this->conn->prepare($query);
 
         // Clean Data
-        $this->companyName = htmlspecialchars(strip_tags($this->companyName));
         $this->dueDate = htmlspecialchars(strip_tags($this->dueDate));
         $this->amountDue = htmlspecialchars(strip_tags($this->amountDue));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind data
-        $stmt->bindParam(":companyName", $this->companyName);
         $stmt->bindParam(":dueDate", $this->dueDate);
         $stmt->bindParam(":amountDue", $this->amountDue);
         $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam(":storeId", $this->storeId);
 
         if($stmt->execute())
             return true;
@@ -77,26 +77,26 @@ class Subscriptions {
     public function update() {
         $query = "UPDATE " . $this->table_name . "
             SET
-                companyName = :companyName,
                 dueDate = :dueDate,
                 amountDue = :amountDue,
-                userId = :userId
+                userId = :userId,
+                storeId = :storeId
             WHERE
                 subId = " . $this->subId;
         
         $stmt = $this->conn->prepare($query);
 
         // Clean Data
-        $this->companyName = htmlspecialchars(strip_tags($this->companyName));
         $this->dueDate = htmlspecialchars(strip_tags($this->dueDate));
         $this->amountDue = htmlspecialchars(strip_tags($this->amountDue));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind data
-        $stmt->bindParam(":companyName", $this->companyName);
         $stmt->bindParam(":dueDate", $this->dueDate);
         $stmt->bindParam(":amountDue", $this->amountDue);
         $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam(":storeId", $this->storeId);
 
         if($stmt->execute())
             return true;

@@ -11,10 +11,10 @@ $sub->getById();
 
 if($sub->companyName != null) {
     $sub_array = array(
-        "companyName" => $sub->companyName,
         "dueDate" => $sub->dueDate,
         "amountDue" => $sub->amountDue,
-        "userId" => $sub->userId
+        "userId" => $sub->userId,
+        "storeId" => $sub->storeId
     );
 
     http_response_code(200);

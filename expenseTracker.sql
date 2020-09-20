@@ -26,10 +26,10 @@ CREATE TABLE bills (
 CREATE TABLE subscriptions (
     -- Add AUTO_INCREMENT after PRIMARY KEY
     subId INT(4) NOT NULL PRIMARY KEY,
-    storeId INT(4) NOT NULL,
     dueDate DATE NOT NULL DEFAULT GETUTCDATE(),
     amountDue DECIMAL(6) NOT NULL,
-    userId INT(6),
+    userId INT(6) NOT NULL,
+    storeId INT(4) NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
 );
