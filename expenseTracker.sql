@@ -24,13 +24,22 @@ CREATE TABLE bills (
 );
 
 CREATE TABLE subscriptions (
-    -- Not in 3rd normalization, implement later
-    
     -- Add AUTO_INCREMENT after PRIMARY KEY
     subId INT(4) NOT NULL PRIMARY KEY,
-    companyName VARCHAR(50) NOT NULL,
+    storeId INT(4) NOT NULL,
     dueDate DATE NOT NULL DEFAULT GETUTCDATE(),
     amountDue DECIMAL(6) NOT NULL,
     userId INT(6),
-    FOREIGN KEY (userId) REFERENCES users(userId)
+    FOREIGN KEY (userId) REFERENCES users(userId),
+    FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
 );
+
+CREATE TABLE storeUnion (
+    -- Add AUTO_INCREMENT after PRIMARY KEY
+    storeId INT(4) NOT NULL PRIMARY KEY,
+    storeName VARCHAR(50)NOT NULL,
+    address VARCHAR(60) NOT NULL,
+    city VARCHAR(70) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    zip INT(5) NOT NULL
+)
