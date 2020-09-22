@@ -6,7 +6,7 @@ include "../../partialFiles/get_all_headers.php";
 include "../../partialFiles/objects_partial_files/newBill.php";
 
 // Get all bills
-$allBills = $bill->getall();
+$allBills = $bill->getAll();
 $num = $allBills->rowCount();
 
 if($num > 0) {
