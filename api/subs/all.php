@@ -20,7 +20,8 @@ if($num > 0) {
             "dueDate" => $dueDate,
             "amountDue" => $amountDate,
             "userId" => $userId,
-            "storeId" => $storeId
+            "storeId" => $storeId,
+            "subName" => $subName
         );
 
         array_push($sub_array["records"], $item);

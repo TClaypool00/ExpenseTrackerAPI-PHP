@@ -31,7 +31,8 @@ CREATE TABLE subscriptions (
     userId INT(6) NOT NULL,
     storeId INT(4) NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(userId),
-    FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
+    FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
+    subName VARCHAR(50) DEFAULT "Subscription",
 );
 
 CREATE TABLE storeUnion (

@@ -14,7 +14,8 @@ if($sub->companyName != null) {
         "dueDate" => $sub->dueDate,
         "amountDue" => $sub->amountDue,
         "userId" => $sub->userId,
-        "storeId" => $sub->storeId
+        "storeId" => $sub->storeId,
+        "subName" => $sub->subName
     );
 
     http_response_code(200);
