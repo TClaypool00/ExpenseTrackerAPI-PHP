@@ -16,12 +16,22 @@ class Bills {
         $this->conn = $db;
     }
 
-    public function getAll() {
-        $query = "SELECT * FROM " . $this->table_name . "
-            ORDER BY billName ASC";
-        
+    public function getAll() {     
+        if(isset($_GET["search"])) {
+            $search = $_GET["search"];
+            $query = "SELECT * FROM " . $this->table_name . "
+                WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR isLate LIKE '%$search%'";
+        } else if(isset($_GET["userId"])) {
+            $this->userId = $_GET["userId"];
+            $query = "SELECT * FROM " . $this->table_name . "
+                WHERE userId = " . $this->userId;
+        } else
+            $query = "SELECT * FROM " . $this->table_name;
+
+        $order_by = " ORDER BY billName ASC";
+
         // Prepare statement
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->conn->prepare($query . $order_by);
 
         // Execute statement
         $stmt->execute();

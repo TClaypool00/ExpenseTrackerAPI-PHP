@@ -8,6 +8,7 @@ class Subscriptions {
     public $amountDue;
     public $userId;
     public $storeId;
+    public $subName;
 
     public function __construct($db)
     {
@@ -15,10 +16,41 @@ class Subscriptions {
     }
 
     public function getAll() {
-        $query = "SELECT * FROM " . $this->table_name . "
-            ORDER BY dueDate ASC";
+        $select_all = "SELECT * FROM " . $this->table_name;
 
-        $stmt = $this->conn->prepare($query);
+        switch (isset($_GET)) {
+            case isset($_GET["search"]):
+                $search = $_GET["search"];
+                $query = $select_all . "
+                    WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE %$search%";
+                break;
+            case isset($_GET["userId"]):
+                $this->userId = $_GET["userId"];
+                $query = $select_all . " WHERE userId = " . $this->userId;
+                break;
+            case isset($_GET["storeId"]):
+                $this->storeId = $_GET["storeId"];
+                $query = $select_all . " WHERE storeId = " . $this->storeId;
+                break;
+            case isset($_GET["dueDate"]):
+                $this->dueDate = $_GET["dueDate"];
+                $query = $select_all . " WHERE dueDate = " . $this->dueDate;
+                break;
+            case isset($_GET["amountDue"]):
+                $this->amountDue = $_GET["amountDue"];
+                $query = $select_all . " WHERE amountDue = " . $this->amountDue;
+                break;
+            case isset($_GET["subName"]):
+                $this->subName = $_GET["subName"];
+                $query = $select_all . " WHERE subName = " . $this->subName;
+                break;
+            default:
+                $query = $select_all;
+                break;
+        }
+
+        $order_by = "ORDER BY dueDate ASC";
+        $stmt = $this->conn->prepare($query . $order_by);
         $stmt->execute();
 
         return $stmt;
@@ -27,9 +59,10 @@ class Subscriptions {
     public function getById() {
         $query = "SELECT
             s.dueDate,
-            s.amountDue,
             s.userId,
-            s.storeId
+            s.storeId,
+            s.amountDue,
+            s.subName,
             FROM " . $this->table_name . " s
                 WHERE
                     s.subId = ? 
@@ -44,6 +77,7 @@ class Subscriptions {
         $this->amountDue = $row["amountDue"] ?? null;
         $this->userId = $row["userId"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
+        $this->subName = $row["subName"] ?? null;
     }
 
     public function create() {
@@ -52,7 +86,8 @@ class Subscriptions {
                 dueDate = :dueDate,
                 amountDue = :amountDue,
                 userId = :userId,
-                storeId = :storeId";
+                storeId = :storeId,
+                subName = :subName,";
         
         $stmt = $this->conn->prepare($query);
 
@@ -61,12 +96,14 @@ class Subscriptions {
         $this->amountDue = htmlspecialchars(strip_tags($this->amountDue));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
+        $this->subName = htmlspecialchars(strip_tags($this->subName));
 
         // Bind data
         $stmt->bindParam(":dueDate", $this->dueDate);
         $stmt->bindParam(":amountDue", $this->amountDue);
         $stmt->bindParam(":userId", $this->userId);
         $stmt->bindParam(":storeId", $this->storeId);
+        $stmt->bindParam(":subName", $this->subName);
 
         if($stmt->execute())
             return true;
@@ -80,7 +117,8 @@ class Subscriptions {
                 dueDate = :dueDate,
                 amountDue = :amountDue,
                 userId = :userId,
-                storeId = :storeId
+                storeId = :storeId,
+                subName = :subName
             WHERE
                 subId = " . $this->subId;
         
@@ -91,12 +129,14 @@ class Subscriptions {
         $this->amountDue = htmlspecialchars(strip_tags($this->amountDue));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
+        $this->subName = htmlspecialchars(strip_tags($this->subName));
 
         // Bind data
         $stmt->bindParam(":dueDate", $this->dueDate);
         $stmt->bindParam(":amountDue", $this->amountDue);
         $stmt->bindParam(":userId", $this->userId);
         $stmt->bindParam(":storeId", $this->storeId);
+        $stmt->bindParam(":subName", $this->subName);
 
         if($stmt->execute())
             return true;

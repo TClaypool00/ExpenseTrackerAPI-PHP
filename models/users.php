@@ -22,9 +22,15 @@ class Users
 
     public function read()
     {
-        // select all query
-        $query = "SELECT * FROM " . $this->tableName . "
+        if(isset($_GET["search"])) {
+            $search = $_GET["search"];
+            $query = "SELECT * FROM " . $this->tableName . "
+            WHERE firstName LIKE '%$search%' OR lastName LIKE '%$search%' OR email LIKE '%$search%' OR address LIKE '%$search%' OR city LIKE '%$search%' OR state LIKE '%$search%'
             ORDER BY firstName ASC";
+        } else {
+            $query = "SELECT * FROM " . $this->tableName . "
+            ORDER BY firstName ASC";
+        }
 
         $pStatement = $this->conn->prepare($query);
 
