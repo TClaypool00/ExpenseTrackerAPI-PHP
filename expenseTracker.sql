@@ -44,3 +44,17 @@ CREATE TABLE storeUnion (
     state VARCHAR(50) NOT NULL,
     zip INT(5) NOT NULL
 )
+
+CREATE TABLE loan (
+    -- Add AUTO_INCREMENT after PRIMARY KEY
+    loanId INT(4) NOT NULL PRIMARY KEY,
+    loanName VARCHAR(50) NOT NULL,
+    dueDate DATE NOT NULL DEFAULT GETUTCDATE(),
+    monthlyAmountDue DECIMAL(6) NOT NULL,
+    deposit DECIMAL(6) NOT NULL,
+    totalAmountDue DECIMAL(6) NOT NULL,
+    userId INT(6) NOT NULL,
+    storeId INT(4) NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(userId),
+    FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
+);
