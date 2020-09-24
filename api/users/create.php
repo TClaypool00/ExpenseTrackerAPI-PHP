@@ -1,45 +1,25 @@
 <?php
-// required headers
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json;");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Access-Control-Allow-Methods, Content-Type, Authorization, X-Requested-Width");
+// Create headers
+include "../../partialFiles/create_headers.php";
 
 // get database connection
-include_once "../../config/Database.php";
-include_once "../../models/users.php";
-
-$database = new Database();
-$db = $database->connect();
-
-$user = new Users($db);
+include "../../partialFiles/objects_partial_files/new_user.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
-    $user->firstName = $data->firstName;
-    $user->lastName = $data->lastName;
-    $user->email = $data->email;
-    $user->password = $data->password;
-    $user->isAdmin = $data->isAdmin;
-    $user->address = $data->address;
-    $user->city = $data->city;
-    $user->state = $data->state;
-    $user->zip = $data->zip;
+$user->firstName = $data->firstName;
+$user->lastName = $data->lastName;
+$user->email = $data->email;
+$user->password = $data->password;
+$user->isAdmin = $data->isAdmin;
+$user->phoneNum = $data->phoneNum;
+$user->salary = $data->salary;
 
-    // Create User
-    if ($user->create()) {
-
-        // set response code - 201 created
-        http_response_code(201);
-
-        // tell the user
-        echo json_encode(array("message" => "User was created."));
-    } else {
-
-        // set response code - 503 service unavailable
-        http_response_code(503);
-
-        // tell the user
-        echo json_encode(array("message" => "Unable to create user."));
-    }
-
+// Create User
+if ($user->create()) {
+    http_response_code(201);
+    echo json_encode(array("message" => "User was created."));
+} else {
+    http_response_code(503);
+    echo json_encode(array("message" => "Unable to create user."));
+}

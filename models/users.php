@@ -11,10 +11,8 @@ class Users
     public $email;
     public $password;
     public $isAdmin;
-    public $address;
-    public $city;
-    public $state;
-    public $zip;
+    public $phoneNum;
+    public $salary;
 
     public function __construct($db){
         $this->conn = $db;
@@ -25,7 +23,7 @@ class Users
         if(isset($_GET["search"])) {
             $search = $_GET["search"];
             $query = "SELECT * FROM " . $this->tableName . "
-            WHERE firstName LIKE '%$search%' OR lastName LIKE '%$search%' OR email LIKE '%$search%' OR address LIKE '%$search%' OR city LIKE '%$search%' OR state LIKE '%$search%'
+            WHERE firstName LIKE '%$search%' OR lastName LIKE '%$search%' OR email LIKE '%$search%'
             ORDER BY firstName ASC";
         } else {
             $query = "SELECT * FROM " . $this->tableName . "
@@ -47,10 +45,8 @@ class Users
             u.email,
             u.password,
             u.isAdmin,
-            u.address,
-            u.city,
-            u.state,
-            u.zip
+            u.phoneNum,
+            u.salary
         FROM " . $this->tableName . " u
             WHERE
                 u.userId = ?
@@ -68,10 +64,8 @@ class Users
         $this->email = $row["email"] ?? null;
         $this->password = $row["password"] ?? null;
         $this->isAdmin = $row["isAdmin"] ?? null;
-        $this->address = $row["address"] ?? null;
-        $this->city = $row["city"] ?? null;
-        $this->state = $row["state"] ?? null;
-        $this->zip = $row["zip"] ?? null;
+        $this->phoneNum = $row["phoneNum"] ?? null;
+        $this->salary = $row["salary"] ?? null;
     }
 
     // Create User
@@ -83,10 +77,8 @@ class Users
                 email = :email,
                 password = :password,
                 isAdmin = :isAdmin,
-                address = :address,
-                city = :city,
-                state = :state,
-                zip = :zip';
+                phoneNum = :phoneNum,
+                salary = :salary';
 
         $stmt = $this->conn->prepare($query);
         
@@ -96,10 +88,8 @@ class Users
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
         $this->isAdmin = htmlspecialchars(strip_tags($this->isAdmin));
-        $this->address = htmlspecialchars(strip_tags($this->address));
-        $this->city = htmlspecialchars(strip_tags($this->city));
-        $this->state = htmlspecialchars(strip_tags($this->state));
-        $this->zip = htmlspecialchars(strip_tags($this->zip));
+        $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
+        $this->salary = htmlspecialchars(strip_tags($this->salary));
 
         // Bind data
         $stmt->bindParam(':firstName', $this->firstName);
@@ -107,10 +97,8 @@ class Users
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':password', $this->password);
         $stmt->bindParam(':isAdmin', $this->isAdmin);
-        $stmt->bindParam(':address', $this->address);
-        $stmt->bindParam(':city', $this->city);
-        $stmt->bindParam(':state', $this->state);
-        $stmt->BindParam(':zip', $this->zip);
+        $stmt->bindParam(":phoneNum", $this->phoneNum);
+        $stmt->bindParam(":salary", $this->salary);
 
         if($stmt->execute())
             return true;
@@ -126,38 +114,30 @@ class Users
                 email = :email,
                 password = :password,
                 isAdmin = :isAdmin,
-                address = :address,
-                city = :city,
-                state = :state,
-                zip = :zip
+                phoneNum = :phoneNum,
+                salary = :salary
             WHERE
-                userId = :userId';
+                userId = ' . $this->userId;
             
             $stmt = $this->conn->prepare($query);
     
             // Clean Data
-            $this->userId = htmlspecialchars(strip_tags($this->userId));
             $this->firstName = htmlspecialchars(strip_tags($this->firstName));
             $this->lastName = htmlspecialchars(strip_tags($this->lastName));
             $this->email = htmlspecialchars(strip_tags($this->email));
             $this->password = htmlspecialchars(strip_tags($this->password));
             $this->isAdmin = htmlspecialchars(strip_tags($this->isAdmin));
-            $this->address = htmlspecialchars(strip_tags($this->address));
-            $this->city = htmlspecialchars(strip_tags($this->city));
-            $this->state = htmlspecialchars(strip_tags($this->state));
-            $this->zip = htmlspecialchars(strip_tags($this->zip));
+            $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
+            $this->salary = htmlspecialchars(strip_tags($this->salary));
     
             // Bind data
-            $stmt->bindParam(":userId", $this->userId);
             $stmt->bindParam(':firstName', $this->firstName);
             $stmt->bindParam(':lastName', $this->lastName);
             $stmt->bindParam(':email', $this->email);
             $stmt->bindParam(':password', $this->password);
             $stmt->bindParam(':isAdmin', $this->isAdmin);
-            $stmt->bindParam(':address', $this->address);
-            $stmt->bindParam(':city', $this->city);
-            $stmt->bindParam(':state', $this->state);
-            $stmt->BindParam(':zip', $this->zip);
+            $stmt->bindParam(":phoneNum", $this->phoneNum);
+            $stmt->bindParam(":salary", $this->salary);
     
             if($stmt->execute())
                 return true;
@@ -166,13 +146,9 @@ class Users
     }
 
     public function delete (){
-        $query = "DELETE FROM " . $this->tableName . " WHERE userId = :userId";
+        $query = "DELETE FROM " . $this->tableName . " WHERE userId = " . $this->userId;
 
         $stmt = $this->conn->prepare($query);
-
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
-
-        $stmt->bindParam(":userId", $this->userId);
 
         if($stmt->execute())
             return true;

@@ -6,10 +6,8 @@ CREATE TABLE users (
     email VARCHAR(50) NOT NULL,
     password VARCHAR(15) NOT NULL,
     isAdmin BIT NOT NULL,
-    address VARCHAR(70) NOT NULL,
-    city VARCHAR(70) NOT NULL,
-    state VARCHAR(30) NOT NULL,
-    zip INT(5) NOT NULL
+    phoneNum INT(10) NOT NULL DEFAULT 123457890,
+    salary DECIMAL(10) NOT NULL DEFAULT 20000
 );
 
 CREATE TABLE bills (

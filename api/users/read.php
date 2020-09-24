@@ -1,25 +1,13 @@
 <?php
-// require headers
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
+// Get all headers
+include "../../partialFiles/get_all_headers.php";
+// Creating a new instance of users and DB obj
+include "../../partialFiles/objects_partial_files/new_user.php";
 
-// Include database and object files
-include_once "../../models/users.php";
-include_once "../../config/Database.php";
-
-// create an instance of the database and object files
-$database = new Database();
-$db = $database->connect();
-
-$users = new Users($db);
-
-// query Users
-
-$allUsers = $users->read();
+$allUsers = $user->read();
 $num = $allUsers->rowCount();
 
 if ($num > 0) {
-    $user_arr = array();
     $user_arr["records"] = array();
 
     while ($row = $allUsers->fetch(PDO::FETCH_ASSOC)) {
@@ -32,25 +20,16 @@ if ($num > 0) {
             "email" => $email,
             "password" => $password,
             "isAdmin" => $isAdmin,
-            "address" => $address,
-            "city" => $city,
-            "state" => $state,
-            "zip" => $zip
+            "phoneNum" => $phoneNum,
+            "salary" => $salary
         );
 
         array_push($user_arr["records"], $user_item);
     }
 
     http_response_code(200);
-
-    // show user data in JSON format
-
     echo json_encode($user_arr);
 } else {
-    // No users found
     http_response_code(404);
-
-    echo json_encode(
-        array("messsage" => "No Users found.")
-    );
+    echo json_encode(array("message" => "No users found."));
 }
