@@ -67,3 +67,12 @@ CREATE TABLE misc (
     FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
 );
+
+CREATE TABLE budget (
+    -- Add AUTO_INCREMENT after PRIMARY KEY
+    budgetId INT(5) NOT NULL PRIMARY KEY,
+    totalBills DECIMAL(10,2) NOT NULL,
+    moneyLeft DECIMAL(10, 2) NOT NULL,
+    userId INT(6) NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(userId)
+);
