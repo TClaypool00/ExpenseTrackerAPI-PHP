@@ -75,7 +75,6 @@ class Subscriptions {
                     s.subId = " . $this->subId;
         
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->subId);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
