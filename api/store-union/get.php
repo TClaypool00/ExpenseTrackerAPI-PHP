@@ -14,7 +14,10 @@ if($store->storeName != null) {
         "address" => $store->address,
         "city" => $store->city,
         "state" => $store->state,
-        "zip" => $store->zip
+        "zip" => $store->zip,
+        "phoneNum" => $store->phoneNum,
+        "email" => $store->email,
+        "webiste" => $store->website
     );
 
     http_response_code(200);

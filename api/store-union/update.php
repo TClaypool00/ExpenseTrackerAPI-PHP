@@ -11,6 +11,9 @@ $store->address = $data->address;
 $store->city = $data->city;
 $store->state = $data->state;
 $store->zip = $data->zip;
+$store->phoneNum = $data->phoneNum;
+$store->email = $data->email;
+$store->website = $data->website;
 
 if($store->update()) {
     http_response_code(200);

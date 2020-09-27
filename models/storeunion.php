@@ -10,6 +10,9 @@ class StoreUnion {
     public $city;
     public $state;
     public $zip;
+    public $phoneNum;
+    public $email;
+    public $website;
 
     public function __construct($db)
     {
@@ -65,7 +68,10 @@ class StoreUnion {
             s.address,
             s.city,
             s.state,
-            s.zip
+            s.zip,
+            s.phoneNum,
+            s.email,
+            s.website
         FROM . " . $this->table_name . " s
             WHERE
                 s.storeId = " . $this->storeId . "
@@ -80,6 +86,9 @@ class StoreUnion {
         $this->city = $row["city"] ?? null;
         $this->state = $row["state"] ?? null;
         $this->zip = $row["zip"] ?? null;
+        $this->phoneNum = $row["phoneNum"] ?? null;
+        $this->email = $row["email"] ?? null;
+        $this->website = $row["website"] ?? null;
     }
 
     public function create() {
@@ -89,7 +98,10 @@ class StoreUnion {
                 address = :address,
                 city = :city,
                 state = :state,
-                zip = :zip";
+                zip = :zip,
+                phoneNum = :phoneNum,
+                email = :email,
+                website = :website";
 
         $stmt = $this->conn->prepare($query);
 
@@ -99,6 +111,9 @@ class StoreUnion {
         $this->city = htmlspecialchars(strip_tags($this->city));
         $this->state = htmlspecialchars(strip_tags($this->state));
         $this->zip = htmlspecialchars(strip_tags($this->zip));
+        $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->website = htmlspecialchars(strip_tags($this->website));
 
         // Bind data
         $stmt->bindParam(":storeName", $this->storeName);
@@ -106,6 +121,9 @@ class StoreUnion {
         $stmt->bindParam(":city", $this->city);
         $stmt->bindParam(":state", $this->state);
         $stmt->bindParam(":zip", $this->zip);
+        $stmt->bindParam(":phoneNum", $this->phoneNum);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":website", $this->website);
 
         if($stmt->execute())
             return true;
@@ -120,7 +138,10 @@ class StoreUnion {
                 address = :address,
                 city = :city,
                 state = :state,
-                zip = :zip
+                zip = :zip,
+                phoneNum = :phoneNum,
+                email = :email,
+                website = :website
             WHERE
                 storeId = " . $this->storeId;
 
@@ -132,6 +153,9 @@ class StoreUnion {
         $this->city = htmlspecialchars(strip_tags($this->city));
         $this->state = htmlspecialchars(strip_tags($this->state));
         $this->zip = htmlspecialchars(strip_tags($this->zip));
+        $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->website = htmlspecialchars(strip_tags($this->website));
 
         // Bind data
         $stmt->bindParam(":storeName", $this->storeName);
@@ -139,6 +163,9 @@ class StoreUnion {
         $stmt->bindParam(":city", $this->city);
         $stmt->bindParam(":state", $this->state);
         $stmt->bindParam(":zip", $this->zip);
+        $stmt->bindParam(":phoneNum", $this->phoneNum);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":website", $this->website);
 
         if($stmt->execute())
             return true;

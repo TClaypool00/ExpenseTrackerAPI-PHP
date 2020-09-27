@@ -20,7 +20,10 @@ if($num > 0) {
             "address" => $address,
             "city" => $city,
             "state" => $state,
-            "zip" => $zip
+            "zip" => $zip,
+            "phoneNum" => $phoneNum,
+            "email" => $email,
+            "website" => $website
         );
 
         array_push($store_arr["records"], $item);
