@@ -9,7 +9,7 @@ class Bills {
     public $billDate;
     public $billPrice;
     public $isLate;
-    public $userId;
+    public $budgetId;
 
     public function __construct($db)
     {
@@ -21,10 +21,10 @@ class Bills {
             $search = $_GET["search"];
             $query = "SELECT * FROM " . $this->table_name . "
                 WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR isLate LIKE '%$search%'";
-        } else if(isset($_GET["userId"])) {
-            $this->userId = $_GET["userId"];
+        } else if(isset($_GET["budgetId"])) {
+            $this->budgetId = $_GET["budgetId"];
             $query = "SELECT * FROM " . $this->table_name . "
-                WHERE userId = " . $this->userId;
+                WHERE budgetId = " . $this->budgetId;
         } else
             $query = "SELECT * FROM " . $this->table_name;
 
@@ -45,7 +45,7 @@ class Bills {
         b.billDate,
         b.billPrice,
         b.isLate,
-        b.userId
+        b.budgetId
         FROM " . $this->table_name . " b
             WHERE
                 b.billId = ?
@@ -63,7 +63,7 @@ class Bills {
         $this->billPrice = $row["billPrice"] ?? null;
         $this->billDate = $row["billDate"] ?? null;
         $this->isLate = $row["isLate"] ?? null;
-        $this->userId = $row["userId"] ?? null;
+        $this->budgetId = $row["budgetId"] ?? null;
     }
 
     public function create() {
@@ -73,7 +73,7 @@ class Bills {
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
-                userId = :userId';
+                budgetId = :budgetId';
             
         $stmt = $this->conn->prepare($query);
 
@@ -82,13 +82,13 @@ class Bills {
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
 
         $stmt->bindParam(':billName', $this->billName);
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
-        $stmt->bindParam(':userId', $this->userId);
+        $stmt->bindParam(':budgetId', $this->budgetId);
 
         if($stmt->execute())
             return true;
@@ -103,7 +103,7 @@ class Bills {
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
-                userId = :userId
+                budgetId = :budgetId
             WHERE
                 billId= :billId";
         
@@ -115,7 +115,7 @@ class Bills {
                 $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
                 $this->billDate = htmlspecialchars(strip_tags($this->billDate));
                 $this->isLate = htmlspecialchars(strip_tags($this->isLate));
-                $this->userId = htmlspecialchars(strip_tags($this->userId));
+                $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
 
                 // Bind data
                 $stmt->bindParam(':billId', $this->billId);
@@ -123,7 +123,7 @@ class Bills {
                 $stmt->bindParam(':billPrice', $this->billPrice);
                 $stmt->bindParam(':billDate', $this->billDate);
                 $stmt->bindParam(':isLate', $this->isLate);
-                $stmt->bindParam(':userId', $this->userId);
+                $stmt->bindParam(':budgetId', $this->budgetId);
         
                 if($stmt->execute())
                     return true;

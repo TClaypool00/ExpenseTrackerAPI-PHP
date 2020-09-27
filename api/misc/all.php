@@ -18,7 +18,7 @@ if($num > 0) {
             "price" => $price,
             "date" => $date,
             "storeId" => $storeId,
-            "userId" => $userId
+            "budgetId" => $budgetId
         );
 
         array_push($misc_arr["records"], $item);

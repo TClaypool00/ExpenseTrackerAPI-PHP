@@ -14,7 +14,7 @@ if($loan->loanName != null) {
         "monthlyAmountDue" => $loan->monthlyAmountDue,
         "deposit" => $loan->deposit,
         "totalAmountDue" => $loan->totalAmountDue,
-        "userId" => $loan->userId,
+        "budgetId" => $loan->budgetId,
         "storeId" => $loan->storeId
     );
 

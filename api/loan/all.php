@@ -20,7 +20,7 @@ if($num > 0) {
             "monthlyAmountDue" => $monthlyAmountDue,
             "deposit" => $deposit,
             "totalAmountDue" => $totalAmountDue,
-            "userId" => $userId,
+            "budgetId" => $budgetId,
             "storeId" => $storeId
         );
 

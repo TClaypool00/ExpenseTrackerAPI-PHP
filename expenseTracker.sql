@@ -17,8 +17,8 @@ CREATE TABLE bills (
     BillDate DATE NOT NULL DEFAULT CURDATE(),
     billPrice DECIMAL(5) NOT NULL,
     isLate BIT NOT NULL,
-    userId INT(6),
-    FOREIGN KEY (userId) REFERENCES users(userId)
+    budgetId INT(4) NOT NULL DEFAULT 1,
+    FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
 );
 
 CREATE TABLE subscriptions (
@@ -26,11 +26,11 @@ CREATE TABLE subscriptions (
     subId INT(4) NOT NULL PRIMARY KEY,
     dueDate DATE NOT NULL DEFAULT CURDATE(),
     amountDue DECIMAL(6) NOT NULL,
-    userId INT(6) NOT NULL,
     storeId INT(4) NOT NULL,
-    FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
     subName VARCHAR(50) DEFAULT "Subscription",
+    budgetId INT(4) NOT NULL DEFAULT 1,
+    FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
 );
 
 CREATE TABLE storeUnion (
@@ -51,10 +51,10 @@ CREATE TABLE loan (
     monthlyAmountDue DECIMAL(6) NOT NULL,
     deposit DECIMAL(6) NOT NULL,
     totalAmountDue DECIMAL(6) NOT NULL,
-    userId INT(6) NOT NULL,
     storeId INT(4) NOT NULL,
-    FOREIGN KEY (userId) REFERENCES users(userId),
-    FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
+    FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
+    budgetId INT(4) NOT NULL DEFAULT 1,
+    FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
 );
 
 CREATE TABLE misc (
@@ -62,10 +62,10 @@ CREATE TABLE misc (
     miscId INT(4) NOT NULL PRIMARY KEY,
     price DECIMAL(5,2) NOT NULL,
     date DATE NOT NULL DEFAULT CURDATE(),
-    userId INT(6) NOT NULL,
     storeId INT(4) NOT NULL,
-    FOREIGN KEY (userId) REFERENCES users(userId),
-    FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
+    FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
+    budgetId INT(4) NOT NULL DEFAULT 1,
+    FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
 );
 
 CREATE TABLE budget (

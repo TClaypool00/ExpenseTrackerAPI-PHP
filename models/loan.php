@@ -9,7 +9,7 @@ class Loan {
     public $monthlyAmountDue;
     public $deposit;
     public $totalAmountDue;
-    public $userId;
+    public $budgetId;
     public $storeId;
 
     public function __construct($db)
@@ -26,9 +26,9 @@ class Loan {
                 $search = $_GET["search"];
                 $query = $select_all . " WHERE dueDate LIKE '%$search%'";
                 break;
-            case isset($_GET["userId"]):
-                $this->userId = $_GET["userId"];
-                $query = $select_all . " WHERE userId = " . $this->userId;
+            case isset($_GET["budgetId"]):
+                $this->budgetId = $_GET["budgetId"];
+                $query = $select_all . " WHERE budgetId = " . $this->budgetId;
                 break;
             case isset($_GET["storeId"]):
                 $this->storeId = $_GET["storeId"];
@@ -59,7 +59,7 @@ class Loan {
         $this->monthlyAmountDue = $row["monthlyAmountDue"] ?? null;
         $this->deposit = $row["deposit"] ?? null;
         $this->totalAmountDue = $row["totalAmountDue"] ?? null;
-        $this->userId = $row["userId"] ?? null;
+        $this->budgetId = $row["budgetId"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
     }
 
@@ -71,7 +71,7 @@ class Loan {
                 monthlyAmountDue = :monthlyAmountDue,
                 deposit = :deposit,
                 totalAmountDue = :totalAmountDue,
-                userId = :userId,
+                budgetId = :budgetId,
                 storeId = :storeId";
 
         $stmt = $this->conn->prepare($query);
@@ -82,7 +82,7 @@ class Loan {
         $this->monthlyAmountDue = htmlspecialchars(strip_tags($this->monthlyAmountDue));
         $this->deposit = htmlspecialchars(strip_tags($this->deposit));
         $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind Data
@@ -91,7 +91,7 @@ class Loan {
         $stmt->bindParam("monthlyamountDue", $this->monthlyAmountDue);
         $stmt->bindParam("deposit", $this->deposit);
         $stmt->bindParam("totalAmountDue", $this->totalAmountDue);
-        $stmt->bindParam("userId", $this->userId);
+        $stmt->bindParam("budgetId", $this->budgetId);
         $stmt->bindParam("storeId", $this->storeId);
 
         if($stmt->execute())
@@ -108,7 +108,7 @@ class Loan {
                 monthlyAmountDue = :monthlyAmountDue,
                 deposit = :deposit,
                 totalAmountDue = :totalAmountDue,
-                userId = :userId,
+                budgetId = :budgetId,
                 storeId = :storeId
             WHERE
                 loanId = " . $this->loanId;
@@ -121,7 +121,7 @@ class Loan {
         $this->monthlyAmountDue = htmlspecialchars(strip_tags($this->monthlyAmountDue));
         $this->deposit = htmlspecialchars(strip_tags($this->deposit));
         $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind Data
@@ -130,7 +130,7 @@ class Loan {
         $stmt->bindParam("monthlyamountDue", $this->monthlyAmountDue);
         $stmt->bindParam("deposit", $this->deposit);
         $stmt->bindParam("totalAmountDue", $this->totalAmountDue);
-        $stmt->bindParam("userId", $this->userId);
+        $stmt->bindParam("budgetId", $this->budgetId);
         $stmt->bindParam("storeId", $this->storeId);
 
         if($stmt->execute())

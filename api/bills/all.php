@@ -22,7 +22,7 @@ if($num > 0) {
             "billDate" => $billDate,
             "billPrice" => $billPrice,
             "isLate" => $isLate,
-            "userId" => $userId
+            "budgetId" => $budgetId
         );
 
         array_push($bill_arr["records"], $bill_item);

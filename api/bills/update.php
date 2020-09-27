@@ -11,7 +11,7 @@ $bill->billName = $data->billName;
 $bill->billPrice = $data->billPrice;
 $bill->billDate = $data->billDate;
 $bill->isLate = $data->isLate;
-$bill->userId = $data->userId;
+$bill->budgetId = $data->budgetId;
 
 if($bill->update()) {
     http_response_code(200);

@@ -13,7 +13,7 @@ if($sub->companyName != null) {
     $sub_array = array(
         "dueDate" => $sub->dueDate,
         "amountDue" => $sub->amountDue,
-        "userId" => $sub->userId,
+        "budgetId" => $sub->budgetId,
         "storeId" => $sub->storeId,
         "subName" => $sub->subName
     );

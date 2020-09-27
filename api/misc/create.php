@@ -8,7 +8,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 $misc->price = $data->price;
 $misc->date = $data->date;
-$misc->userId = $data->userId;
+$misc->budgetId = $data->budgetId;
 $misc->storeId = $data->storeId;
 
 if($misc->create()) {

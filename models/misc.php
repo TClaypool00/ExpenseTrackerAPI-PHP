@@ -9,7 +9,7 @@ class Misc {
     public $price;
     public $date;
     public $storeId;
-    public $userId;
+    public $budgetId;
 
     public function __construct($db)
     {
@@ -34,7 +34,7 @@ class Misc {
         $this->price = $row["price"] ?? null;
         $this->date = $row["date"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
-        $this->userId = $row["userId"] ?? null;
+        $this->budgetId = $row["budgetId"] ?? null;
     }
 
     public function create() {
@@ -42,21 +42,21 @@ class Misc {
             SET
                 price = :price,
                 date = :date,
-                userId = :userId,
-                storeId = :storeId";
+                budgetId = :budgetId,
+                storeId = :budgetId";
 
         $stmt = $this->conn->prepare($query);
 
         // Clean Data
         $this->price = htmlspecialchars(strip_tags($this->price));
         $this->date = htmlspecialchars(strip_tags($this->date));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind Data
         $stmt->bindParam(":price", $this->price);
         $stmt->bindParam(":date", $this->date);
-        $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam(":budgetId", $this->budgetId);
         $stmt->bindParam(":storeId", $this->storeId);
 
         if($stmt->execute())
@@ -70,7 +70,7 @@ class Misc {
             SET
                 price = :price,
                 date = :date,
-                userId = :userId,
+                budgetId = :budgetId,
                 storeId = :storeId
             WHERE
                 miscId = " . $this->miscId;
@@ -80,13 +80,13 @@ class Misc {
         // Clean Data
         $this->price = htmlspecialchars(strip_tags($this->price));
         $this->date = htmlspecialchars(strip_tags($this->date));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind Data
         $stmt->bindParam(":price", $this->price);
         $stmt->bindParam(":date", $this->date);
-        $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam(":budgetId", $this->budgetId);
         $stmt->bindParam(":storeId", $this->storeId);
 
         if($stmt->execute())

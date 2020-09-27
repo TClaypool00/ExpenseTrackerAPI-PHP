@@ -6,7 +6,7 @@ class Subscriptions {
     public $subId;
     public $dueDate;
     public $amountDue;
-    public $userId;
+    public $budgetId;
     public $storeId;
     public $subName;
 
@@ -24,9 +24,9 @@ class Subscriptions {
                 $query = $select_all . "
                     WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE %$search%";
                 break;
-            case isset($_GET["userId"]):
-                $this->userId = $_GET["userId"];
-                $query = $select_all . " WHERE userId = " . $this->userId;
+            case isset($_GET["budgetId"]):
+                $this->budgetId = $_GET["budgetId"];
+                $query = $select_all . " WHERE budgetId = " . $this->budgetId;
                 break;
             case isset($_GET["storeId"]):
                 $this->storeId = $_GET["storeId"];
@@ -59,7 +59,7 @@ class Subscriptions {
     public function getById() {
         $query = "SELECT
             s.dueDate,
-            s.userId,
+            s.budgetId,
             s.storeId,
             s.amountDue,
             s.subName,
@@ -75,7 +75,7 @@ class Subscriptions {
 
         $this->dueDate = $row["dueDate"] ?? null;
         $this->amountDue = $row["amountDue"] ?? null;
-        $this->userId = $row["userId"] ?? null;
+        $this->budgetId = $row["budgetId"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
         $this->subName = $row["subName"] ?? null;
     }
@@ -85,7 +85,7 @@ class Subscriptions {
             SET
                 dueDate = :dueDate,
                 amountDue = :amountDue,
-                userId = :userId,
+                budgetId = :budgetId,
                 storeId = :storeId,
                 subName = :subName,";
         
@@ -94,14 +94,14 @@ class Subscriptions {
         // Clean Data
         $this->dueDate = htmlspecialchars(strip_tags($this->dueDate));
         $this->amountDue = htmlspecialchars(strip_tags($this->amountDue));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
         $this->subName = htmlspecialchars(strip_tags($this->subName));
 
         // Bind data
         $stmt->bindParam(":dueDate", $this->dueDate);
         $stmt->bindParam(":amountDue", $this->amountDue);
-        $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam(":budgetId", $this->budgetId);
         $stmt->bindParam(":storeId", $this->storeId);
         $stmt->bindParam(":subName", $this->subName);
 
@@ -116,7 +116,7 @@ class Subscriptions {
             SET
                 dueDate = :dueDate,
                 amountDue = :amountDue,
-                userId = :userId,
+                budgetId = :budgetId,
                 storeId = :storeId,
                 subName = :subName
             WHERE
@@ -127,14 +127,14 @@ class Subscriptions {
         // Clean Data
         $this->dueDate = htmlspecialchars(strip_tags($this->dueDate));
         $this->amountDue = htmlspecialchars(strip_tags($this->amountDue));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
         $this->subName = htmlspecialchars(strip_tags($this->subName));
 
         // Bind data
         $stmt->bindParam(":dueDate", $this->dueDate);
         $stmt->bindParam(":amountDue", $this->amountDue);
-        $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam(":budgetId", $this->budgetId);
         $stmt->bindParam(":storeId", $this->storeId);
         $stmt->bindParam(":subName", $this->subName);
 

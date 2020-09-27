@@ -15,7 +15,7 @@ if($bill->billName != null) {
         "billDate" => $bill->billDate,
         "billPrice" => $bill->billPrice,
         "isLate" => $bill->isLate,
-        "userId" => $bill->userId
+        "budgetId" => $bill->budgetId
     );
 
     http_response_code(200);
