@@ -95,12 +95,9 @@ class Bills {
         b.storeId
         FROM " . $this->table_name . " b
             WHERE
-                b.billId = ?
-                LIMIT 0,1";
+                b.billId = " . $this->billId;
 
         $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(1, $this->billId);
 
         $stmt->execute();
 
@@ -157,12 +154,11 @@ class Bills {
                 budgetId = :budgetId,
                 storeId = :storeId
             WHERE
-                billId= :billId";
+                billId = " . $this->billId;
         
                 $stmt = $this->conn->prepare($query);
 
                 // Clean data
-                $this->billId = htmlspecialchars(strip_tags($this->billId));
                 $this->billName = htmlspecialchars(strip_tags($this->billName));
                 $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
                 $this->billDate = htmlspecialchars(strip_tags($this->billDate));
@@ -171,7 +167,6 @@ class Bills {
                 $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
                 // Bind data
-                $stmt->bindParam(':billId', $this->billId);
                 $stmt->bindParam(':billName', $this->billName);
                 $stmt->bindParam(':billPrice', $this->billPrice);
                 $stmt->bindParam(':billDate', $this->billDate);

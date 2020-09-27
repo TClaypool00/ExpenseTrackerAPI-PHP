@@ -6,7 +6,7 @@ include "../../partialFiles/objects_partial_files/newBill.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
-$bill->billId = $data->billId;
+$bill->billId = isset($_GET["billId"]) ? $_GET["billId"] : die();
 $bill->billName = $data->billName;
 $bill->billPrice = $data->billPrice;
 $bill->billDate = $data->billDate;
