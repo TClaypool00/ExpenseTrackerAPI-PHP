@@ -72,8 +72,7 @@ class Subscriptions {
             s.subName,
             FROM " . $this->table_name . " s
                 WHERE
-                    s.subId = ? 
-                    LIMIT 0,1";
+                    s.subId = " . $this->subId;
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->subId);

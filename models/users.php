@@ -52,11 +52,8 @@ class Users
             u.salary
         FROM " . $this->tableName . " u
             WHERE
-                u.userId = ?
-                LIMIT 0,1";
+                u.userId = " . $this->userId;
         $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(1, $this->userId);
 
         $stmt->execute();
 
