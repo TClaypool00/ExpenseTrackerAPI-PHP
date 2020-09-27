@@ -18,7 +18,33 @@ class Misc {
 
     public function getAll() {
         // Referes to private properites ^
-        $stmt = $this->conn->prepare($this->select_all . $this->table_name . $this->order_by);
+        switch ($_GET) {
+            case isset($_GET["search"]):
+                $search = $_GET["search"];
+                $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%'";
+                break;
+            case isset($_GET["budgetId"]) and isset($_GET["search"]):
+                $search = $_GET["search"];
+                $this->budgetId = $_GET["budgetId"];
+                $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND budgetId = " . $this->budgetId;
+                break;
+            case isset($_GET["storeId"]) and isset($_GET["search"]):
+                $search = $_GET["search"];
+                $this->storeId = $_GET["storeId"];
+                $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND storeId = " . $this->storeId;
+                break;
+            case isset($_GET["budgetId"]) and isset($_GET["storeId"]) and isset($_GET["search"]):
+                $search = $_GET["search"];
+                $this->budgetId = $_GET["budgetId"];
+                $this->storeId = $_GET["storeId"];
+                $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND budgetId = " . $this->budgetId . " AND storeId = " . $this->storeId;
+                break;
+            default:
+                $query = $this->select_all . $this->table_name;
+                break;
+        }
+
+        $stmt = $this->conn->prepare($query . $this->order_by);
 
         $stmt->execute();
 

@@ -22,7 +22,7 @@ class Subscriptions {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
                 $query = $select_all . "
-                    WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE %$search%";
+                    WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE '%$search%'";
                 break;
             case isset($_GET["budgetId"]):
                 $this->budgetId = $_GET["budgetId"];
@@ -32,17 +32,24 @@ class Subscriptions {
                 $this->storeId = $_GET["storeId"];
                 $query = $select_all . " WHERE storeId = " . $this->storeId;
                 break;
-            case isset($_GET["dueDate"]):
-                $this->dueDate = $_GET["dueDate"];
-                $query = $select_all . " WHERE dueDate = " . $this->dueDate;
+            case isset($_GET["budgetId"]) and isset($_GET["search"]):
+                $this->budgetId = $_GET["budgetId"];
+                $search = $_GET["search"];
+                $query = $select_all . "
+                    WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE '%$search%' AND budgetId = " . $this->budgetId;
                 break;
-            case isset($_GET["amountDue"]):
-                $this->amountDue = $_GET["amountDue"];
-                $query = $select_all . " WHERE amountDue = " . $this->amountDue;
+            case isset($_GET["storeId"]) and isset($_GET["search"]):
+                $this->storeId = $_GET["storeId"];
+                $search = $_GET["search"];
+                $query = $select_all . "
+                    WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE '%$search%' AND storeId = " . $this->storeId;
                 break;
-            case isset($_GET["subName"]):
-                $this->subName = $_GET["subName"];
-                $query = $select_all . " WHERE subName = " . $this->subName;
+            case isset($_GET["budgetId"]) and isset($_GET["storeId"]) and isset($_GET["search"]):
+                $this->budgetId = $_GET["budgetId"];
+                $this->storeId = $_GET["storeId"];
+                $search = $_GET["search"];
+                $query = $select_all . "
+                    WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE '%$search%' AND budgetId = " . $this->budgetId . " AND storeId = " . $this->storeId;
                 break;
             default:
                 $query = $select_all;

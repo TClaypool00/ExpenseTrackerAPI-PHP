@@ -2,6 +2,8 @@
 class Bills {
     private $conn;
     private $table_name = "bills";
+    private $select_all = "SELECT * FROM ";
+    private $order_by = "ORDER BY billName ASC";
 
     // Properties
     public $billId;
@@ -17,21 +19,47 @@ class Bills {
     }
 
     public function getAll() {     
-        if(isset($_GET["search"])) {
-            $search = $_GET["search"];
-            $query = "SELECT * FROM " . $this->table_name . "
-                WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR isLate LIKE '%$search%'";
-        } else if(isset($_GET["budgetId"])) {
-            $this->budgetId = $_GET["budgetId"];
-            $query = "SELECT * FROM " . $this->table_name . "
+        switch ($_GET) {
+            case isset($_GET["search"]):
+                $search = $_GET["search"];
+                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%'";
+                break;
+            case isset($_GET["budgetId"]):
+                $this->budgetId = $_GET["budgetId"];
+                $query = $this->select_all . $this->table_name . " 
                 WHERE budgetId = " . $this->budgetId;
-        } else
-            $query = "SELECT * FROM " . $this->table_name;
-
-        $order_by = " ORDER BY billName ASC";
+                break;
+            case isset($_GET["budgetId"]) and isset($_GET["search"]):
+                $this->budgetId = $_GET["budgetId"];
+                $search = $_GET["search"];
+                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND budgetId = " . $this->budgetId;
+                break;
+            case isset($_GET["billName"]):
+                $this->billName = $_GET["billName"];
+                $query = $this->select_all . $this->table_name . " 
+                WHERE billName LIKE '%" . $this->billName . "%'";
+                break;
+            case isset($_GET["billDate"]):
+                $this->billDate = $_GET["billDate"];
+                $query = $this->select_all . $this->table_name . " 
+                WHERE billDate LIKE '%" . $this->billDate . "%'";
+                break;
+            case isset($_GET["billPrice"]):
+                $this->billPrice = $_GET["billPrice"];
+                $query = $this->select_all . $this->table_name . " 
+                WHERE billPrice LIKE '%" . $this->billPrice . "%'";
+            case isset($_GET["isLate"]):
+                $this->isLate = $_GET["isLate"];
+                $query = $this->select_all . $this->table_name . " 
+                WHERE isLate LIKE '%" . $this->isLate . "%'";
+                break;
+            default:
+                $query = $this->select_all . $this->table_name;
+                break;
+        }
 
         // Prepare statement
-        $stmt = $this->conn->prepare($query . $order_by);
+        $stmt = $this->conn->prepare($query . $this->order_by);
 
         // Execute statement
         $stmt->execute();

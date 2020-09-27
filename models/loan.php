@@ -24,7 +24,7 @@ class Loan {
         switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
-                $query = $select_all . " WHERE dueDate LIKE '%$search%'";
+                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%'";
                 break;
             case isset($_GET["budgetId"]):
                 $this->budgetId = $_GET["budgetId"];
@@ -34,7 +34,17 @@ class Loan {
                 $this->storeId = $_GET["storeId"];
                 $query = $select_all . " WHERE storeId = " . $this->storeId;
                 break;
-            // Add more case to search for each property
+            case isset($_GET["budgetId"]) and isset($_GET["search"]):
+                $this->budgetId = $_GET["budgetId"];
+                $search = $_GET["search"];
+                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND budgetId = " . $this->budgetId;
+                break;
+            case isset($_GET["budgetId"]) and isset($_GET["search"]) and isset($_GET["storeId"]):
+                $this->budgetId = $_GET["budgetId"];
+                $this->storeId = $_GET["storeId"];
+                $search = $_GET["search"];
+                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND budgetId = " . $this->budgetId . " AND storeId = storeId = " . $this->storeId;
+                break;
             default:
                 $query = $select_all;
                 break;

@@ -3,6 +3,8 @@ class Users
 {
     private $conn;
     private $tableName = "users";
+    private $select_all = "SELECT * FROM ";
+    private $order_by = " ORDER BY firstName ASC";
 
     // Properties
     public $userId;
@@ -20,22 +22,23 @@ class Users
 
     public function read()
     {
-        if(isset($_GET["search"])) {
-            $search = $_GET["search"];
-            $query = "SELECT * FROM " . $this->tableName . "
-            WHERE firstName LIKE '%$search%' OR lastName LIKE '%$search%' OR email LIKE '%$search%'
-            ORDER BY firstName ASC";
-        } else {
-            $query = "SELECT * FROM " . $this->tableName . "
-            ORDER BY firstName ASC";
+        switch ($_GET) {
+            case isset($_GET["search"]):
+                $search = $_GET["search"];
+                $query = $this->select_all . $this->tableName . "
+                WHERE firstName LIKE '%$search%' OR lastName LIKE '%$search%' OR email LIKE '%$search%'";
+                break;
+            default:
+                $query = $this->select_all . $this->tableName;
+                break;
         }
 
-        $pStatement = $this->conn->prepare($query);
+        $stmt = $this->conn->prepare($query . $this->order_by);
 
         // execute query
-        $pStatement->execute();
+        $stmt->execute();
 
-        return $pStatement;
+        return $stmt;
     }
 
     public function read_single(){
