@@ -7,7 +7,7 @@ CREATE TABLE users (
     password VARCHAR(15) NOT NULL,
     isAdmin BIT NOT NULL,
     phoneNum INT(10) NOT NULL DEFAULT 123457890,
-    salary DECIMAL(10) NOT NULL DEFAULT 20000
+    salary DECIMAL(10, 2) NOT NULL DEFAULT 20000
 );
 
 CREATE TABLE bills (
@@ -15,7 +15,7 @@ CREATE TABLE bills (
     billId INT(4) PRIMARY KEY,
     billName VARCHAR(50) NOT NULL,
     BillDate DATE NOT NULL DEFAULT CURDATE(),
-    billPrice DECIMAL(5) NOT NULL,
+    billPrice DECIMAL(5, 2) NOT NULL,
     isLate BIT NOT NULL,
     budgetId INT(4) NOT NULL DEFAULT 1,
     FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
@@ -25,7 +25,7 @@ CREATE TABLE subscriptions (
     -- Add AUTO_INCREMENT after PRIMARY KEY
     subId INT(4) NOT NULL PRIMARY KEY,
     dueDate DATE NOT NULL DEFAULT CURDATE(),
-    amountDue DECIMAL(6) NOT NULL,
+    amountDue DECIMAL(6, 2) NOT NULL,
     storeId INT(4) NOT NULL,
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
     subName VARCHAR(50) DEFAULT "Subscription",
@@ -40,7 +40,10 @@ CREATE TABLE storeUnion (
     address VARCHAR(60) NOT NULL,
     city VARCHAR(70) NOT NULL,
     state VARCHAR(50) NOT NULL,
-    zip INT(5) NOT NULL
+    zip INT(5) NOT NULL,
+    phoneNum INT(10) NOT NULL DEFAULT 1234567890,
+    email VARCHAR(30) NOT NULL DEFAULT "store@gmil.com",
+    website VARCHAR(50) NOT NULL DEFAULT "www.store.com"
 );
 
 CREATE TABLE loan (
@@ -48,9 +51,9 @@ CREATE TABLE loan (
     loanId INT(4) NOT NULL PRIMARY KEY,
     loanName VARCHAR(50) NOT NULL,
     dueDate DATE NOT NULL DEFAULT CURDATE(),
-    monthlyAmountDue DECIMAL(6) NOT NULL,
-    deposit DECIMAL(6) NOT NULL,
-    totalAmountDue DECIMAL(6) NOT NULL,
+    monthlyAmountDue DECIMAL(6, 2) NOT NULL,
+    deposit DECIMAL(10, 2) NOT NULL,
+    totalAmountDue DECIMAL(6, 2) NOT NULL,
     storeId INT(4) NOT NULL,
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
     budgetId INT(4) NOT NULL DEFAULT 1,
