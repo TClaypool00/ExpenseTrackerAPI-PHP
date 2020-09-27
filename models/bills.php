@@ -12,6 +12,7 @@ class Bills {
     public $billPrice;
     public $isLate;
     public $budgetId;
+    public $storeId;
 
     public function __construct($db)
     {
@@ -33,6 +34,23 @@ class Bills {
                 $this->budgetId = $_GET["budgetId"];
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND budgetId = " . $this->budgetId;
+                break;
+            case isset($_GET["storeId"]):
+                $this->storeId = $_GET["storeId"];
+                $query = $this->select_all . $this->table_name . " 
+                WHERE storeId = " . $this->storeId;
+                break;
+            case isset($_GET["storeId"]) and isset($_GET["budgetId"]):
+                $this->storeId = $_GET["storeId"];
+                $this->budgetId = $_GET["budgetId"];
+                $query = $this->select_all . $this->table_name . " 
+                WHERE storeId = " . $this->storeId . " AND budgetId = " . $this->budgetId;
+                break;
+            case isset($_GET["storeId"]) and isset($_GET["budgetId"]) and isset($_GET["search"]):
+                $search = $_GET["search"];
+                $this->storeId = $_GET["storeId"];
+                $this->budgetId = $_GET["budgetId"];
+                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND storeId = " . $this->storeId . " AND budgetId = " . $this->budgetId;
                 break;
             case isset($_GET["billName"]):
                 $this->billName = $_GET["billName"];
@@ -73,7 +91,8 @@ class Bills {
         b.billDate,
         b.billPrice,
         b.isLate,
-        b.budgetId
+        b.budgetId,
+        b.storeId
         FROM " . $this->table_name . " b
             WHERE
                 b.billId = ?
@@ -92,6 +111,7 @@ class Bills {
         $this->billDate = $row["billDate"] ?? null;
         $this->isLate = $row["isLate"] ?? null;
         $this->budgetId = $row["budgetId"] ?? null;
+        $this->storeId = $row["storeId"] ?? null;
     }
 
     public function create() {
@@ -101,7 +121,8 @@ class Bills {
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
-                budgetId = :budgetId';
+                budgetId = :budgetId,
+                storeId = :storeId';
             
         $stmt = $this->conn->prepare($query);
 
@@ -111,12 +132,14 @@ class Bills {
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
         $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+        $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         $stmt->bindParam(':billName', $this->billName);
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
         $stmt->bindParam(':budgetId', $this->budgetId);
+        $stmt->bindParam(':storeId', $this->storeId);
 
         if($stmt->execute())
             return true;
@@ -131,7 +154,8 @@ class Bills {
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
-                budgetId = :budgetId
+                budgetId = :budgetId,
+                storeId = :storeId
             WHERE
                 billId= :billId";
         
@@ -144,6 +168,7 @@ class Bills {
                 $this->billDate = htmlspecialchars(strip_tags($this->billDate));
                 $this->isLate = htmlspecialchars(strip_tags($this->isLate));
                 $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+                $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
                 // Bind data
                 $stmt->bindParam(':billId', $this->billId);
@@ -152,6 +177,8 @@ class Bills {
                 $stmt->bindParam(':billDate', $this->billDate);
                 $stmt->bindParam(':isLate', $this->isLate);
                 $stmt->bindParam(':budgetId', $this->budgetId);
+                $stmt->bindParam(':storeId', $this->storeId);
+
         
                 if($stmt->execute())
                     return true;

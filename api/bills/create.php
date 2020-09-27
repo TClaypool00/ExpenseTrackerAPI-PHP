@@ -12,6 +12,7 @@ $bill->billPrice = $data->billPrice;
 $bill->billDate = $data->billDate;
 $bill->isLate = $data->isLate;
 $bill->budgetId = $data->budgetId;
+$bill->storeId = $data->storeId;
 
 if($bill->create()){
     http_response_code(201);

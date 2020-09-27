@@ -18,7 +18,9 @@ CREATE TABLE bills (
     billPrice DECIMAL(5, 2) NOT NULL,
     isLate BIT NOT NULL,
     budgetId INT(4) NOT NULL DEFAULT 1,
-    FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
+    storeId INT(4) NOT NULL DEFAULT 1,
+    FOREIGN KEY (budgetId) REFERENCES budget(budgetId),
+    FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
 );
 
 CREATE TABLE subscriptions (
