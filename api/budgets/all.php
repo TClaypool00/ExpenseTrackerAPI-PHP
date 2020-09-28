@@ -7,10 +7,10 @@ include "../../partialFiles/objects_partial_files/new_budget.php";
 $all_budgets = $budget->getAll();
 $num = $all_budgets->rowCount();
 
-if($num > 0) {
-    $budget_arr["records"] = array();
+if ($num > 0) {
+    $budget_arr = array();
 
-    while($row = $all_budgets->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = $all_budgets->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
         $item = array(
@@ -20,7 +20,7 @@ if($num > 0) {
             "userId" => $userId
         );
 
-        array_push($budget_arr["records"], $item);
+        array_push($budget_arr, $item);
 
         http_response_code(200);
         echo json_encode($budget_arr);

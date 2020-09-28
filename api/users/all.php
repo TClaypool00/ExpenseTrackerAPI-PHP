@@ -8,7 +8,7 @@ $allUsers = $user->read();
 $num = $allUsers->rowCount();
 
 if ($num > 0) {
-    $user_arr["records"] = array();
+    $user_arr = array();
 
     while ($row = $allUsers->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
@@ -24,7 +24,7 @@ if ($num > 0) {
             "salary" => $salary
         );
 
-        array_push($user_arr["records"], $user_item);
+        array_push($user_arr, $user_item);
     }
 
     http_response_code(200);

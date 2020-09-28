@@ -7,8 +7,8 @@ include "../../partialFiles/objects_partial_files/new_loan.php";
 $all_loans = $loan->getAll();
 $num = $all_loans->rowCount();
 
-if($num > 0) {
-    $loan_arr["records"] = array();
+if ($num > 0) {
+    $loan_arr = array();
 
     while ($row = $all_loans->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
@@ -24,14 +24,12 @@ if($num > 0) {
             "storeId" => $storeId
         );
 
-        array_push($loan_arr["records"], $item);
+        array_push($loan_arr, $item);
 
         http_response_code(200);
         echo json_encode($loan_arr);
     }
-
 } else {
     http_response_code(404);
     echo json_encode(array("message" => "No loans found."));
-    
 }

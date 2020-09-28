@@ -9,10 +9,10 @@ include "../../partialFiles/objects_partial_files/new_sub.php";
 $all_subs = $sub->getAll();
 $num = $all_subs->rowCount();
 
-if($num > 0) {
-    $sub_array["records"] = array();
+if ($num > 0) {
+    $sub_array = array();
 
-    while($row = $all_subs->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = $all_subs->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
         $item = array(
@@ -24,7 +24,7 @@ if($num > 0) {
             "subName" => $subName
         );
 
-        array_push($sub_array["records"], $item);
+        array_push($sub_array, $item);
 
         // Returns 200 if there are subscriptions
         http_response_code(200);

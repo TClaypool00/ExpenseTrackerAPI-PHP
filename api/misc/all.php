@@ -7,10 +7,10 @@ include "../../partialFiles/objects_partial_files/new_misc.php";
 $all_misc = $misc->getAll();
 $num = $all_misc->rowCount();
 
-if($num > 0) {
-    $misc_arr["records"] = array();
+if ($num > 0) {
+    $misc_arr = array();
 
-    while($row = $all_misc->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = $all_misc->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
         $item = array(
@@ -21,7 +21,7 @@ if($num > 0) {
             "budgetId" => $budgetId
         );
 
-        array_push($misc_arr["records"], $item);
+        array_push($misc_arr, $item);
 
         http_response_code(200);
 

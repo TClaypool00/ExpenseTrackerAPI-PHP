@@ -8,10 +8,10 @@ include "../../partialFiles/objects_partial_files/new_storeunion.php";
 $all_stores = $store->getAll();
 $num = $all_stores->rowCount();
 
-if($num > 0) {
-    $store_arr["records"] = array();
+if ($num > 0) {
+    $store_arr = array();
 
-    while($row = $all_stores->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = $all_stores->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
         $item = array(
@@ -26,7 +26,7 @@ if($num > 0) {
             "website" => $website
         );
 
-        array_push($store_arr["records"], $item);
+        array_push($store_arr, $item);
     }
 
     http_response_code(200);

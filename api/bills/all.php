@@ -9,9 +9,9 @@ include "../../partialFiles/objects_partial_files/newBill.php";
 $allBills = $bill->getAll();
 $num = $allBills->rowCount();
 
-if($num > 0) {
+if ($num > 0) {
     $bill_arr = array();
-    $bill_arr["records"] = array();
+    $bill_arr = array();
 
     while ($row = $allBills->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
@@ -26,7 +26,7 @@ if($num > 0) {
             "storeId" => $storeId
         );
 
-        array_push($bill_arr["records"], $bill_item);
+        array_push($bill_arr, $bill_item);
     }
 
     http_response_code(200);
