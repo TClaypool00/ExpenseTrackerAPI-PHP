@@ -16,7 +16,8 @@ class Users
     public $phoneNum;
     public $salary;
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
@@ -41,7 +42,8 @@ class Users
         return $stmt;
     }
 
-    public function read_single(){
+    public function read_single()
+    {
         $query = "SELECT 
             u.firstName,
             u.lastName,
@@ -69,7 +71,8 @@ class Users
     }
 
     // Create User
-    public function create(){
+    public function create()
+    {
         $query = 'INSERT INTO ' . $this->tableName . '
             SET
                 firstName = :firstName,
@@ -81,7 +84,7 @@ class Users
                 salary = :salary';
 
         $stmt = $this->conn->prepare($query);
-        
+
         // Clean Data
         $this->firstName = htmlspecialchars(strip_tags($this->firstName));
         $this->lastName = htmlspecialchars(strip_tags($this->lastName));
@@ -100,13 +103,14 @@ class Users
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":salary", $this->salary);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;
     }
 
-    public function update(){
+    public function update()
+    {
         $query = 'UPDATE ' . $this->tableName . '
             SET
                 firstName = :firstName,
@@ -118,39 +122,40 @@ class Users
                 salary = :salary
             WHERE
                 userId = ' . $this->userId;
-            
-            $stmt = $this->conn->prepare($query);
-    
-            // Clean Data
-            $this->firstName = htmlspecialchars(strip_tags($this->firstName));
-            $this->lastName = htmlspecialchars(strip_tags($this->lastName));
-            $this->email = htmlspecialchars(strip_tags($this->email));
-            $this->password = htmlspecialchars(strip_tags($this->password));
-            $this->isAdmin = htmlspecialchars(strip_tags($this->isAdmin));
-            $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
-            $this->salary = htmlspecialchars(strip_tags($this->salary));
-    
-            // Bind data
-            $stmt->bindParam(':firstName', $this->firstName);
-            $stmt->bindParam(':lastName', $this->lastName);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':password', $this->password);
-            $stmt->bindParam(':isAdmin', $this->isAdmin);
-            $stmt->bindParam(":phoneNum", $this->phoneNum);
-            $stmt->bindParam(":salary", $this->salary);
-    
-            if($stmt->execute())
-                return true;
-    
-            return false;
+
+        $stmt = $this->conn->prepare($query);
+
+        // Clean Data
+        $this->firstName = htmlspecialchars(strip_tags($this->firstName));
+        $this->lastName = htmlspecialchars(strip_tags($this->lastName));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->password = htmlspecialchars(strip_tags($this->password));
+        $this->isAdmin = htmlspecialchars(strip_tags($this->isAdmin));
+        $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
+        $this->salary = htmlspecialchars(strip_tags($this->salary));
+
+        // Bind data
+        $stmt->bindParam(':firstName', $this->firstName);
+        $stmt->bindParam(':lastName', $this->lastName);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':isAdmin', $this->isAdmin);
+        $stmt->bindParam(":phoneNum", $this->phoneNum);
+        $stmt->bindParam(":salary", $this->salary);
+
+        if ($stmt->execute())
+            return true;
+
+        return false;
     }
 
-    public function delete (){
+    public function delete()
+    {
         $query = "DELETE FROM " . $this->tableName . " WHERE userId = " . $this->userId;
 
         $stmt = $this->conn->prepare($query);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;

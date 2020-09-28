@@ -1,5 +1,6 @@
 <?php
-class Subscriptions {
+class Subscriptions
+{
     private $conn;
     private $table_name = "subscriptions";
 
@@ -15,7 +16,8 @@ class Subscriptions {
         $this->conn = $db;
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         $select_all = "SELECT * FROM " . $this->table_name;
 
         switch (isset($_GET)) {
@@ -63,7 +65,8 @@ class Subscriptions {
         return $stmt;
     }
 
-    public function getById() {
+    public function getById()
+    {
         $query = "SELECT
             s.dueDate,
             s.budgetId,
@@ -73,7 +76,7 @@ class Subscriptions {
             FROM " . $this->table_name . " s
                 WHERE
                     s.subId = " . $this->subId;
-        
+
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -85,7 +88,8 @@ class Subscriptions {
         $this->subName = $row["subName"] ?? null;
     }
 
-    public function create() {
+    public function create()
+    {
         $query = "INSERT INTO " . $this->table_name . "
             SET
                 dueDate = :dueDate,
@@ -93,7 +97,7 @@ class Subscriptions {
                 budgetId = :budgetId,
                 storeId = :storeId,
                 subName = :subName,";
-        
+
         $stmt = $this->conn->prepare($query);
 
         // Clean Data
@@ -110,13 +114,14 @@ class Subscriptions {
         $stmt->bindParam(":storeId", $this->storeId);
         $stmt->bindParam(":subName", $this->subName);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
-        
+
         return false;
     }
 
-    public function update() {
+    public function update()
+    {
         $query = "UPDATE " . $this->table_name . "
             SET
                 dueDate = :dueDate,
@@ -126,7 +131,7 @@ class Subscriptions {
                 subName = :subName
             WHERE
                 subId = " . $this->subId;
-        
+
         $stmt = $this->conn->prepare($query);
 
         // Clean Data
@@ -143,18 +148,19 @@ class Subscriptions {
         $stmt->bindParam(":storeId", $this->storeId);
         $stmt->bindParam(":subName", $this->subName);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
-        
+
         return false;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $query = "DELETE FROM " . $this->table_name . " WHERE subId = " . $this->subId;
 
         $stmt = $this->conn->prepare($query);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;

@@ -1,5 +1,6 @@
 <?php
-class Loan {
+class Loan
+{
     private $conn;
     private $table_name = "loan";
 
@@ -17,7 +18,8 @@ class Loan {
         $this->conn = $db;
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         $select_all = "SELECT * FROM " . $this->table_name;
         $order_by = " ORDER BY dueDate ASC";
 
@@ -56,7 +58,8 @@ class Loan {
         return $stmt;
     }
 
-    public function getById() {
+    public function getById()
+    {
         $query = "SELECT * FROM " . $this->table_name . " 
             WHERE loanId = " . $this->loanId;
 
@@ -73,7 +76,8 @@ class Loan {
         $this->storeId = $row["storeId"] ?? null;
     }
 
-    public function create() {
+    public function create()
+    {
         $query = "INSERT INTO " . $this->table_name . "
             SET
                 loanName = :loanName,
@@ -104,13 +108,14 @@ class Loan {
         $stmt->bindParam("budgetId", $this->budgetId);
         $stmt->bindParam("storeId", $this->storeId);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;
     }
 
-    public function update() {
+    public function update()
+    {
         $query = "UPDATE " . $this->table_name . "
             SET
                 loanName = :loanName,
@@ -143,18 +148,19 @@ class Loan {
         $stmt->bindParam("budgetId", $this->budgetId);
         $stmt->bindParam("storeId", $this->storeId);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $query = "DELETE FROM " . $this->table_name . " WHERE loanId = " . $this->loanId;
 
         $stmt = $this->conn->prepare($query);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;

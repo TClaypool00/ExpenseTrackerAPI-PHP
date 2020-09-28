@@ -1,5 +1,6 @@
 <?php
-class Bills {
+class Bills
+{
     private $conn;
     private $table_name = "bills";
     private $select_all = "SELECT * FROM ";
@@ -19,7 +20,8 @@ class Bills {
         $this->conn = $db;
     }
 
-    public function getAll() {     
+    public function getAll()
+    {
         switch ($_GET) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
@@ -85,7 +87,8 @@ class Bills {
         return $stmt;
     }
 
-    public function getById() {
+    public function getById()
+    {
         $query = "SELECT 
         b.billName,
         b.billDate,
@@ -111,7 +114,8 @@ class Bills {
         $this->storeId = $row["storeId"] ?? null;
     }
 
-    public function create() {
+    public function create()
+    {
         $query = 'INSERT INTO ' . $this->table_name . '
             SET
                 billName = :billName,
@@ -120,7 +124,7 @@ class Bills {
                 isLate = :isLate,
                 budgetId = :budgetId,
                 storeId = :storeId';
-            
+
         $stmt = $this->conn->prepare($query);
 
         // Clean data
@@ -138,13 +142,14 @@ class Bills {
         $stmt->bindParam(':budgetId', $this->budgetId);
         $stmt->bindParam(':storeId', $this->storeId);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
-        
+
         return false;
     }
 
-    public function update() {
+    public function update()
+    {
         $query = "UPDATE " . $this->table_name . "
             SET
                 billName = :billName,
@@ -155,40 +160,41 @@ class Bills {
                 storeId = :storeId
             WHERE
                 billId = " . $this->billId;
-        
-                $stmt = $this->conn->prepare($query);
 
-                // Clean data
-                $this->billName = htmlspecialchars(strip_tags($this->billName));
-                $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
-                $this->billDate = htmlspecialchars(strip_tags($this->billDate));
-                $this->isLate = htmlspecialchars(strip_tags($this->isLate));
-                $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
-                $this->storeId = htmlspecialchars(strip_tags($this->storeId));
+        $stmt = $this->conn->prepare($query);
 
-                // Bind data
-                $stmt->bindParam(':billName', $this->billName);
-                $stmt->bindParam(':billPrice', $this->billPrice);
-                $stmt->bindParam(':billDate', $this->billDate);
-                $stmt->bindParam(':isLate', $this->isLate);
-                $stmt->bindParam(':budgetId', $this->budgetId);
-                $stmt->bindParam(':storeId', $this->storeId);
+        // Clean data
+        $this->billName = htmlspecialchars(strip_tags($this->billName));
+        $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
+        $this->billDate = htmlspecialchars(strip_tags($this->billDate));
+        $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+        $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
-        
-                if($stmt->execute())
-                    return true;
-                
-                return false;
+        // Bind data
+        $stmt->bindParam(':billName', $this->billName);
+        $stmt->bindParam(':billPrice', $this->billPrice);
+        $stmt->bindParam(':billDate', $this->billDate);
+        $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':budgetId', $this->budgetId);
+        $stmt->bindParam(':storeId', $this->storeId);
+
+
+        if ($stmt->execute())
+            return true;
+
+        return false;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $query = "DELETE FROM " . $this->table_name . " WHERE billId = :billId";
 
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":billId", $this->billId);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;

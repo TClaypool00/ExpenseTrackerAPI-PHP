@@ -1,5 +1,6 @@
 <?php
-class Misc {
+class Misc
+{
     private $conn;
     private $table_name = "misc";
     private $select_all = "SELECT * FROM ";
@@ -16,7 +17,8 @@ class Misc {
         $this->conn = $db;
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         // Referes to private properites ^
         switch ($_GET) {
             case isset($_GET["search"]):
@@ -51,19 +53,21 @@ class Misc {
         return $stmt;
     }
 
-    public function getbyId() {
+    public function getbyId()
+    {
         $query = $this->select_all . $this->table_name . " WHERE miscId = " . $this->miscId;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
         $this->price = $row["price"] ?? null;
         $this->date = $row["date"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
         $this->budgetId = $row["budgetId"] ?? null;
     }
 
-    public function create() {
+    public function create()
+    {
         $query = "INSERT INTO " . $this->table_name . "
             SET
                 price = :price,
@@ -85,13 +89,14 @@ class Misc {
         $stmt->bindParam(":budgetId", $this->budgetId);
         $stmt->bindParam(":storeId", $this->storeId);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;
     }
 
-    public function update() {
+    public function update()
+    {
         $query = "UPDATE" . $this->table_name . "
             SET
                 price = :price,
@@ -115,18 +120,19 @@ class Misc {
         $stmt->bindParam(":budgetId", $this->budgetId);
         $stmt->bindParam(":storeId", $this->storeId);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $query = "DELETE FROM " . $this->table_name . " WHERE miscId = " . $this->miscId;
 
         $stmt = $this->conn->prepare($query);
 
-        if($stmt->exeucte())
+        if ($stmt->exeucte())
             return true;
 
         return false;

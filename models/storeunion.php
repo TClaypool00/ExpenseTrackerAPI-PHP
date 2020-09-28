@@ -1,5 +1,6 @@
 <?php
-class StoreUnion {
+class StoreUnion
+{
     private $conn;
     private $table_name = "storeunion";
 
@@ -19,38 +20,39 @@ class StoreUnion {
         $this->conn = $db;
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
                 $query = "SELECT * FROM " . $this->table_name . "
                     WHERE storeName LIKE '%$search%' OR address LIKE '%$search%' OR city LIKE '%$search%' OR state LIKE '%$search%' OR zip LIKE '%$search%'";
-            break;
+                break;
             case isset($_GET["storeName"]):
-                    $this->storeName= $_GET["storeName"];
-                    $query = "SELECT * FROM " . $this->table_name . "
+                $this->storeName = $_GET["storeName"];
+                $query = "SELECT * FROM " . $this->table_name . "
                         WHERE storeName LIKE '%" . $this->storeName . "%'";
-            break;
+                break;
             case isset($_GET["address"]):
                 $this->address = $_GET["address"];
                 $query = "SELECT * FROM " . $this->table_name . "
                         WHERE address LIKE '%" . $this->address . "%'";
-            break;
+                break;
             case isset($_GET["city"]):
                 $this->city = $_GET["city"];
                 $query = "SELECT * FROM " . $this->table_name . "
                         WHERE city LIKE '%" . $this->city . "%'";
-            break;
+                break;
             case isset($_GET["state"]):
                 $this->state = $_GET["state"];
                 $query = "SELECT * FROM " . $this->table_name . "
                         WHERE state LIKE '%" . $this->state . "%'";
-            break;
+                break;
             case isset($_GET["zip"]):
                 $this->zip = $_GET["zip"];
                 $query = "SELECT * FROM " . $this->table_name . "
                         WHERE zip LIKE '%" . $this->zip . "%'";
-            break;
+                break;
             default:
                 $query = "SELECT * FROM " . $this->table_name;
                 break;
@@ -62,7 +64,8 @@ class StoreUnion {
         return $stmt;
     }
 
-    public function getById() {
+    public function getById()
+    {
         $query = "SELECT 
             s.storeName,
             s.address,
@@ -91,7 +94,8 @@ class StoreUnion {
         $this->website = $row["website"] ?? null;
     }
 
-    public function create() {
+    public function create()
+    {
         $query = "INSERT INTO " . $this->table_name . "
             SET
                 storeName = :storeName,
@@ -125,13 +129,14 @@ class StoreUnion {
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":website", $this->website);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
-        
+
         return false;
     }
 
-    public function update() {
+    public function update()
+    {
         $query = "UPDATE " . $this->table_name . "
             SET
                 storeName = :storeName,
@@ -167,18 +172,19 @@ class StoreUnion {
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":website", $this->website);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
-        
+
         return false;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $query = "DELETE FROM " . $this->table_name . " WHERE storeId = " . $this->storeId;
 
         $stmt = $this->conn->prepare($query);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;

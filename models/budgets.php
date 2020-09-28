@@ -1,5 +1,6 @@
 <?php
-class Budgets {
+class Budgets
+{
     private $conn;
     private $table_name = "budget";
     private $select_all = "SELECT * FROM ";
@@ -15,7 +16,8 @@ class Budgets {
         $this->conn = $db;
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         switch ($_GET) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
@@ -49,7 +51,8 @@ class Budgets {
         return $stmt;
     }
 
-    public function getById() {
+    public function getById()
+    {
         $query = $this->select_all . $this->table_name . " WHERE budgetId = " . $this->budgetId;
 
         $stmt = $this->conn->prepare($query);
@@ -61,7 +64,8 @@ class Budgets {
         $this->userId = $row["userId"] ?? null;
     }
 
-    public function create() {
+    public function create()
+    {
         $query = "INSERT INTO " . $this->table_name . "
             SET
                 totalBills = :totalBills,
@@ -80,13 +84,14 @@ class Budgets {
         $stmt->bindParam(":moneyLeft", $this->moneyLeft);
         $stmt->bindParam(":userId", $this->userId);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;
     }
 
-    public function update() {
+    public function update()
+    {
         $query = "UPDATE " . $this->table_name . "
             SET
                 totalBills = :totalBills,
@@ -107,18 +112,19 @@ class Budgets {
         $stmt->bindParam(":moneyLeft", $this->moneyLeft);
         $stmt->bindParam(":userId", $this->userId);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $query = "DELETE FROM " . $this->table_name . " WHERE budgetId = " . $this->budgetId;
 
         $stmt = $this->conn->prepare($query);
 
-        if($stmt->execute())
+        if ($stmt->execute())
             return true;
 
         return false;

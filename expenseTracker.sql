@@ -1,4 +1,5 @@
-CREATE TABLE users (
+CREATE TABLE users
+(
     -- Add AUTO_INCREMENT after PRIMARY KEY
     userId INT(6) PRIMARY KEY,
     firstName VARCHAR(40) NOT NULL,
@@ -10,7 +11,8 @@ CREATE TABLE users (
     salary DECIMAL(10, 2) NOT NULL DEFAULT 20000
 );
 
-CREATE TABLE bills (
+CREATE TABLE bills
+(
     -- Add AUTO_INCREMENT after PRIMARY KEY
     billId INT(4) PRIMARY KEY,
     billName VARCHAR(50) NOT NULL,
@@ -23,7 +25,8 @@ CREATE TABLE bills (
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
 );
 
-CREATE TABLE subscriptions (
+CREATE TABLE subscriptions
+(
     -- Add AUTO_INCREMENT after PRIMARY KEY
     subId INT(4) NOT NULL PRIMARY KEY,
     dueDate DATE NOT NULL DEFAULT CURDATE(),
@@ -35,7 +38,8 @@ CREATE TABLE subscriptions (
     FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
 );
 
-CREATE TABLE storeUnion (
+CREATE TABLE storeUnion
+(
     -- Add AUTO_INCREMENT after PRIMARY KEY
     storeId INT(4) NOT NULL PRIMARY KEY,
     storeName VARCHAR(50)NOT NULL,
@@ -48,7 +52,8 @@ CREATE TABLE storeUnion (
     website VARCHAR(50) NOT NULL DEFAULT "www.store.com"
 );
 
-CREATE TABLE loan (
+CREATE TABLE loan
+(
     -- Add AUTO_INCREMENT after PRIMARY KEY
     loanId INT(4) NOT NULL PRIMARY KEY,
     loanName VARCHAR(50) NOT NULL,
@@ -62,7 +67,8 @@ CREATE TABLE loan (
     FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
 );
 
-CREATE TABLE misc (
+CREATE TABLE misc
+(
     -- Add AUTO_INCREMENT after PRIMARY KEY
     miscId INT(4) NOT NULL PRIMARY KEY,
     price DECIMAL(5,2) NOT NULL,
@@ -73,7 +79,8 @@ CREATE TABLE misc (
     FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
 );
 
-CREATE TABLE budget (
+CREATE TABLE budget
+(
     -- Add AUTO_INCREMENT after PRIMARY KEY
     budgetId INT(5) NOT NULL PRIMARY KEY,
     totalBills DECIMAL(10,2) NOT NULL,
