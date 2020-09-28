@@ -23,7 +23,7 @@ class Users
 
     public function read()
     {
-        switch ($_GET) {
+        switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->tableName . "

@@ -18,7 +18,7 @@ class Budgets
 
     public function getAll()
     {
-        switch ($_GET) {
+        switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . " HERE totalBills LIKE '%$search%' OR moneyLeft LIKE '%$search%'";

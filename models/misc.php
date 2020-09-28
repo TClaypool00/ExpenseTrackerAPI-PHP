@@ -20,7 +20,7 @@ class Misc
     public function getAll()
     {
         // Referes to private properites ^
-        switch ($_GET) {
+        switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%'";

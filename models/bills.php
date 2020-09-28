@@ -22,7 +22,7 @@ class Bills
 
     public function getAll()
     {
-        switch ($_GET) {
+        switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%'";
