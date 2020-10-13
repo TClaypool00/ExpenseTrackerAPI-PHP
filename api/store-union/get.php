@@ -10,6 +10,7 @@ $store->getById();
 
 if($store->storeName != null) {
     $store_array = array(
+        "storeId" => $store->storeId,
         "storeName" => $store->storeName,
         "address" => $store->address,
         "city" => $store->city,

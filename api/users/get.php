@@ -12,6 +12,7 @@ $user->read_single();
 if($user->firstName != null){
 
     $user_array = array(
+        "userId" => $user->userId,
         "firstName" => $user->firstName,
         "lastName" => $user->lastName,
         "email" => $user->email,
@@ -23,7 +24,7 @@ if($user->firstName != null){
 
     http_response_code(200);
 
-    echo(json_encode($user_array));
+    echo json_encode($user_array);
 } else {
     http_response_code(404);
 

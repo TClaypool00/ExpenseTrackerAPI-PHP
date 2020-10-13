@@ -23,16 +23,13 @@ class Users
 
     public function read()
     {
-        switch (isset($_GET)) {
-            case isset($_GET["search"]):
+            if(isset($_GET["search"])) {
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->tableName . "
                 WHERE firstName LIKE '%$search%' OR lastName LIKE '%$search%' OR email LIKE '%$search%'";
-                break;
-            default:
+            } else {
                 $query = $this->select_all . $this->tableName;
-                break;
-        }
+            }
 
         $stmt = $this->conn->prepare($query . $this->order_by);
 
@@ -45,6 +42,7 @@ class Users
     public function read_single()
     {
         $query = "SELECT 
+            u.userId,
             u.firstName,
             u.lastName,
             u.email,
@@ -61,6 +59,7 @@ class Users
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $this->userId = $row["userId"] ?? null;
         $this->firstName = $row["firstName"] ?? null;
         $this->lastName = $row['lastName'] ?? null;
         $this->email = $row["email"] ?? null;
@@ -103,8 +102,9 @@ class Users
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":salary", $this->salary);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -143,8 +143,9 @@ class Users
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":salary", $this->salary);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -155,8 +156,9 @@ class Users
 
         $stmt = $this->conn->prepare($query);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }

@@ -11,6 +11,7 @@ $bill->getById();
 
 if($bill->billName != null) {
     $bill_array = array (
+        "billId" => $bill->billId,
         "billName" => $bill->billName,
         "billDate" => $bill->billDate,
         "billPrice" => $bill->billPrice,

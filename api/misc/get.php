@@ -9,7 +9,8 @@ $misc->getbyId();
 
 if($misc->price != null) {
     $misc_arr = array(
-        "price" => $misc->miscId,
+        "miscId" => $misc->miscId,
+        "price" => $misc->price,
         "date" => $misc->date,
         "storeId" => $misc->storeId,
         "budgetId" => $misc->budgetId

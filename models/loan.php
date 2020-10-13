@@ -36,12 +36,12 @@ class Loan
                 $this->storeId = $_GET["storeId"];
                 $query = $select_all . " WHERE storeId = " . $this->storeId;
                 break;
-            case isset($_GET["budgetId"]) and isset($_GET["search"]):
+            case isset($_GET["budgetId"]) && isset($_GET["search"]):
                 $this->budgetId = $_GET["budgetId"];
                 $search = $_GET["search"];
                 $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND budgetId = " . $this->budgetId;
                 break;
-            case isset($_GET["budgetId"]) and isset($_GET["search"]) and isset($_GET["storeId"]):
+            case isset($_GET["budgetId"]) && isset($_GET["search"]) && isset($_GET["storeId"]):
                 $this->budgetId = $_GET["budgetId"];
                 $this->storeId = $_GET["storeId"];
                 $search = $_GET["search"];
@@ -67,6 +67,7 @@ class Loan
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $this->loanId = $row["loanId"] ?? null;
         $this->loanName = $row["loanName"] ?? null;
         $this->dueDate = $row["dueDate"] ?? null;
         $this->monthlyAmountDue = $row["monthlyAmountDue"] ?? null;
@@ -108,8 +109,9 @@ class Loan
         $stmt->bindParam("budgetId", $this->budgetId);
         $stmt->bindParam("storeId", $this->storeId);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -148,8 +150,9 @@ class Loan
         $stmt->bindParam("budgetId", $this->budgetId);
         $stmt->bindParam("storeId", $this->storeId);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -160,8 +163,9 @@ class Loan
 
         $stmt = $this->conn->prepare($query);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }

@@ -34,19 +34,19 @@ class Subscriptions
                 $this->storeId = $_GET["storeId"];
                 $query = $select_all . " WHERE storeId = " . $this->storeId;
                 break;
-            case isset($_GET["budgetId"]) and isset($_GET["search"]):
+            case isset($_GET["budgetId"]) && isset($_GET["search"]):
                 $this->budgetId = $_GET["budgetId"];
                 $search = $_GET["search"];
                 $query = $select_all . "
                     WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE '%$search%' AND budgetId = " . $this->budgetId;
                 break;
-            case isset($_GET["storeId"]) and isset($_GET["search"]):
+            case isset($_GET["storeId"]) && isset($_GET["search"]):
                 $this->storeId = $_GET["storeId"];
                 $search = $_GET["search"];
                 $query = $select_all . "
                     WHERE dueDate LIKE '%$search%' OR amountDue LIKE '%$search%' OR subName LIKE '%$search%' AND storeId = " . $this->storeId;
                 break;
-            case isset($_GET["budgetId"]) and isset($_GET["storeId"]) and isset($_GET["search"]):
+            case isset($_GET["budgetId"]) && isset($_GET["storeId"]) && isset($_GET["search"]):
                 $this->budgetId = $_GET["budgetId"];
                 $this->storeId = $_GET["storeId"];
                 $search = $_GET["search"];
@@ -68,6 +68,7 @@ class Subscriptions
     public function getById()
     {
         $query = "SELECT
+            s.subId,
             s.dueDate,
             s.budgetId,
             s.storeId,
@@ -81,6 +82,7 @@ class Subscriptions
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $this->subId = $row["subId"] ?? null;
         $this->dueDate = $row["dueDate"] ?? null;
         $this->amountDue = $row["amountDue"] ?? null;
         $this->budgetId = $row["budgetId"] ?? null;
@@ -114,8 +116,9 @@ class Subscriptions
         $stmt->bindParam(":storeId", $this->storeId);
         $stmt->bindParam(":subName", $this->subName);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -148,8 +151,9 @@ class Subscriptions
         $stmt->bindParam(":storeId", $this->storeId);
         $stmt->bindParam(":subName", $this->subName);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -160,8 +164,9 @@ class Subscriptions
 
         $stmt = $this->conn->prepare($query);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }

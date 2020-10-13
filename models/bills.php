@@ -32,7 +32,7 @@ class Bills
                 $query = $this->select_all . $this->table_name . " 
                 WHERE budgetId = " . $this->budgetId;
                 break;
-            case isset($_GET["budgetId"]) and isset($_GET["search"]):
+            case isset($_GET["budgetId"]) && isset($_GET["search"]):
                 $this->budgetId = $_GET["budgetId"];
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND budgetId = " . $this->budgetId;
@@ -42,13 +42,13 @@ class Bills
                 $query = $this->select_all . $this->table_name . " 
                 WHERE storeId = " . $this->storeId;
                 break;
-            case isset($_GET["storeId"]) and isset($_GET["budgetId"]):
+            case isset($_GET["storeId"]) && isset($_GET["budgetId"]):
                 $this->storeId = $_GET["storeId"];
                 $this->budgetId = $_GET["budgetId"];
                 $query = $this->select_all . $this->table_name . " 
                 WHERE storeId = " . $this->storeId . " AND budgetId = " . $this->budgetId;
                 break;
-            case isset($_GET["storeId"]) and isset($_GET["budgetId"]) and isset($_GET["search"]):
+            case isset($_GET["storeId"]) && isset($_GET["budgetId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
                 $this->storeId = $_GET["storeId"];
                 $this->budgetId = $_GET["budgetId"];
@@ -68,6 +68,7 @@ class Bills
                 $this->billPrice = $_GET["billPrice"];
                 $query = $this->select_all . $this->table_name . " 
                 WHERE billPrice LIKE '%" . $this->billPrice . "%'";
+                break;
             case isset($_GET["isLate"]):
                 $this->isLate = $_GET["isLate"];
                 $query = $this->select_all . $this->table_name . " 
@@ -90,6 +91,7 @@ class Bills
     public function getById()
     {
         $query = "SELECT 
+        b.billId,
         b.billName,
         b.billDate,
         b.billPrice,
@@ -106,6 +108,7 @@ class Bills
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $this->billId = $row["billId"] ?? null;
         $this->billName = $row["billName"] ?? null;
         $this->billPrice = $row["billPrice"] ?? null;
         $this->billDate = $row["billDate"] ?? null;
@@ -142,8 +145,9 @@ class Bills
         $stmt->bindParam(':budgetId', $this->budgetId);
         $stmt->bindParam(':storeId', $this->storeId);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -180,8 +184,9 @@ class Bills
         $stmt->bindParam(':storeId', $this->storeId);
 
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -194,8 +199,9 @@ class Bills
 
         $stmt->bindParam(":billId", $this->billId);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }

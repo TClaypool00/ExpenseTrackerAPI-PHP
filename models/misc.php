@@ -25,17 +25,17 @@ class Misc
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%'";
                 break;
-            case isset($_GET["budgetId"]) and isset($_GET["search"]):
+            case isset($_GET["budgetId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
                 $this->budgetId = $_GET["budgetId"];
                 $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND budgetId = " . $this->budgetId;
                 break;
-            case isset($_GET["storeId"]) and isset($_GET["search"]):
+            case isset($_GET["storeId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
                 $this->storeId = $_GET["storeId"];
                 $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND storeId = " . $this->storeId;
                 break;
-            case isset($_GET["budgetId"]) and isset($_GET["storeId"]) and isset($_GET["search"]):
+            case isset($_GET["budgetId"]) && isset($_GET["storeId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
                 $this->budgetId = $_GET["budgetId"];
                 $this->storeId = $_GET["storeId"];
@@ -60,6 +60,7 @@ class Misc
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $this->miscId = $row["miscId"] ?? null;
         $this->price = $row["price"] ?? null;
         $this->date = $row["date"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
@@ -89,8 +90,9 @@ class Misc
         $stmt->bindParam(":budgetId", $this->budgetId);
         $stmt->bindParam(":storeId", $this->storeId);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -120,8 +122,9 @@ class Misc
         $stmt->bindParam(":budgetId", $this->budgetId);
         $stmt->bindParam(":storeId", $this->storeId);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -132,8 +135,9 @@ class Misc
 
         $stmt = $this->conn->prepare($query);
 
-        if ($stmt->exeucte())
+        if ($stmt->exeucte()) {
             return true;
+        }
 
         return false;
     }

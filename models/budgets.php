@@ -27,7 +27,7 @@ class Budgets
                 $this->userId = $_GET["userId"];
                 $query = $this->select_all . $this->table_name . " WHERE userId = " . $this->userId;
                 break;
-            case isset($_GET["userId"]) and isset($_GET["search"]):
+            case isset($_GET["userId"]) && isset($_GET["search"]):
                 $this->userId = $_GET["userId"];
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . " HERE totalBills LIKE '%$search%' OR moneyLeft LIKE '%$search%' AND userId = " . $this->userId;
@@ -59,6 +59,7 @@ class Budgets
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $this->budgetId = $row["budgetId"] ?? null;
         $this->totalBills = $row["totalBills"] ?? null;
         $this->moneyLeft = $row["moneyLeft"] ?? null;
         $this->userId = $row["userId"] ?? null;
@@ -84,8 +85,9 @@ class Budgets
         $stmt->bindParam(":moneyLeft", $this->moneyLeft);
         $stmt->bindParam(":userId", $this->userId);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -112,8 +114,9 @@ class Budgets
         $stmt->bindParam(":moneyLeft", $this->moneyLeft);
         $stmt->bindParam(":userId", $this->userId);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }
@@ -124,8 +127,9 @@ class Budgets
 
         $stmt = $this->conn->prepare($query);
 
-        if ($stmt->execute())
+        if ($stmt->execute()) {
             return true;
+        }
 
         return false;
     }

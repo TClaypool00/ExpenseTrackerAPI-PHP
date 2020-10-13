@@ -11,6 +11,7 @@ $sub->getById();
 
 if($sub->companyName != null) {
     $sub_array = array(
+        "subId" => $sub->subId,
         "dueDate" => $sub->dueDate,
         "amountDue" => $sub->amountDue,
         "budgetId" => $sub->budgetId,

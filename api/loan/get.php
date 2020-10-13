@@ -9,6 +9,7 @@ $loan->loanId = isset($_GET["loanId"]) ? $_GET["loanId"] : die();
 
 if($loan->loanName != null) {
     $loan_arr = array(
+        "loanId" => $loan->loanId,
         "loanName" => $loan->loanName,
         "dueDate" => $loan->dueDate,
         "monthlyAmountDue" => $loan->monthlyAmountDue,
