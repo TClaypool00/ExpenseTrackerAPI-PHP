@@ -11,7 +11,6 @@ include "../../partialFiles/objects_partial_files/new_user.php";
 $data = json_decode(file_get_contents("php://input"));
 
 $user->email = $data->email;
-$user->password = $data->email;
 // Checks if email entered in exists in the database - returns true if email does exist
 // And false if the email does not exist
 $email_exist = $user->emailExist();

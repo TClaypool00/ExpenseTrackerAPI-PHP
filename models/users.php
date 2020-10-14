@@ -98,13 +98,10 @@ class Users
         $stmt->bindParam(':firstName', $this->firstName);
         $stmt->bindParam(':lastName', $this->lastName);
         $stmt->bindParam($this->bind_email, $this->email);
+        $stmt->bindParam(":password", $this->password);
         $stmt->bindParam(':isAdmin', $this->isAdmin);
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":salary", $this->salary);
-
-        // Hash the password before saving to the database
-        $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-        $stmt->bindParam(':password', $password_hash);
 
         if ($stmt->execute()) {
             return true;
@@ -142,13 +139,10 @@ class Users
         $stmt->bindParam(':firstName', $this->firstName);
         $stmt->bindParam(':lastName', $this->lastName);
         $stmt->bindParam($this->bind_email, $this->email);
+        $stmt->bindParam(":password", $this->password);
         $stmt->bindParam(':isAdmin', $this->isAdmin);
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":salary", $this->salary);
-
-        // Hash the password before saving to the database
-        $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-        $stmt->bindParam(':password', $password_hash);
 
         if ($stmt->execute()) {
             return true;
