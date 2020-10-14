@@ -5,6 +5,7 @@ class Users
     private $tableName = "users";
     private $select_all = "SELECT * FROM ";
     private $order_by = " ORDER BY firstName ASC";
+    private $bind_email = ":email";
 
     // Properties
     public $userId;
@@ -96,7 +97,7 @@ class Users
         // Bind data
         $stmt->bindParam(':firstName', $this->firstName);
         $stmt->bindParam(':lastName', $this->lastName);
-        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam($this->bind_email, $this->email);
         $stmt->bindParam(':password', $this->password);
         $stmt->bindParam(':isAdmin', $this->isAdmin);
         $stmt->bindParam(":phoneNum", $this->phoneNum);
@@ -137,7 +138,7 @@ class Users
         // Bind data
         $stmt->bindParam(':firstName', $this->firstName);
         $stmt->bindParam(':lastName', $this->lastName);
-        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam($this->bind_email, $this->email);
         $stmt->bindParam(':password', $this->password);
         $stmt->bindParam(':isAdmin', $this->isAdmin);
         $stmt->bindParam(":phoneNum", $this->phoneNum);
@@ -161,5 +162,30 @@ class Users
         }
 
         return false;
+    }
+
+    public function emailExist() {
+        $query = "SELECT userId, firstName, lastName, password
+            FROM " . $this->tableName . "
+            WHERE email = :email";
+
+            $stmt = $this->conn->prepare($query);
+            $this->email = htmlspecialchars(strip_tags($this->email));
+            $stmt->bindParam(":email", $this->email);
+            $stmt->execute();
+
+            $num = $stmt->rowCount();
+
+            if($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $this->userId = $row["userId"] ?? null;
+                $this->firstName = $row["firstName"] ?? null;
+                $this->lastName = $row["lastName"] ?? null;
+                $this->password = $row["password"] ?? null;
+
+                return true;
+            }
+            return false;
     }
 }
