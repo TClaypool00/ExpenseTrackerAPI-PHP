@@ -33,7 +33,10 @@ if($email_exist && $data->password == $user->password) {
             "userId" => $user->userId,
             "firstName" => $user->firstName,
             "lastName" => $user->lastName,
-            "email" => $user->email
+            "email" => $user->email,
+            "isAdmin" => $user->isAdmin,
+            "phoneNum" => $user->phoneNum,
+            "salary" => $user->salary
         )
     );
 
@@ -41,15 +44,38 @@ if($email_exist && $data->password == $user->password) {
     http_response_code(200);
     // Geneate JWT
     $jwt = JWT::encode($token, $key);
+    auth_token($jwt, $key);
 
-    echo json_encode(
-        array(
-            "message" => "Login successful!",
-            "jwt" => $jwt
-        )
-    );
+    
     // Login failed
 } else {
     http_response_code(401);
     echo json_encode(array("message" => "Login failed."));
+}
+
+function auth_token($jwt, $key) {
+    // if jwt is not empty
+    if($jwt) {
+        // If decode suceed, show user details
+        try {
+            // decode jwt
+            $decoded = JWT::decode($jwt, $key, array("HS256"));
+            http_response_code(200);
+            // Show user details
+            echo json_encode(array(
+                "message" => "Login Successful!",
+                "data" => $decoded->data
+            ));
+        } catch(Exception $e) {
+            http_response_code(401);
+            echo json_encode(array(
+                "message" => "Access denied",
+                "error" => $e->getMessage()
+            ));
+        }
+        // If JWT is empty
+    } else {
+        http_response_code(401);
+        echo json_encode(array("message" => "Access denied."));
+    }
 }

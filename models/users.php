@@ -165,8 +165,7 @@ class Users
     }
 
     public function emailExist() {
-        $query = "SELECT userId, firstName, lastName, password
-            FROM " . $this->tableName . "
+        $query = "SELECT * FROM " . $this->tableName . "
             WHERE email = :email";
 
             $stmt = $this->conn->prepare($query);
@@ -181,8 +180,12 @@ class Users
 
                 $this->userId = $row["userId"] ?? null;
                 $this->firstName = $row["firstName"] ?? null;
-                $this->lastName = $row["lastName"] ?? null;
+                $this->lastName = $row['lastName'] ?? null;
+                $this->email = $row["email"] ?? null;
                 $this->password = $row["password"] ?? null;
+                $this->isAdmin = $row["isAdmin"] ?? null;
+                $this->phoneNum = $row["phoneNum"] ?? null;
+                $this->salary = $row["salary"] ?? null;
 
                 return true;
             }
