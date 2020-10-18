@@ -1,5 +1,5 @@
 <?php
-include_once "../../models/subs.php";
+include_once "../../DataAccess/models/subs.php";
 include_once "../../config/Database.php";
 
 $database = new Database();

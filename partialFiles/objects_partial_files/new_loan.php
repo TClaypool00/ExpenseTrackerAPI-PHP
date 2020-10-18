@@ -1,5 +1,5 @@
 <?php
-include_once "../../models/loan.php";
+include_once "../../DataAccess/models/loan.php";
 include_once "../../config/Database.php";
 
 $database = new Database();
