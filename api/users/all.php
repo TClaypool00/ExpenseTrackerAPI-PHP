@@ -19,9 +19,14 @@ if ($num > 0) {
             "lastName" => $lastName,
             "email" => $email,
             "password" => $password,
-            "isAdmin" => $isAdmin,
+            "is_superuser" => $is_superuser,
             "phoneNum" => $phoneNum,
-            "salary" => $salary
+            "salary" => $salary,
+            "date_joined" => $date_joined,
+            "is_active" => $is_active,
+            "is_staff" => $is_staff,
+            "last_login" => $last_login
+
         );
 
         array_push($user_arr, $user_item);

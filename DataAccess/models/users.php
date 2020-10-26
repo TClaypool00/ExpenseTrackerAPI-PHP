@@ -13,9 +13,13 @@ class Users
     public $lastName;
     public $email;
     public $password;
-    public $isAdmin;
+    public $is_superuser;
     public $phoneNum;
     public $salary;
+    public $date_joined;
+    public $is_active;
+    public $is_staff;
+    public $last_login;
 
     public function __construct($db)
     {
@@ -42,18 +46,10 @@ class Users
 
     public function read_single()
     {
-        $query = "SELECT 
-            u.userId,
-            u.firstName,
-            u.lastName,
-            u.email,
-            u.password,
-            u.isAdmin,
-            u.phoneNum,
-            u.salary
-        FROM " . $this->tableName . " u
+        $query = "SELECT *
+        FROM " . $this->tableName . "
             WHERE
-                u.userId = " . $this->userId;
+                userId = " . $this->userId;
         $stmt = $this->conn->prepare($query);
 
         $stmt->execute();
@@ -65,9 +61,13 @@ class Users
         $this->lastName = $row['lastName'] ?? null;
         $this->email = $row["email"] ?? null;
         $this->password = $row["password"] ?? null;
-        $this->isAdmin = $row["isAdmin"] ?? null;
+        $this->is_superuser = $row["is_superuser"] ?? null;
         $this->phoneNum = $row["phoneNum"] ?? null;
         $this->salary = $row["salary"] ?? null;
+        $this->date_joined = $row["date_joined"] ?? null;
+        $this->is_active = $row["is_active"] ?? null;
+        $this->is_staff = $row["is_staff"] ?? null;
+        $this->last_login = $row["last_login"] ?? null;
     }
 
     // Create User
@@ -79,7 +79,7 @@ class Users
                 lastName = :lastName,
                 email = :email,
                 password = :password,
-                isAdmin = :isAdmin,
+                is_superuser = :is_superuser,
                 phoneNum = :phoneNum,
                 salary = :salary';
 
@@ -90,7 +90,7 @@ class Users
         $this->lastName = htmlspecialchars(strip_tags($this->lastName));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
-        $this->isAdmin = htmlspecialchars(strip_tags($this->isAdmin));
+        $this->is_superuser = htmlspecialchars(strip_tags($this->is_superuser));
         $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
         $this->salary = htmlspecialchars(strip_tags($this->salary));
 
@@ -99,7 +99,7 @@ class Users
         $stmt->bindParam(':lastName', $this->lastName);
         $stmt->bindParam($this->bind_email, $this->email);
         $stmt->bindParam(":password", $this->password);
-        $stmt->bindParam(':isAdmin', $this->isAdmin);
+        $stmt->bindParam(':is_superuser', $this->is_superuser);
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":salary", $this->salary);
 
@@ -118,7 +118,7 @@ class Users
                 lastName = :lastName,
                 email = :email,
                 password = :password,
-                isAdmin = :isAdmin,
+                is_superuser = :is_superuser,
                 phoneNum = :phoneNum,
                 salary = :salary
             WHERE
@@ -131,7 +131,7 @@ class Users
         $this->lastName = htmlspecialchars(strip_tags($this->lastName));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = htmlspecialchars(strip_tags($this->password));
-        $this->isAdmin = htmlspecialchars(strip_tags($this->isAdmin));
+        $this->is_superuser = htmlspecialchars(strip_tags($this->is_superuser));
         $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
         $this->salary = htmlspecialchars(strip_tags($this->salary));
 
@@ -140,7 +140,7 @@ class Users
         $stmt->bindParam(':lastName', $this->lastName);
         $stmt->bindParam($this->bind_email, $this->email);
         $stmt->bindParam(":password", $this->password);
-        $stmt->bindParam(':isAdmin', $this->isAdmin);
+        $stmt->bindParam(':is_superuser', $this->is_superuser);
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":salary", $this->salary);
 
@@ -183,7 +183,7 @@ class Users
                 $this->lastName = $row['lastName'] ?? null;
                 $this->email = $row["email"] ?? null;
                 $this->password = $row["password"] ?? null;
-                $this->isAdmin = $row["isAdmin"] ?? null;
+                $this->is_superuser = $row["is_superuser"] ?? null;
                 $this->phoneNum = $row["phoneNum"] ?? null;
                 $this->salary = $row["salary"] ?? null;
 

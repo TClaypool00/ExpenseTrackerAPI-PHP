@@ -17,9 +17,13 @@ if($user->firstName != null){
         "lastName" => $user->lastName,
         "email" => $user->email,
         "password" => $user->password,
-        "isAdmin" => $user->isAdmin,
+        "is_superuser" => $user->is_superuser,
         "phoneNum" => $user->phoneNum,
-        "salary" => $user->salary
+        "salary" => $user->salary,
+        "date_joined" => $user->date_joined,
+        "is_active" => $user->is_active,
+        "is_staff" => $user->is_staff,
+        "last_login" => $user->last_login
     );
 
     http_response_code(200);

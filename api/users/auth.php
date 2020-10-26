@@ -34,7 +34,7 @@ if($email_exist && $data->password == $user->password) {
             "firstName" => $user->firstName,
             "lastName" => $user->lastName,
             "email" => $user->email,
-            "isAdmin" => $user->isAdmin,
+            "is_superuser" => $user->is_superuser,
             "phoneNum" => $user->phoneNum,
             "salary" => $user->salary
         )
@@ -46,7 +46,6 @@ if($email_exist && $data->password == $user->password) {
     $jwt = JWT::encode($token, $key);
     auth_token($jwt, $key);
 
-    
     // Login failed
 } else {
     http_response_code(401);
