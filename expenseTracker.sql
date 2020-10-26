@@ -6,9 +6,13 @@ CREATE TABLE users
     lastName VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     password VARCHAR(15) NOT NULL,
-    isAdmin BIT NOT NULL,
     phoneNum INT(10) NOT NULL DEFAULT 123457890,
-    salary DECIMAL(10, 2) NOT NULL DEFAULT 20000
+    salary DECIMAL(10, 2) NOT NULL DEFAULT 20000,
+    date_joined DATETIME(6) DEFAULT CURDATE(),
+    is_active TINYINT(1) DEFAULT 0,
+    is_staff TINYINT(1) DEFAULT 0,
+    is_superuser TINYINT(1) DEFAULT 0,
+    last_login DATETIME(6) DEFAULT NULL
 );
 
 CREATE TABLE bills
