@@ -23,9 +23,9 @@ CREATE TABLE bills
     BillDate DATE NOT NULL DEFAULT CURDATE(),
     billPrice DECIMAL(5, 2) NOT NULL,
     isLate BIT NOT NULL,
-    budgetId INT(4) NOT NULL DEFAULT 1,
+    userId INT(6) NOT NULL DEFAULT 1,
     storeId INT(4) NOT NULL DEFAULT 1,
-    FOREIGN KEY (budgetId) REFERENCES budget(budgetId),
+    FOREIGN KEY (userId) REFERENCES budget(userId),
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
 );
 
@@ -38,8 +38,8 @@ CREATE TABLE subscriptions
     storeId INT(4) NOT NULL,
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
     subName VARCHAR(50) DEFAULT "Subscription",
-    budgetId INT(4) NOT NULL DEFAULT 1,
-    FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
+    userId INT(6) NOT NULL DEFAULT 1,
+    FOREIGN KEY (userId) REFERENCES budget(userId)
 );
 
 CREATE TABLE storeUnion
@@ -67,8 +67,8 @@ CREATE TABLE loan
     totalAmountDue DECIMAL(6, 2) NOT NULL,
     storeId INT(4) NOT NULL,
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
-    budgetId INT(4) NOT NULL DEFAULT 1,
-    FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
+    userId INT(6) NOT NULL DEFAULT 1,
+    FOREIGN KEY (userId) REFERENCES budget(userId)
 );
 
 CREATE TABLE misc
@@ -79,14 +79,14 @@ CREATE TABLE misc
     date DATE NOT NULL DEFAULT CURDATE(),
     storeId INT(4) NOT NULL,
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
-    budgetId INT(4) NOT NULL DEFAULT 1,
-    FOREIGN KEY (budgetId) REFERENCES budget(budgetId)
+    userId INT(6) NOT NULL DEFAULT 1,
+    FOREIGN KEY (userId) REFERENCES budget(userId)
 );
 
 CREATE TABLE budget
 (
     -- Add AUTO_INCREMENT after PRIMARY KEY
-    budgetId INT(5) NOT NULL PRIMARY KEY,
+    userId INT(5) NOT NULL PRIMARY KEY,
     totalBills DECIMAL(10,2) NOT NULL,
     moneyLeft DECIMAL(10, 2) NOT NULL,
     userId INT(6) NOT NULL,

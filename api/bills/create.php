@@ -11,7 +11,7 @@ $bill->billName = $data->billName;
 $bill->billPrice = $data->billPrice;
 $bill->billDate = $data->billDate;
 $bill->isLate = $data->isLate;
-$bill->budgetId = $data->budgetId;
+$bill->userId = $data->userId;
 $bill->storeId = $data->storeId;
 
 if($bill->create()){

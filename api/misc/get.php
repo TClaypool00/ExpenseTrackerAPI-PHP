@@ -13,7 +13,7 @@ if($misc->price != null) {
         "price" => $misc->price,
         "date" => $misc->date,
         "storeId" => $misc->storeId,
-        "budgetId" => $misc->budgetId
+        "userId" => $misc->userId
     );
 
     http_response_code(200);

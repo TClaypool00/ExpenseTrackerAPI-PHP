@@ -10,7 +10,7 @@ class Misc
     public $price;
     public $date;
     public $storeId;
-    public $budgetId;
+    public $userId;
 
     public function __construct($db)
     {
@@ -25,21 +25,21 @@ class Misc
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%'";
                 break;
-            case isset($_GET["budgetId"]) && isset($_GET["search"]):
+            case isset($_GET["userId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
-                $this->budgetId = $_GET["budgetId"];
-                $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND budgetId = " . $this->budgetId;
+                $this->userId = $_GET["userId"];
+                $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND userId = " . $this->userId;
                 break;
             case isset($_GET["storeId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
                 $this->storeId = $_GET["storeId"];
                 $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND storeId = " . $this->storeId;
                 break;
-            case isset($_GET["budgetId"]) && isset($_GET["storeId"]) && isset($_GET["search"]):
+            case isset($_GET["userId"]) && isset($_GET["storeId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
-                $this->budgetId = $_GET["budgetId"];
+                $this->userId = $_GET["userId"];
                 $this->storeId = $_GET["storeId"];
-                $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND budgetId = " . $this->budgetId . " AND storeId = " . $this->storeId;
+                $query = $this->select_all . $this->table_name . " WHERE price LIKE '%$search%' OR date LIKE '%$search%' AND userId = " . $this->userId . " AND storeId = " . $this->storeId;
                 break;
             default:
                 $query = $this->select_all . $this->table_name;
@@ -64,7 +64,7 @@ class Misc
         $this->price = $row["price"] ?? null;
         $this->date = $row["date"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
-        $this->budgetId = $row["budgetId"] ?? null;
+        $this->userId = $row["userId"] ?? null;
     }
 
     public function create()
@@ -73,21 +73,21 @@ class Misc
             SET
                 price = :price,
                 date = :date,
-                budgetId = :budgetId,
-                storeId = :budgetId";
+                userId = :userId,
+                storeId = :userId";
 
         $stmt = $this->conn->prepare($query);
 
         // Clean Data
         $this->price = htmlspecialchars(strip_tags($this->price));
         $this->date = htmlspecialchars(strip_tags($this->date));
-        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind Data
         $stmt->bindParam(":price", $this->price);
         $stmt->bindParam(":date", $this->date);
-        $stmt->bindParam(":budgetId", $this->budgetId);
+        $stmt->bindParam(":userId", $this->userId);
         $stmt->bindParam(":storeId", $this->storeId);
 
         if ($stmt->execute()) {
@@ -103,7 +103,7 @@ class Misc
             SET
                 price = :price,
                 date = :date,
-                budgetId = :budgetId,
+                userId = :userId,
                 storeId = :storeId
             WHERE
                 miscId = " . $this->miscId;
@@ -113,13 +113,13 @@ class Misc
         // Clean Data
         $this->price = htmlspecialchars(strip_tags($this->price));
         $this->date = htmlspecialchars(strip_tags($this->date));
-        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind Data
         $stmt->bindParam(":price", $this->price);
         $stmt->bindParam(":date", $this->date);
-        $stmt->bindParam(":budgetId", $this->budgetId);
+        $stmt->bindParam(":userId", $this->userId);
         $stmt->bindParam(":storeId", $this->storeId);
 
         if ($stmt->execute()) {

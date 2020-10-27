@@ -9,13 +9,13 @@ $data = json_decode(file_get_contents("php://input"));
 $misc->miscId = isset($_GET["miscId"]) ? $_GET["miscId"] : die();
 $misc->price = $data->price;
 $misc->date = $data->date;
-$misc->budgetId = $data->budgetId;
+$misc->userId = $data->userId;
 $misc->storeId = $data->storeId;
 
 if($misc->create()) {
     http_response_code(201);
     echo json_encode(array("message" => "miscellaneous was created!"));
-} else if($misc->price == null or $misc->date == null or $misc->userId == null or $misc->storeId == null) {
+} else if($misc->price == null || $misc->date == null || $misc->userId == null || $misc->storeId == null) {
     http_response_code(400);
     echo json_encode(array("message" => "Something was empty. Try again."));
 } else {

@@ -19,7 +19,7 @@ if ($num > 0) {
             "subId" => $subId,
             "dueDate" => $dueDate,
             "amountDue" => $amountDate,
-            "budgetId" => $budgetId,
+            "userId" => $userId,
             "storeId" => $storeId,
             "subName" => $subName
         );

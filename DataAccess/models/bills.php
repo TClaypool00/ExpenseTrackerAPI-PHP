@@ -12,7 +12,7 @@ class Bills
     public $billDate;
     public $billPrice;
     public $isLate;
-    public $budgetId;
+    public $userId;
     public $storeId;
 
     public function __construct($db)
@@ -27,32 +27,32 @@ class Bills
                 $search = $_GET["search"];
                 $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%'";
                 break;
-            case isset($_GET["budgetId"]):
-                $this->budgetId = $_GET["budgetId"];
+            case isset($_GET["userId"]):
+                $this->userId = $_GET["userId"];
                 $query = $this->select_all . $this->table_name . " 
-                WHERE budgetId = " . $this->budgetId;
+                WHERE userId = " . $this->userId;
                 break;
-            case isset($_GET["budgetId"]) && isset($_GET["search"]):
-                $this->budgetId = $_GET["budgetId"];
+            case isset($_GET["userId"]) && isset($_GET["search"]):
+                $this->userId = $_GET["userId"];
                 $search = $_GET["search"];
-                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND budgetId = " . $this->budgetId;
+                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND userId = " . $this->userId;
                 break;
             case isset($_GET["storeId"]):
                 $this->storeId = $_GET["storeId"];
                 $query = $this->select_all . $this->table_name . " 
                 WHERE storeId = " . $this->storeId;
                 break;
-            case isset($_GET["storeId"]) && isset($_GET["budgetId"]):
+            case isset($_GET["storeId"]) && isset($_GET["userId"]):
                 $this->storeId = $_GET["storeId"];
-                $this->budgetId = $_GET["budgetId"];
+                $this->userId = $_GET["userId"];
                 $query = $this->select_all . $this->table_name . " 
-                WHERE storeId = " . $this->storeId . " AND budgetId = " . $this->budgetId;
+                WHERE storeId = " . $this->storeId . " AND userId = " . $this->userId;
                 break;
-            case isset($_GET["storeId"]) && isset($_GET["budgetId"]) && isset($_GET["search"]):
+            case isset($_GET["storeId"]) && isset($_GET["userId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
                 $this->storeId = $_GET["storeId"];
-                $this->budgetId = $_GET["budgetId"];
-                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND storeId = " . $this->storeId . " AND budgetId = " . $this->budgetId;
+                $this->userId = $_GET["userId"];
+                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND storeId = " . $this->storeId . " AND userId = " . $this->userId;
                 break;
             case isset($_GET["billName"]):
                 $this->billName = $_GET["billName"];
@@ -96,7 +96,7 @@ class Bills
         b.billDate,
         b.billPrice,
         b.isLate,
-        b.budgetId,
+        b.userId,
         b.storeId
         FROM " . $this->table_name . " b
             WHERE
@@ -113,7 +113,7 @@ class Bills
         $this->billPrice = $row["billPrice"] ?? null;
         $this->billDate = $row["billDate"] ?? null;
         $this->isLate = $row["isLate"] ?? null;
-        $this->budgetId = $row["budgetId"] ?? null;
+        $this->userId = $row["userId"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
     }
 
@@ -125,7 +125,7 @@ class Bills
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
-                budgetId = :budgetId,
+                userId = :userId,
                 storeId = :storeId';
 
         $stmt = $this->conn->prepare($query);
@@ -135,14 +135,14 @@ class Bills
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
-        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         $stmt->bindParam(':billName', $this->billName);
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
-        $stmt->bindParam(':budgetId', $this->budgetId);
+        $stmt->bindParam(':userId', $this->userId);
         $stmt->bindParam(':storeId', $this->storeId);
 
         if ($stmt->execute()) {
@@ -160,7 +160,7 @@ class Bills
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
-                budgetId = :budgetId,
+                userId = :userId,
                 storeId = :storeId
             WHERE
                 billId = " . $this->billId;
@@ -172,7 +172,7 @@ class Bills
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
-        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind data
@@ -180,7 +180,7 @@ class Bills
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
-        $stmt->bindParam(':budgetId', $this->budgetId);
+        $stmt->bindParam(':userId', $this->userId);
         $stmt->bindParam(':storeId', $this->storeId);
 
 
@@ -193,11 +193,9 @@ class Bills
 
     public function delete()
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE billId = :billId";
+        $query = "DELETE FROM " . $this->table_name . " WHERE billId =" . $this->billId;
 
         $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(":billId", $this->billId);
 
         if ($stmt->execute()) {
             return true;

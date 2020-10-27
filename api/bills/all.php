@@ -22,7 +22,7 @@ if ($num > 0) {
             "billDate" => $billDate,
             "billPrice" => $billPrice,
             "isLate" => $isLate,
-            "budgetId" => $budgetId,
+            "userId" => $userId,
             "storeId" => $storeId
         );
 

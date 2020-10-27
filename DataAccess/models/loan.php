@@ -10,7 +10,7 @@ class Loan
     public $monthlyAmountDue;
     public $deposit;
     public $totalAmountDue;
-    public $budgetId;
+    public $userId;
     public $storeId;
 
     public function __construct($db)
@@ -28,24 +28,24 @@ class Loan
                 $search = $_GET["search"];
                 $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%'";
                 break;
-            case isset($_GET["budgetId"]):
-                $this->budgetId = $_GET["budgetId"];
-                $query = $select_all . " WHERE budgetId = " . $this->budgetId;
+            case isset($_GET["userId"]):
+                $this->userId = $_GET["userId"];
+                $query = $select_all . " WHERE userId = " . $this->userId;
                 break;
             case isset($_GET["storeId"]):
                 $this->storeId = $_GET["storeId"];
                 $query = $select_all . " WHERE storeId = " . $this->storeId;
                 break;
-            case isset($_GET["budgetId"]) && isset($_GET["search"]):
-                $this->budgetId = $_GET["budgetId"];
+            case isset($_GET["userId"]) && isset($_GET["search"]):
+                $this->userId = $_GET["userId"];
                 $search = $_GET["search"];
-                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND budgetId = " . $this->budgetId;
+                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND userId = " . $this->userId;
                 break;
-            case isset($_GET["budgetId"]) && isset($_GET["search"]) && isset($_GET["storeId"]):
-                $this->budgetId = $_GET["budgetId"];
+            case isset($_GET["userId"]) && isset($_GET["search"]) && isset($_GET["storeId"]):
+                $this->userId = $_GET["userId"];
                 $this->storeId = $_GET["storeId"];
                 $search = $_GET["search"];
-                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND budgetId = " . $this->budgetId . " AND storeId = storeId = " . $this->storeId;
+                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND userId = " . $this->userId . " AND storeId = storeId = " . $this->storeId;
                 break;
             default:
                 $query = $select_all;
@@ -73,7 +73,7 @@ class Loan
         $this->monthlyAmountDue = $row["monthlyAmountDue"] ?? null;
         $this->deposit = $row["deposit"] ?? null;
         $this->totalAmountDue = $row["totalAmountDue"] ?? null;
-        $this->budgetId = $row["budgetId"] ?? null;
+        $this->userId = $row["userId"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
     }
 
@@ -86,7 +86,7 @@ class Loan
                 monthlyAmountDue = :monthlyAmountDue,
                 deposit = :deposit,
                 totalAmountDue = :totalAmountDue,
-                budgetId = :budgetId,
+                userId = :userId,
                 storeId = :storeId";
 
         $stmt = $this->conn->prepare($query);
@@ -97,7 +97,7 @@ class Loan
         $this->monthlyAmountDue = htmlspecialchars(strip_tags($this->monthlyAmountDue));
         $this->deposit = htmlspecialchars(strip_tags($this->deposit));
         $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
-        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind Data
@@ -106,7 +106,7 @@ class Loan
         $stmt->bindParam("monthlyamountDue", $this->monthlyAmountDue);
         $stmt->bindParam("deposit", $this->deposit);
         $stmt->bindParam("totalAmountDue", $this->totalAmountDue);
-        $stmt->bindParam("budgetId", $this->budgetId);
+        $stmt->bindParam("userId", $this->userId);
         $stmt->bindParam("storeId", $this->storeId);
 
         if ($stmt->execute()) {
@@ -125,7 +125,7 @@ class Loan
                 monthlyAmountDue = :monthlyAmountDue,
                 deposit = :deposit,
                 totalAmountDue = :totalAmountDue,
-                budgetId = :budgetId,
+                userId = :userId,
                 storeId = :storeId
             WHERE
                 loanId = " . $this->loanId;
@@ -138,7 +138,7 @@ class Loan
         $this->monthlyAmountDue = htmlspecialchars(strip_tags($this->monthlyAmountDue));
         $this->deposit = htmlspecialchars(strip_tags($this->deposit));
         $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
-        $this->budgetId = htmlspecialchars(strip_tags($this->budgetId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
         // Bind Data
@@ -147,7 +147,7 @@ class Loan
         $stmt->bindParam("monthlyamountDue", $this->monthlyAmountDue);
         $stmt->bindParam("deposit", $this->deposit);
         $stmt->bindParam("totalAmountDue", $this->totalAmountDue);
-        $stmt->bindParam("budgetId", $this->budgetId);
+        $stmt->bindParam("userId", $this->userId);
         $stmt->bindParam("storeId", $this->storeId);
 
         if ($stmt->execute()) {

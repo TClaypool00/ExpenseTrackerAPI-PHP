@@ -12,7 +12,7 @@ $loan->dueDate = $data->dueDate;
 $loan->monthlyAmountDue = $data->monthlyAmountDue;
 $loan->deposit = $data->deposit;
 $loan->totalAmountDue = $data->totalAmountDue;
-$loan->budgetId = $data->budgetId;
+$loan->userId = $data->userId;
 $loan->storeId = $data->storeId;
 
 if($loan->create()) {

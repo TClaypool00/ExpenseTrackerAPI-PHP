@@ -9,7 +9,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 $sub->dueDate = $data->dueDate;
 $sub->amountDue = $data->amountDue;
-$sub->budgetId = $data->budgetId;
+$sub->userId = $data->userId;
 $sub->storeId = $data->storeId;
 $sub->subName = $data->subName;
 

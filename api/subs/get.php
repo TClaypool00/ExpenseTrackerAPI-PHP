@@ -14,7 +14,7 @@ if($sub->companyName != null) {
         "subId" => $sub->subId,
         "dueDate" => $sub->dueDate,
         "amountDue" => $sub->amountDue,
-        "budgetId" => $sub->budgetId,
+        "userId" => $sub->userId,
         "storeId" => $sub->storeId,
         "subName" => $sub->subName
     );
