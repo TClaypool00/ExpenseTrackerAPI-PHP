@@ -1,19 +1,16 @@
 <?php
-// Headers
+// Get all headers
 include "../../partialFiles/get_all_headers.php";
-
-// Create a new instance of a bill
+// Creating a new instance of the bill and DB obj
 include "../../partialFiles/objects_partial_files/newBill.php";
 
-// Get all bills
-$allBills = $bill->getAll();
-$num = $allBills->rowCount();
+$all_bills = $bill->getAll();
+$num = $all_bills->rowCount();
 
 if ($num > 0) {
     $bill_arr = array();
-    $bill_arr = array();
 
-    while ($row = $allBills->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = $all_bills->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
         $bill_item = array(
@@ -22,23 +19,16 @@ if ($num > 0) {
             "billDate" => $billDate,
             "billPrice" => $billPrice,
             "isLate" => $isLate,
-            "userId" => $userId,
-            "storeId" => $storeId
+            "storeId" => $storeId,
+            "userId" => $userId
         );
 
         array_push($bill_arr, $bill_item);
     }
 
     http_response_code(200);
-
-    // Shows bill data in JSON format
-
     echo json_encode($bill_arr);
 } else {
-    // No bills found
     http_response_code(404);
-
-    echo json_encode(
-        array("message" => "No bills found")
-    );
+    echo json_encode(array("message" => "No bills found."));
 }

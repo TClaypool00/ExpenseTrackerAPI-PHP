@@ -4,7 +4,7 @@ class Bills
     private $conn;
     private $table_name = "bills";
     private $select_all = "SELECT * FROM ";
-    private $order_by = "ORDER BY billName ASC";
+    private $order_by = " ORDER BY billName ASC";
 
     // Properties
     public $billId;
