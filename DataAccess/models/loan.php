@@ -86,28 +86,28 @@ class Loan
                 monthlyAmountDue = :monthlyAmountDue,
                 deposit = :deposit,
                 totalAmountDue = :totalAmountDue,
-                userId = :userId,
-                storeId = :storeId";
+                storeId = :storeId,
+                userId = :userId";
 
         $stmt = $this->conn->prepare($query);
-
+        
         // Clean Data
         $this->loanName = htmlspecialchars(strip_tags($this->loanName));
         $this->dueDate = htmlspecialchars(strip_tags($this->dueDate));
         $this->monthlyAmountDue = htmlspecialchars(strip_tags($this->monthlyAmountDue));
         $this->deposit = htmlspecialchars(strip_tags($this->deposit));
         $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
 
         // Bind Data
-        $stmt->bindParam("loanName", $this->loanName);
-        $stmt->bindParam("dueDate", $this->dueDate);
-        $stmt->bindParam("monthlyamountDue", $this->monthlyAmountDue);
-        $stmt->bindParam("deposit", $this->deposit);
-        $stmt->bindParam("totalAmountDue", $this->totalAmountDue);
-        $stmt->bindParam("userId", $this->userId);
-        $stmt->bindParam("storeId", $this->storeId);
+        $stmt->bindParam(':loanName', $this->loanName);
+        $stmt->bindParam(':dueDate', $this->dueDate);
+        $stmt->bindParam(':monthlyAmountDue', $this->monthlyAmountDue);
+        $stmt->bindParam(':deposit', $this->deposit);
+        $stmt->bindParam(':totalAmountDue', $this->totalAmountDue);
+        $stmt->bindParam(':storeId', $this->storeId);
+        $stmt->bindParam(':userId', $this->userId);
 
         if ($stmt->execute()) {
             return true;
@@ -125,36 +125,36 @@ class Loan
                 monthlyAmountDue = :monthlyAmountDue,
                 deposit = :deposit,
                 totalAmountDue = :totalAmountDue,
-                userId = :userId,
-                storeId = :storeId
+                storeId = :storeId,
+                userId = :userId
             WHERE
                 loanId = " . $this->loanId;
 
-        $stmt = $this->conn->prepare($query);
-
-        // Clean Data
-        $this->loanName = htmlspecialchars(strip_tags($this->loanName));
-        $this->dueDate = htmlspecialchars(strip_tags($this->dueDate));
-        $this->monthlyAmountDue = htmlspecialchars(strip_tags($this->monthlyAmountDue));
-        $this->deposit = htmlspecialchars(strip_tags($this->deposit));
-        $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
-        $this->userId = htmlspecialchars(strip_tags($this->userId));
-        $this->storeId = htmlspecialchars(strip_tags($this->storeId));
-
-        // Bind Data
-        $stmt->bindParam("loanName", $this->loanName);
-        $stmt->bindParam("dueDate", $this->dueDate);
-        $stmt->bindParam("monthlyamountDue", $this->monthlyAmountDue);
-        $stmt->bindParam("deposit", $this->deposit);
-        $stmt->bindParam("totalAmountDue", $this->totalAmountDue);
-        $stmt->bindParam("userId", $this->userId);
-        $stmt->bindParam("storeId", $this->storeId);
-
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+                $stmt = $this->conn->prepare($query);
+        
+                // Clean Data
+                $this->loanName = htmlspecialchars(strip_tags($this->loanName));
+                $this->dueDate = htmlspecialchars(strip_tags($this->dueDate));
+                $this->monthlyAmountDue = htmlspecialchars(strip_tags($this->monthlyAmountDue));
+                $this->deposit = htmlspecialchars(strip_tags($this->deposit));
+                $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
+                $this->storeId = htmlspecialchars(strip_tags($this->storeId));
+                $this->userId = htmlspecialchars(strip_tags($this->userId));
+        
+                // Bind Data
+                $stmt->bindParam(':loanName', $this->loanName);
+                $stmt->bindParam(':dueDate', $this->dueDate);
+                $stmt->bindParam(':monthlyAmountDue', $this->monthlyAmountDue);
+                $stmt->bindParam(':deposit', $this->deposit);
+                $stmt->bindParam(':totalAmountDue', $this->totalAmountDue);
+                $stmt->bindParam(':storeId', $this->storeId);
+                $stmt->bindParam(':userId', $this->userId);
+        
+                if ($stmt->execute()) {
+                    return true;
+                }
+        
+                return false;
     }
 
     public function delete()

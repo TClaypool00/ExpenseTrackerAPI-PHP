@@ -11,8 +11,9 @@ $loan->dueDate = $data->dueDate;
 $loan->monthlyAmountDue = $data->monthlyAmountDue;
 $loan->deposit = $data->deposit;
 $loan->totalAmountDue = $data->totalAmountDue;
-$loan->userId = $data->userId;
 $loan->storeId = $data->storeId;
+$loan->userId = $data->userId;
+
 
 if($loan->create()) {
     http_response_code(201);
