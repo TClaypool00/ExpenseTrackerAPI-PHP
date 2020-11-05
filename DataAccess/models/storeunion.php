@@ -15,6 +15,7 @@ class StoreUnion
     public $phoneNum;
     public $email;
     public $website;
+    public $isCreditUnion;
 
     public function __construct($db)
     {
@@ -54,6 +55,17 @@ class StoreUnion
                 $query = $this->select_all . $this->table_name . "
                         WHERE zip LIKE '%" . $this->zip . "%'";
                 break;
+            case isset($_GET["isUnion"]):
+                $this->isCreditUnion = $_GET["isUnion"];
+                $query = $this->select_all . $this->table_name . "
+                WHERE isCreditUnion LIKE '%" . $this->isCreditUnion . "%'";
+                break;
+            case isset($_GET["isUnion"]) && isset($_GET["search"]):
+                $this->isCreditUnion = $_GET["isUnion"];
+                $search = $_GET["search"];
+                $query = $this->select_all . $this->table_name . "
+                WHERE storeName LIKE '%$search%' OR address LIKE '%$search%' OR city LIKE '%$search%' OR state LIKE '%$search%' OR zip LIKE '%$search%' AND isCreditUnion LIKE '%" . $this->isCreditUnion . "%'";
+                break;
             default:
                 $query = $this->select_all . $this->table_name;
                 break;
@@ -67,19 +79,9 @@ class StoreUnion
 
     public function getById()
     {
-        $query = "SELECT 
-            s.storeId,
-            s.storeName,
-            s.address,
-            s.city,
-            s.state,
-            s.zip,
-            s.phoneNum,
-            s.email,
-            s.website
-        FROM . " . $this->table_name . " s
+        $query = $this->select_all . $this->table_name . "
             WHERE
-                s.storeId = " . $this->storeId . "
+                storeId = " . $this->storeId . "
                 LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
@@ -94,6 +96,7 @@ class StoreUnion
         $this->phoneNum = $row["phoneNum"] ?? null;
         $this->email = $row["email"] ?? null;
         $this->website = $row["website"] ?? null;
+        $this->isCreditUnion = $_GET["isCreditUnion"];
     }
 
     public function create()
@@ -107,7 +110,8 @@ class StoreUnion
                 zip = :zip,
                 phoneNum = :phoneNum,
                 email = :email,
-                website = :website";
+                website = :website,
+                isCreditUnion = :isCreditUnion";
 
         $stmt = $this->conn->prepare($query);
 
@@ -120,6 +124,7 @@ class StoreUnion
         $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->website = htmlspecialchars(strip_tags($this->website));
+        $this->isCreditUnion = htmlspecialchars(strip_tags($this->isCreditUnion));
 
         // Bind data
         $stmt->bindParam(":storeName", $this->storeName);
@@ -130,6 +135,7 @@ class StoreUnion
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":website", $this->website);
+        $stmt->bindParam(":isCreditUnion", $this->isCreditUnion);
 
         if ($stmt->execute()) {
             return true;
@@ -149,7 +155,8 @@ class StoreUnion
                 zip = :zip,
                 phoneNum = :phoneNum,
                 email = :email,
-                website = :website
+                website = :website,
+                isCreditUnion = :isCreditUnion
             WHERE
                 storeId = " . $this->storeId;
 
@@ -164,6 +171,7 @@ class StoreUnion
         $this->phoneNum = htmlspecialchars(strip_tags($this->phoneNum));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->website = htmlspecialchars(strip_tags($this->website));
+        $this->isCreditUnion = htmlspecialchars(strip_tags($this->isCreditUnion));
 
         // Bind data
         $stmt->bindParam(":storeName", $this->storeName);
@@ -174,6 +182,7 @@ class StoreUnion
         $stmt->bindParam(":phoneNum", $this->phoneNum);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":website", $this->website);
+        $stmt->bindParam(":isCreditUnion", $this->isCreditUnion);
 
         if ($stmt->execute()) {
             return true;

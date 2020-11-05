@@ -23,7 +23,8 @@ if ($num > 0) {
             "zip" => $zip,
             "phoneNum" => $phoneNum,
             "email" => $email,
-            "website" => $website
+            "website" => $website,
+            "isCreditUnion" => $isCreditUnion
         );
 
         array_push($store_arr, $item);

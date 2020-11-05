@@ -25,6 +25,7 @@ CREATE TABLE bills
     isLate BIT NOT NULL,
     userId INT(6) NOT NULL DEFAULT 1,
     storeId INT(4) NOT NULL DEFAULT 1,
+    endDate DATE DEFAULT '2020-11-6',
     FOREIGN KEY (userId) REFERENCES budget(userId),
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
 );
@@ -52,8 +53,9 @@ CREATE TABLE storeUnion
     state VARCHAR(50) NOT NULL,
     zip INT(5) NOT NULL,
     phoneNum INT(10) NOT NULL DEFAULT 1234567890,
-    email VARCHAR(30) NOT NULL DEFAULT "store@gmil.com",
-    website VARCHAR(50) NOT NULL DEFAULT "www.store.com"
+    email VARCHAR(50) NOT NULL DEFAULT "store@gmil.com",
+    website VARCHAR(100) NOT NULL DEFAULT "www.store.com",
+    isCreditUnion TINYINT(1) NOT NULL DEFAULT 0
 );
 
 CREATE TABLE loan
@@ -89,6 +91,7 @@ CREATE TABLE budget
     userId INT(5) NOT NULL PRIMARY KEY,
     totalBills DECIMAL(10,2) NOT NULL,
     moneyLeft DECIMAL(10, 2) NOT NULL,
+    savingsMoney DECIMAL(10, 2) NOT NULL DEFAULT 500.00,
     userId INT(6) NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );

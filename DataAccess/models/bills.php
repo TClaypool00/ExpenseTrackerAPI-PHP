@@ -12,6 +12,7 @@ class Bills
     public $billDate;
     public $billPrice;
     public $isLate;
+    public $endDate;
     public $userId;
     public $storeId;
 
@@ -25,7 +26,7 @@ class Bills
         switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
-                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%'";
+                $query = $this->select_all . $this->table_name . "WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR isLate LIKE '%$search%' OR endDate LIKE '%$search%'";
                 break;
             case isset($_GET["userId"]):
                 $this->userId = $_GET["userId"];
@@ -90,17 +91,10 @@ class Bills
 
     public function getById()
     {
-        $query = "SELECT 
-        b.billId,
-        b.billName,
-        b.billDate,
-        b.billPrice,
-        b.isLate,
-        b.userId,
-        b.storeId
-        FROM " . $this->table_name . " b
+        $query = "SELECT *
+        FROM " . $this->table_name . "
             WHERE
-                b.billId = " . $this->billId;
+                billId = " . $this->billId;
 
         $stmt = $this->conn->prepare($query);
 
@@ -113,6 +107,7 @@ class Bills
         $this->billPrice = $row["billPrice"] ?? null;
         $this->billDate = $row["billDate"] ?? null;
         $this->isLate = $row["isLate"] ?? null;
+        $this->endDate = $row['endDate'] ?? null;
         $this->userId = $row["userId"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
     }
@@ -125,6 +120,7 @@ class Bills
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
+                endDate = :endDate,
                 userId = :userId,
                 storeId = :storeId';
 
@@ -135,6 +131,7 @@ class Bills
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->endDate = htmlspecialchars(strip_tags($this->endDate));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
@@ -142,6 +139,7 @@ class Bills
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':endDate', $this->endDate);
         $stmt->bindParam(':userId', $this->userId);
         $stmt->bindParam(':storeId', $this->storeId);
 
@@ -160,6 +158,7 @@ class Bills
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
+                endDate = :endDate,
                 userId = :userId,
                 storeId = :storeId
             WHERE
@@ -172,14 +171,15 @@ class Bills
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->endDate = htmlspecialchars(strip_tags($this->endDate));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
-        // Bind data
         $stmt->bindParam(':billName', $this->billName);
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':endDate', $this->endDate);
         $stmt->bindParam(':userId', $this->userId);
         $stmt->bindParam(':storeId', $this->storeId);
 

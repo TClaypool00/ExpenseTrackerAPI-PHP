@@ -18,7 +18,8 @@ if($store->storeName != null) {
         "zip" => $store->zip,
         "phoneNum" => $store->phoneNum,
         "email" => $store->email,
-        "webiste" => $store->website
+        "webiste" => $store->website,
+        "isCreditUnion" => $store->isCreditUnion
     );
 
     http_response_code(200);

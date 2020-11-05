@@ -14,6 +14,7 @@ $store->zip = $data->zip;
 $store->phoneNum = $data->phoneNum;
 $store->email = $data->email;
 $store->website = $data->website;
+$store->isCreditUnion = $data->isCreditUnion;
 
 if($store->update()) {
     http_response_code(200);

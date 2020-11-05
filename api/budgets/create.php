@@ -8,6 +8,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 $budget->totalBills = $data->totalBills;
 $budget->moneyLeft = $data->moneyLeft;
+$budget->savingsMoney = $data->savingsMoney;
 $budget->userId = $data->userId;
 
 if($budget->create()) {

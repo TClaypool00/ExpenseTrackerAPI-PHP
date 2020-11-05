@@ -9,6 +9,7 @@ $data = json_decode(file_get_contents("php://input"));
 $budget->budgetId = isset($_GET["budgetId"]) ? $_GET["budgetId"] : die();
 $budget->totalBills = $data->totalBills;
 $budget->moneyLeft = $data->moneyLeft;
+$budget->savingsMoney = $data->savingsMoney;
 $budget->userId = $data->userId;
 
 if($budget->update()) {

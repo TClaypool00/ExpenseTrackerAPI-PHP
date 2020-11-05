@@ -9,6 +9,7 @@ class Budgets
     public $budgetId;
     public $totalBills;
     public $moneyLeft;
+    public $savingsMoney;
     public $userId;
 
     public function __construct($db)
@@ -21,7 +22,7 @@ class Budgets
         switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
-                $query = $this->select_all . $this->table_name . " HERE totalBills LIKE '%$search%' OR moneyLeft LIKE '%$search%'";
+                $query = $this->select_all . $this->table_name . " HERE totalBills LIKE '%$search%' OR moneyLeft LIKE '%$search%' OR savingsMoney LIKE '%$search%'";
                 break;
             case isset($_GET["userId"]):
                 $this->userId = $_GET["userId"];
@@ -62,6 +63,7 @@ class Budgets
         $this->budgetId = $row["budgetId"] ?? null;
         $this->totalBills = $row["totalBills"] ?? null;
         $this->moneyLeft = $row["moneyLeft"] ?? null;
+        $this->savingsMoney = $row["savingsMoney"] ?? null;
         $this->userId = $row["userId"] ?? null;
     }
 
@@ -71,6 +73,7 @@ class Budgets
             SET
                 totalBills = :totalBills,
                 moneyLeft = :moneyLeft,
+                savingsMoney = :savingsMoney,
                 userid = :userId";
 
         $stmt = $this->conn->prepare($query);
@@ -78,11 +81,13 @@ class Budgets
         // Clean data
         $this->totalBills = htmlspecialchars(strip_tags($this->totalBills));
         $this->moneyLeft = htmlspecialchars(strip_tags($this->moneyLeft));
+        $this->savingsMoney = htmlspecialchars(strip_tags($this->savingsMoney));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
 
         // Bind data
         $stmt->bindParam(":totalBills", $this->totalBills);
         $stmt->bindParam(":moneyLeft", $this->moneyLeft);
+        $stmt->bindParam(":savingsMoney", $this->savingsMoney);
         $stmt->bindParam(":userId", $this->userId);
 
         if ($stmt->execute()) {
@@ -98,6 +103,7 @@ class Budgets
             SET
                 totalBills = :totalBills,
                 moneyLeft = :moneyLeft,
+                savingsMoney = :savingsMoney,
                 userid = :userId
             WHERE
                 budgetId = " . $this->budgetId;
@@ -107,11 +113,13 @@ class Budgets
         // Clean data
         $this->totalBills = htmlspecialchars(strip_tags($this->totalBills));
         $this->moneyLeft = htmlspecialchars(strip_tags($this->moneyLeft));
+        $this->savingsMoney = htmlspecialchars(strip_tags($this->savingsMoney));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
 
         // Bind data
         $stmt->bindParam(":totalBills", $this->totalBills);
         $stmt->bindParam(":moneyLeft", $this->moneyLeft);
+        $stmt->bindParam(":savingsMoney", $this->savingsMoney);
         $stmt->bindParam(":userId", $this->userId);
 
         if ($stmt->execute()) {

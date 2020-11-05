@@ -11,6 +11,7 @@ $bill->billName = $data->billName;
 $bill->billPrice = $data->billPrice;
 $bill->billDate = $data->billDate;
 $bill->isLate = $data->isLate;
+$bill->endDate = $data->endDate;
 $bill->userId = $data->userId;
 $bill->storeId = $data->storeId;
 

@@ -17,6 +17,7 @@ if ($num > 0) {
             "budgetId" => $budgetId,
             "totalBills" => $totalBills,
             "moneyLeft" => $moneyLeft,
+            "savingsMoney" => $savingsMoney,
             "userId" => $userId
         );
 

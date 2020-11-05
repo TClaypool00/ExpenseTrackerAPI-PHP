@@ -12,6 +12,7 @@ if($budget->totalBills != null) {
         "budgetId" => $budget->budgetId,
         "totalBills" => $budget->totalBills,
         "moneyLeft" => $budget->moneyLeft,
+        "savingsMoney" => $budget->savingsMoney,
         "userId" => $budget->userId
     );
 
