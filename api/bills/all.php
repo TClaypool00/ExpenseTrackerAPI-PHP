@@ -22,7 +22,7 @@ if ($num > 0) {
             "endDate" => $endDate,
             "storeId" => $storeId,
             "storeName" => $storeName,
-            "storeWebiste" => $website,
+            "storeWebsite" => $website,
             "userId" => $userId
         );
 
