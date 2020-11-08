@@ -20,7 +20,7 @@ if($bill->billName != null) {
         "userId" => $bill->userId,
         "storeId" => $bill->storeId,
         "storeName" => $bill->storeName,
-        "storeWebiste" => $bill->website
+        "storeWebsite" => $bill->website
     );
 
     http_response_code(200);
