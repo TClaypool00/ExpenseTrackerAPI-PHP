@@ -20,7 +20,7 @@ if($bill->create()){
 
     echo json_encode(array("message" => "Bill was created!"));
 } else {
-    http_response_code(503);
+    http_response_code(400);
 
     echo json_encode(array("message" => "Unable to create bill"));
 }

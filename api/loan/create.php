@@ -19,6 +19,6 @@ if($loan->create()) {
     http_response_code(201);
     echo json_encode(array("message" => "Loan was created."));
 } else {
-    http_response_code(503);
+    http_response_code(400);
     echo json_encode(array("message" => "Unable to create loan."));
 }

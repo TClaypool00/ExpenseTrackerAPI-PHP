@@ -20,6 +20,6 @@ if($store->create()) {
     http_response_code(201);
     echo json_encode(array("message" => "Store or Credit Union was created!"));
 } else {
-    http_response_code(503);
+    http_response_code(400);
     echo json_encode(array("message" => "Unable to create Store or Credit Union."));
 }

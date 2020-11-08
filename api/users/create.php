@@ -20,6 +20,6 @@ if ($user->create()) {
     http_response_code(201);
     echo json_encode(array("message" => "User was created."));
 } else {
-    http_response_code(503);
+    http_response_code(400);
     echo json_encode(array("message" => "Unable to create user."));
 }
