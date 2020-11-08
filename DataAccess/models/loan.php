@@ -3,6 +3,9 @@ class Loan
 {
     private $conn;
     private $table_name = "loan";
+    private $select_all = "SELECT loan.loanId, loan.loanName, loan.dueDate, loan.monthlyAmountDue, loan.deposit, loan.totalAmountDue, loan.storeId, storeunion.storeName, storeunion.website, loan.userId FROM ";
+    private $inner_join = " INNER JOIN storeunion ON loan.storeId = storeunion.storeId";
+    private $order_by = " ORDER BY dueDate ASC";
 
     public $loanId;
     public $loanName;
@@ -12,6 +15,8 @@ class Loan
     public $totalAmountDue;
     public $userId;
     public $storeId;
+    public $storeName;
+    public $webiste;
 
     public function __construct($db)
     {
@@ -20,39 +25,36 @@ class Loan
 
     public function getAll()
     {
-        $select_all = "SELECT * FROM " . $this->table_name;
-        $order_by = " ORDER BY dueDate ASC";
-
         switch (isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
-                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%'";
+                $query = $this->select_all . $this->table_name . $this->inner_join . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%'";
                 break;
             case isset($_GET["userId"]):
                 $this->userId = $_GET["userId"];
-                $query = $select_all . " WHERE userId = " . $this->userId;
+                $query = $this->select_all . $this->table_name . $this->inner_join . " WHERE userId = " . $this->userId;
                 break;
             case isset($_GET["storeId"]):
                 $this->storeId = $_GET["storeId"];
-                $query = $select_all . " WHERE storeId = " . $this->storeId;
+                $query = $this->select_all . $this->table_name . $this->inner_join . " WHERE storeId = " . $this->storeId;
                 break;
             case isset($_GET["userId"]) && isset($_GET["search"]):
                 $this->userId = $_GET["userId"];
                 $search = $_GET["search"];
-                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND userId = " . $this->userId;
+                $query = $this->select_all . $this->table_name . $this->inner_join . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND userId = " . $this->userId;
                 break;
             case isset($_GET["userId"]) && isset($_GET["search"]) && isset($_GET["storeId"]):
                 $this->userId = $_GET["userId"];
                 $this->storeId = $_GET["storeId"];
                 $search = $_GET["search"];
-                $query = $select_all . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND userId = " . $this->userId . " AND storeId = storeId = " . $this->storeId;
+                $query = $this->select_all . $this->table_name . $this->inner_join . " WHERE loanName LIKE '%$search%' OR dueDate LIKE '%$search%' OR monthlyAmountDue LIKE '%$search%' OR deposit LIKE '%$search%' OR totalAmountDue LIKE '%$search%' AND userId = " . $this->userId . " AND storeId = storeId = " . $this->storeId;
                 break;
             default:
-                $query = $select_all;
+                $query = $this->select_all . $this->table_name . $this->inner_join;
                 break;
         }
 
-        $stmt = $this->conn->prepare($query . $order_by);
+        $stmt = $this->conn->prepare($query . $this->order_by);
         $stmt->execute();
 
         return $stmt;
@@ -60,8 +62,9 @@ class Loan
 
     public function getById()
     {
-        $query = "SELECT * FROM " . $this->table_name . " 
-            WHERE loanId = " . $this->loanId;
+        $query = $this->select_all . $this->table_name . $this->inner_join . " 
+        WHERE 
+            loanId = " . $this->loanId;
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -75,6 +78,8 @@ class Loan
         $this->totalAmountDue = $row["totalAmountDue"] ?? null;
         $this->userId = $row["userId"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
+        $this->storeName = $row["storeName"] ?? null;
+        $this->webiste = $row["website"] ?? null;
     }
 
     public function create()

@@ -7,6 +7,8 @@ include "../../partialFiles/objects_partial_files/new_loan.php";
 // Get Id
 $loan->loanId = isset($_GET["loanId"]) ? $_GET["loanId"] : die();
 
+$loan->getById();
+
 if($loan->loanName != null) {
     $loan_arr = array(
         "loanId" => $loan->loanId,
@@ -16,7 +18,9 @@ if($loan->loanName != null) {
         "deposit" => $loan->deposit,
         "totalAmountDue" => $loan->totalAmountDue,
         "userId" => $loan->userId,
-        "storeId" => $loan->storeId
+        "storeId" => $loan->storeId,
+        "storeName" => $loan->storeName,
+        "storeWebsite" => $loan->webiste
     );
 
     http_response_code(200);

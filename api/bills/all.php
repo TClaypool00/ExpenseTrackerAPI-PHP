@@ -21,6 +21,8 @@ if ($num > 0) {
             "isLate" => $isLate,
             "endDate" => $endDate,
             "storeId" => $storeId,
+            "storeName" => $storeName,
+            "storeWebiste" => $website,
             "userId" => $userId
         );
 

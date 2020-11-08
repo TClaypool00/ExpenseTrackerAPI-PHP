@@ -21,7 +21,9 @@ if ($num > 0) {
             "deposit" => $deposit,
             "totalAmountDue" => $totalAmountDue,
             "userId" => $userId,
-            "storeId" => $storeId
+            "storeId" => $storeId,
+            "storeName" => $storeName,
+            "storeWebsite" => $website
         );
 
         array_push($loan_arr, $item);

@@ -18,7 +18,9 @@ if($bill->billName != null) {
         "isLate" => $bill->isLate,
         "endDate" => $bill->endDate,
         "userId" => $bill->userId,
-        "storeId" => $bill->storeId
+        "storeId" => $bill->storeId,
+        "storeName" => $bill->storeName,
+        "storeWebiste" => $bill->website
     );
 
     http_response_code(200);
