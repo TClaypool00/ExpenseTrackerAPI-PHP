@@ -15,18 +15,21 @@ if ($num > 0) {
 
         $item = array(
             "miscId" => $miscId,
+            "miscName" => $miscName,
             "price" => $price,
             "date" => $date,
+            "memo" => $memo,
             "storeId" => $storeId,
-            "userId" => $userId
+            "storeName" => $storeName,
+            "storeWebsite" => $website,
+            "userId" => $userId,
         );
 
         array_push($misc_arr, $item);
-
-        http_response_code(200);
-
-        echo json_encode($misc_arr);
     }
+    http_response_code(200);
+
+    echo json_encode($misc_arr);
 } else {
     http_response_code(404);
     echo json_encode(array("message" => "No Miscellaneous found."));

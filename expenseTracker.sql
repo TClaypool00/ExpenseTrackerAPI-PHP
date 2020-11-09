@@ -78,11 +78,13 @@ CREATE TABLE misc
     -- Add AUTO_INCREMENT after PRIMARY KEY
     miscId INT(4) NOT NULL PRIMARY KEY,
     price DECIMAL(5,2) NOT NULL,
-    date DATE NOT NULL DEFAULT CURDATE(),
     storeId INT(4) NOT NULL,
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
+    date DATE NOT NULL DEFAULT CURDATE(),
     userId INT(6) NOT NULL DEFAULT 1,
-    FOREIGN KEY (userId) REFERENCES budget(userId)
+    FOREIGN KEY (userId) REFERENCES budget(userId),
+    memo VARCHAR(100),
+    msicName VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE budget

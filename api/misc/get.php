@@ -10,8 +10,10 @@ $misc->getbyId();
 if($misc->price != null) {
     $misc_arr = array(
         "miscId" => $misc->miscId,
+        "miscName" => $misc->miscName,
         "price" => $misc->price,
         "date" => $misc->date,
+        "memo" => $misc->memo,
         "storeId" => $misc->storeId,
         "userId" => $misc->userId
     );

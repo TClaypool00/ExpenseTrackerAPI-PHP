@@ -7,9 +7,11 @@ include "../../partialFiles/objects_partial_files/new_misc.php";
 $data = json_decode(file_get_contents("php://input"));
 
 $misc->price = $data->price;
+$misc->storeId = $data->storeId;
 $misc->date = $data->date;
 $misc->userId = $data->userId;
-$misc->storeId = $data->storeId;
+$misc->memo = $data->miscName;
+$misc->miscName = $data->miscName;
 
 if($misc->create()) {
     http_response_code(201);

@@ -8,9 +8,11 @@ $data = json_decode(file_get_contents("php://input"));
 
 $misc->miscId = isset($_GET["miscId"]) ? $_GET["miscId"] : die();
 $misc->price = $data->price;
+$misc->storeId = $data->storeId;
 $misc->date = $data->date;
 $misc->userId = $data->userId;
-$misc->storeId = $data->storeId;
+$misc->memo = $data->miscName;
+$misc->miscName = $data->miscName;
 
 if($misc->create()) {
     http_response_code(201);
