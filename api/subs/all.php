@@ -18,19 +18,21 @@ if ($num > 0) {
         $item = array(
             "subId" => $subId,
             "dueDate" => $dueDate,
-            "amountDue" => $amountDate,
+            "amountDue" => $amountDue,
             "userId" => $userId,
             "storeId" => $storeId,
-            "subName" => $subName
+            "subName" => $subName,
+            "storeName" => $storeName,
+            "storeWebsite" => $website
         );
 
         array_push($sub_array, $item);
-
-        // Returns 200 if there are subscriptions
-        http_response_code(200);
-
-        echo json_encode($sub_array);
     }
+    // Returns 200 if there are subscriptions
+    http_response_code(200);
+
+    echo json_encode($sub_array);
+
 } else {
     // No subscriptions
     http_response_code(404);

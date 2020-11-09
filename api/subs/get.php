@@ -9,14 +9,16 @@ include "../../partialFiles/objects_partial_files/new_sub.php";
 $sub->subId = isset($_GET["subId"]) ? $_GET["subId"] : die();
 $sub->getById();
 
-if($sub->companyName != null) {
+if($sub->dueDate != null) {
     $sub_array = array(
         "subId" => $sub->subId,
         "dueDate" => $sub->dueDate,
         "amountDue" => $sub->amountDue,
         "userId" => $sub->userId,
         "storeId" => $sub->storeId,
-        "subName" => $sub->subName
+        "subName" => $sub->subName,
+        "storeName" => $sub->storeName,
+        "storeWebsite" => $sub->website
     );
 
     http_response_code(200);
