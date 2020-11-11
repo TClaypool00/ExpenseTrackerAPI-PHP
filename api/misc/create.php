@@ -8,9 +8,9 @@ $data = json_decode(file_get_contents("php://input"));
 
 $misc->price = $data->price;
 $misc->storeId = $data->storeId;
-$misc->date = $data->date;
+$misc->date = date("Y-m-d");
 $misc->userId = $data->userId;
-$misc->memo = $data->miscName;
+$misc->memo = $data->memo;
 $misc->miscName = $data->miscName;
 
 if($misc->create()) {
