@@ -4,6 +4,7 @@ class Budgets
     private $conn;
     private $table_name = "budget";
     private $select_all = "SELECT * FROM ";
+    private $bind_userId = ":userId";
 
     // Properties
     public $budgetId;
@@ -88,7 +89,7 @@ class Budgets
         $stmt->bindParam(":totalBills", $this->totalBills);
         $stmt->bindParam(":moneyLeft", $this->moneyLeft);
         $stmt->bindParam(":savingsMoney", $this->savingsMoney);
-        $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam($this->bind_userId, $this->userId);
 
         if ($stmt->execute()) {
             return true;
@@ -120,7 +121,7 @@ class Budgets
         $stmt->bindParam(":totalBills", $this->totalBills);
         $stmt->bindParam(":moneyLeft", $this->moneyLeft);
         $stmt->bindParam(":savingsMoney", $this->savingsMoney);
-        $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam($this->bind_userId, $this->userId);
 
         if ($stmt->execute()) {
             return true;
@@ -140,5 +141,65 @@ class Budgets
         }
 
         return false;
+    }
+
+    public function getTotalBillAmt() {
+        $query = "SELECT SUM(bills.billPrice) AS value_sum FROM bills WHERE bills.userId = :userId";
+
+        return $this->extractQuery($query);
+    }
+
+    public function getTotalLoanAmt() {
+        $query = "SELECT SUM(loan.monthlyAmountDue) AS value_sum FROM loan WHERE loan.userId = :userId";
+
+        return $this->extractQuery($query);
+    }
+
+    public function getTotalSubAmt() {
+        $query = "SELECT SUM(subscriptions.amountDue) AS value_sum FROM subscriptions WHERE subscriptions.userId = :userId";
+
+        return $this->extractQuery($query);
+    }
+
+    public function getSalary() {
+        $query = "SELECT users.salary AS value_sum FROM users WHERE users.userId = :userId";
+        
+        return $this->extractQuery($query);
+    }
+
+    public function budgetExist() {
+        $query = "SELECT budget.budgetId FROM "  . $this->table_name . "
+            WHERE userId = :userId";
+
+            $stmt = $this->conn->prepare($query);
+
+            $this->userId = htmlspecialchars(strip_tags($this->userId));
+            $stmt->bindParam($this->bind_userId, $this->userId);
+    
+            $stmt->execute();
+
+            $num = $stmt->rowCount();
+
+            if($num > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $this->budgetId = $row["budgetId"] ?? null;
+
+                return true;
+            }
+
+            return false;
+    }
+
+    public function extractQuery($query) {
+        $stmt = $this->conn->prepare($query);
+
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $stmt->bindParam($this->bind_userId, $this->userId);
+
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['value_sum'];
     }
 }
