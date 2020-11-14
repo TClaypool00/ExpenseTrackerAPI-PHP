@@ -48,14 +48,15 @@ CREATE TABLE storeUnion
     -- Add AUTO_INCREMENT after PRIMARY KEY
     storeId INT(4) NOT NULL PRIMARY KEY,
     storeName VARCHAR(50)NOT NULL,
-    address VARCHAR(60) NOT NULL,
-    city VARCHAR(70) NOT NULL,
-    state VARCHAR(50) NOT NULL,
-    zip INT(5) NOT NULL,
-    phoneNum INT(10) NOT NULL DEFAULT 1234567890,
-    email VARCHAR(50) NOT NULL DEFAULT "store@gmil.com",
+    address VARCHAR(60),
+    city VARCHAR(70),
+    state VARCHAR(50),
+    zip INT(5),
+    phoneNum INT(10) DEFAULT 1234567890,
+    email VARCHAR(50) DEFAULT "store@gmil.com",
     website VARCHAR(100) NOT NULL DEFAULT "www.store.com",
-    isCreditUnion TINYINT(1) NOT NULL DEFAULT 0
+    isCreditUnion TINYINT(1) NOT NULL DEFAULT FALSE,
+    isCompleted TINYINT(1) NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE loan

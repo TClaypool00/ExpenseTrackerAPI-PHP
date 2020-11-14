@@ -19,7 +19,8 @@ if($store->storeName != null) {
         "phoneNum" => $store->phoneNum,
         "email" => $store->email,
         "webiste" => $store->website,
-        "isCreditUnion" => $store->isCreditUnion
+        "isCreditUnion" => $store->isCreditUnion,
+        "isCompleted" => $store->isCompleted
     );
 
     http_response_code(200);

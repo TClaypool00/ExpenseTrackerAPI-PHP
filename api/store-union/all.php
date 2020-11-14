@@ -24,7 +24,8 @@ if ($num > 0) {
             "phoneNum" => $phoneNum,
             "email" => $email,
             "website" => $website,
-            "isCreditUnion" => $isCreditUnion
+            "isCreditUnion" => $isCreditUnion,
+            "isCompleted" => $isCompleted
         );
 
         array_push($store_arr, $item);

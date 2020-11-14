@@ -15,6 +15,7 @@ $store->phoneNum = $data->phoneNum;
 $store->email = $data->email;
 $store->website = $data->website;
 $store->isCreditUnion = $data->isCreditUnion;
+$store->isCompleted = $data->isCompleted;
 
 if($store->update()) {
     http_response_code(200);

@@ -16,6 +16,7 @@ class StoreUnion
     public $email;
     public $website;
     public $isCreditUnion;
+    public $isCompleted;
 
     public function __construct($db)
     {
@@ -66,6 +67,17 @@ class StoreUnion
                 $query = $this->select_all . $this->table_name . "
                 WHERE storeName LIKE '%$search%' OR address LIKE '%$search%' OR city LIKE '%$search%' OR state LIKE '%$search%' OR zip LIKE '%$search%' AND isCreditUnion LIKE '%" . $this->isCreditUnion . "%'";
                 break;
+            case isset($_GET["isCompleted"]):
+                $this->isCompleted = $_GET["isCompleted"];
+                $query = $this->select_all . $this->table_name . "
+                WHERE isCompleted LIKE '%" . $this->isCompleted . "%'";
+                break;
+            case isset($_GET["isCompleted"]) && isset($_GET["search"]):
+                $this->isCompleted = $_GET["isCompleted"];
+                $search = $_GET["search"];
+                $query = $this->select_all . $this->table_name . "
+                WHERE storeName LIKE '%$search%' OR address LIKE '%$search%' OR city LIKE '%$search%' OR state LIKE '%$search%' OR zip LIKE '%$search%' AND isCompleted LIKE '%" . $this->isCompleted . "%'";
+                break;
             default:
                 $query = $this->select_all . $this->table_name;
                 break;
@@ -96,7 +108,8 @@ class StoreUnion
         $this->phoneNum = $row["phoneNum"] ?? null;
         $this->email = $row["email"] ?? null;
         $this->website = $row["website"] ?? null;
-        $this->isCreditUnion = $_GET["isCreditUnion"];
+        $this->isCreditUnion = $row["isCreditUnion"] ?? null;
+        $this->isCompleted = $row["isCompleted"] ?? null;
     }
 
     public function create()
@@ -111,7 +124,8 @@ class StoreUnion
                 phoneNum = :phoneNum,
                 email = :email,
                 website = :website,
-                isCreditUnion = :isCreditUnion";
+                isCreditUnion = :isCreditUnion,
+                isCompleted = :isCompleted";
 
         $stmt = $this->conn->prepare($query);
 
@@ -125,6 +139,7 @@ class StoreUnion
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->website = htmlspecialchars(strip_tags($this->website));
         $this->isCreditUnion = htmlspecialchars(strip_tags($this->isCreditUnion));
+        $this->isCompleted = htmlspecialchars(strip_tags($this->isCompleted));
 
         // Bind data
         $stmt->bindParam(":storeName", $this->storeName);
@@ -136,6 +151,7 @@ class StoreUnion
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":website", $this->website);
         $stmt->bindParam(":isCreditUnion", $this->isCreditUnion);
+        $stmt->bindParam(":isCompleted", $this->isCompleted);
 
         if ($stmt->execute()) {
             return true;
@@ -156,7 +172,8 @@ class StoreUnion
                 phoneNum = :phoneNum,
                 email = :email,
                 website = :website,
-                isCreditUnion = :isCreditUnion
+                isCreditUnion = :isCreditUnion,
+                isCompleted = :isCompleted
             WHERE
                 storeId = " . $this->storeId;
 
@@ -172,6 +189,7 @@ class StoreUnion
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->website = htmlspecialchars(strip_tags($this->website));
         $this->isCreditUnion = htmlspecialchars(strip_tags($this->isCreditUnion));
+        $this->isCompleted = htmlspecialchars(strip_tags($this->isCompleted));
 
         // Bind data
         $stmt->bindParam(":storeName", $this->storeName);
@@ -183,6 +201,7 @@ class StoreUnion
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":website", $this->website);
         $stmt->bindParam(":isCreditUnion", $this->isCreditUnion);
+        $stmt->bindParam(":isCompleted", $this->isCompleted);
 
         if ($stmt->execute()) {
             return true;

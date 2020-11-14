@@ -16,6 +16,12 @@ $store->email = $data->email;
 $store->website = $data->website;
 $store->isCreditUnion = $data->isCreditUnion;
 
+if($store->address == null || $store->city == null || $store->state == null || $store->zip == null || $store->phoneNum || $store->website == null) {
+    $store->isCompleted = false;
+} else {
+    $store->isCompleted = true;
+}
+
 if($store->create()) {
     http_response_code(201);
     echo json_encode(array("message" => "Store or Credit Union was created!"));
