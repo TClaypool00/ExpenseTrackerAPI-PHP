@@ -195,6 +195,17 @@ class Bills
         return false;
     }
 
+    public function patch($column, $value) {
+        $query = "UPDATE " . $this->table_name . " SET " . $this->table_name . "."  . $column . "= " . $value . " WHERE billId = " . $this->billId;
+        $stmt = $this->conn->prepare($query);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function delete()
     {
         $query = "DELETE FROM " . $this->table_name . " WHERE billId =" . $this->billId;
