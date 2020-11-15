@@ -100,7 +100,7 @@ class Subscriptions
                 amountDue = :amountDue,
                 storeId = :storeId,
                 subName = :subName,
-                userId = :userId
+                userId = :userId,
                 isLate = :isLate,
                 isPaid = :isPaid";
 
