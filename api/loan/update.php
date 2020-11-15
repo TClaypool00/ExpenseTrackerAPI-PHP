@@ -12,6 +12,9 @@ $loan->dueDate = $data->dueDate;
 $loan->monthlyAmountDue = $data->monthlyAmountDue;
 $loan->deposit = $data->deposit;
 $loan->totalAmountDue = $data->totalAmountDue;
+$loan->amountRemaining = $data->amountRemaining;
+$loan->isPaid = $data->isPaid;
+$loan->isLate = $data->isLate;
 $loan->storeId = $data->storeId;
 $loan->userId = $data->userId;
 

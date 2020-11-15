@@ -3,7 +3,7 @@ class Loan
 {
     private $conn;
     private $table_name = "loan";
-    private $select_all = "SELECT loan.loanId, loan.loanName, loan.dueDate, loan.monthlyAmountDue, loan.deposit, loan.totalAmountDue, loan.storeId, storeunion.storeName, storeunion.website, loan.userId FROM ";
+    private $select_all = "SELECT loan.loanId, loan.loanName, loan.dueDate, loan.monthlyAmountDue, loan.deposit, loan.totalAmountDue, loan.storeId, storeunion.storeName, storeunion.website, loan.userId, loan.amountRemaining, loan.isLate, loan.isPaid FROM ";
     private $inner_join = " INNER JOIN storeunion ON loan.storeId = storeunion.storeId";
     private $order_by = " ORDER BY dueDate ASC";
 
@@ -13,10 +13,13 @@ class Loan
     public $monthlyAmountDue;
     public $deposit;
     public $totalAmountDue;
+    public $amountRemaining;
     public $userId;
     public $storeId;
     public $storeName;
     public $webiste;
+    public $isLate;
+    public $isPaid;
 
     public function __construct($db)
     {
@@ -80,6 +83,10 @@ class Loan
         $this->storeId = $row["storeId"] ?? null;
         $this->storeName = $row["storeName"] ?? null;
         $this->webiste = $row["website"] ?? null;
+        $this->amountRemaining = $row["amountRemaining"] ?? null;
+        $this->isLate = $row["isLate"] ?? null;
+        $this->isPaid = $row["isPaid"] ?? null;
+        
     }
 
     public function create()
@@ -91,8 +98,11 @@ class Loan
                 monthlyAmountDue = :monthlyAmountDue,
                 deposit = :deposit,
                 totalAmountDue = :totalAmountDue,
+                amountRemaining = :amountRemaining,
                 storeId = :storeId,
-                userId = :userId";
+                userId = :userId,
+                isLate = :isLate,
+                isPaid = :isPaid";
 
         $stmt = $this->conn->prepare($query);
         
@@ -104,6 +114,9 @@ class Loan
         $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->amountRemaining = htmlspecialchars(strip_tags($this->amountRemaining));
+        $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->isPaid = htmlspecialchars(strip_tags($this->isPaid));
 
         // Bind Data
         $stmt->bindParam(':loanName', $this->loanName);
@@ -113,6 +126,9 @@ class Loan
         $stmt->bindParam(':totalAmountDue', $this->totalAmountDue);
         $stmt->bindParam(':storeId', $this->storeId);
         $stmt->bindParam(':userId', $this->userId);
+        $stmt->bindParam(':amountRemaining', $this->amountRemaining);
+        $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':isPaid', $this->isPaid);
 
         if ($stmt->execute()) {
             return true;
@@ -130,8 +146,11 @@ class Loan
                 monthlyAmountDue = :monthlyAmountDue,
                 deposit = :deposit,
                 totalAmountDue = :totalAmountDue,
+                amountRemaining = :amountRemaining,
                 storeId = :storeId,
-                userId = :userId
+                userId = :userId,
+                isLate = :isLate,
+                isPaid = :isPaid
             WHERE
                 loanId = " . $this->loanId;
 
@@ -145,7 +164,10 @@ class Loan
                 $this->totalAmountDue = htmlspecialchars(strip_tags($this->totalAmountDue));
                 $this->storeId = htmlspecialchars(strip_tags($this->storeId));
                 $this->userId = htmlspecialchars(strip_tags($this->userId));
-        
+                $this->amountRemaining = htmlspecialchars(strip_tags($this->amountRemaining));
+                $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+                $this->isPaid = htmlspecialchars(strip_tags($this->isPaid));
+
                 // Bind Data
                 $stmt->bindParam(':loanName', $this->loanName);
                 $stmt->bindParam(':dueDate', $this->dueDate);
@@ -154,6 +176,9 @@ class Loan
                 $stmt->bindParam(':totalAmountDue', $this->totalAmountDue);
                 $stmt->bindParam(':storeId', $this->storeId);
                 $stmt->bindParam(':userId', $this->userId);
+                $stmt->bindParam(':amountRemaining', $this->amountRemaining);
+                $stmt->bindParam(':isLate', $this->isLate);
+                $stmt->bindParam(':isPaid', $this->isPaid);
         
                 if ($stmt->execute()) {
                     return true;

@@ -11,11 +11,12 @@ $bill->billName = $data->billName;
 $bill->billPrice = $data->billPrice;
 $bill->billDate = $data->billDate;
 $bill->isLate = $data->isLate;
+$bill->isPaid = $data->isPaid;
 $bill->userId = $data->userId;
 $bill->storeId = $data->storeId;
 
 if($bill->update()) {
-    http_response_code(200);
+    http_response_code(201);
 
     echo json_encode(array("message" => "Bill was updated"));
 } else {

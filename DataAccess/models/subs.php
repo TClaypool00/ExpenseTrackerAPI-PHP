@@ -3,7 +3,7 @@ class Subscriptions
 {
     private $conn;
     private $table_name = "subscriptions ";
-    private $select_all = 'SELECT subscriptions.subId, subscriptions.dueDate, subscriptions.amountDue, subscriptions.storeId, subscriptions.subName, subscriptions.userId,  storeunion.storeName, storeunion.website FROM ';
+    private $select_all = 'SELECT subscriptions.subId, subscriptions.dueDate, subscriptions.amountDue, subscriptions.storeId, subscriptions.subName, subscriptions.userId, subscriptions.isLate, subscriptions.isPaid, storeunion.storeName, storeunion.website FROM ';
     private $inner_join = "INNER JOIN storeunion ON subscriptions.storeId = storeunion.storeId";
 
     public $subId;
@@ -12,6 +12,8 @@ class Subscriptions
     public $userId;
     public $storeId;
     public $subName;
+    public $isLate;
+    public $isPaid;
     public $storeName;
     public $website;
 
@@ -86,6 +88,8 @@ class Subscriptions
         $this->userId = $row["userId"] ?? null;
         $this->storeName = $row["storeName"] ?? null;
         $this->website = $row["website"] ?? null;
+        $this->isLate = $row["isLate"] ?? null;
+        $this->isPaid = $row["isPaid"] ?? null;
     }
 
     public function create()
@@ -96,7 +100,9 @@ class Subscriptions
                 amountDue = :amountDue,
                 storeId = :storeId,
                 subName = :subName,
-                userId = :userId";
+                userId = :userId
+                isLate = :isLate,
+                isPaid = :isPaid";
 
         $stmt = $this->conn->prepare($query);
 
@@ -106,6 +112,8 @@ class Subscriptions
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
         $this->subName = htmlspecialchars(strip_tags($this->subName));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->isPaid = htmlspecialchars(strip_tags($this->isPaid));
 
         // Bind data
         $stmt->bindParam(":dueDate", $this->dueDate);
@@ -113,6 +121,8 @@ class Subscriptions
         $stmt->bindParam(":storeId", $this->storeId);
         $stmt->bindParam(":subName", $this->subName);
         $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':isPaid', $this->isPaid);
 
         if ($stmt->execute()) {
             return true;
@@ -129,7 +139,9 @@ class Subscriptions
                 amountDue = :amountDue,
                 storeId = :storeId,
                 subName = :subName,
-                userId = :userId
+                userId = :userId,
+                isLate = :isLate,
+                isPaid = :isPaid
             WHERE
                 subId = " . $this->subId;
 
@@ -141,6 +153,8 @@ class Subscriptions
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
         $this->subName = htmlspecialchars(strip_tags($this->subName));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
+        $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->isPaid = htmlspecialchars(strip_tags($this->isPaid));
 
         // Bind data
         $stmt->bindParam(":dueDate", $this->dueDate);
@@ -148,6 +162,8 @@ class Subscriptions
         $stmt->bindParam(":storeId", $this->storeId);
         $stmt->bindParam(":subName", $this->subName);
         $stmt->bindParam(":userId", $this->userId);
+        $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':isPaid', $this->isPaid);
 
         if ($stmt->execute()) {
             return true;

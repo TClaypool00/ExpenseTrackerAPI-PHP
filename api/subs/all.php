@@ -22,6 +22,8 @@ if ($num > 0) {
             "userId" => $userId,
             "storeId" => $storeId,
             "subName" => $subName,
+            "isLate" => $isLate,
+            "isPaid" => $isPaid,
             "storeName" => $storeName,
             "storeWebsite" => $website
         );

@@ -12,6 +12,8 @@ $sub->amountDue = $data->amountDue;
 $sub->userId = $data->userId;
 $sub->storeId = $data->storeId;
 $sub->subName = $data->subName;
+$sub->isLate = false;
+$sub->isPaid = false;
 
 if($sub->create()) {
     http_response_code(201);

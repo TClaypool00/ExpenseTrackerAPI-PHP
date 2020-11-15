@@ -20,12 +20,12 @@ CREATE TABLE bills
     -- Add AUTO_INCREMENT after PRIMARY KEY
     billId INT(4) PRIMARY KEY,
     billName VARCHAR(50) NOT NULL,
-    BillDate DATE NOT NULL DEFAULT CURDATE(),
-    billPrice DECIMAL(5, 2) NOT NULL,
+    BillDate DATE NOT NULL,
+    billPrice DECIMAL(10, 2) NOT NULL,
     isLate BIT NOT NULL,
     userId INT(6) NOT NULL DEFAULT 1,
     storeId INT(4) NOT NULL DEFAULT 1,
-    endDate DATE DEFAULT '2020-11-6',
+    isPaid TINYINT(1) NOT NULL,
     FOREIGN KEY (userId) REFERENCES budget(userId),
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId)
 );
@@ -40,7 +40,9 @@ CREATE TABLE subscriptions
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
     subName VARCHAR(50) DEFAULT "Subscription",
     userId INT(6) NOT NULL DEFAULT 1,
-    FOREIGN KEY (userId) REFERENCES budget(userId)
+    FOREIGN KEY (userId) REFERENCES budget(userId),
+    isLate TINYINT(1) NOT NULL,
+    isPaid TINYINT(1) NOT NULL
 );
 
 CREATE TABLE storeUnion
@@ -64,14 +66,17 @@ CREATE TABLE loan
     -- Add AUTO_INCREMENT after PRIMARY KEY
     loanId INT(4) NOT NULL PRIMARY KEY,
     loanName VARCHAR(50) NOT NULL,
-    dueDate DATE NOT NULL DEFAULT CURDATE(),
+    dueDate DATE NOT NULL,
     monthlyAmountDue DECIMAL(6, 2) NOT NULL,
     deposit DECIMAL(10, 2) NOT NULL,
-    totalAmountDue DECIMAL(6, 2) NOT NULL,
+    totalAmountDue DECIMAL(10, 2) NOT NULL,
     storeId INT(4) NOT NULL,
     FOREIGN KEY (storeId) REFERENCES storeunion(storeId),
     userId INT(6) NOT NULL DEFAULT 1,
-    FOREIGN KEY (userId) REFERENCES budget(userId)
+    FOREIGN KEY (userId) REFERENCES budget(userId),
+    amountRemaining DECIMAL(10,2) NOT NULL,
+    isLate TINYINT(1) NOT NULL,
+    isPaid TINYINT(1) NOT NULL
 );
 
 CREATE TABLE misc
@@ -98,3 +103,16 @@ CREATE TABLE budget
     userId INT(6) NOT NULL,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
+
+CREATE TABLE auth_group
+(
+    id INT(11) NOT NULL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+)
+
+CREATE TABLE django_content_type
+(
+    id INT(11) NOT NULL PRIMARY KEY,
+    app_label VARCHAR(100) NOT NULL,
+    model VARCHAR(100) NOT NULL
+)

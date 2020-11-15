@@ -17,6 +17,8 @@ if($sub->dueDate != null) {
         "userId" => $sub->userId,
         "storeId" => $sub->storeId,
         "subName" => $sub->subName,
+        "isLate" => $sub->isLate,
+        "isPaid" => $sub->isPaid,
         "storeName" => $sub->storeName,
         "storeWebsite" => $sub->website
     );

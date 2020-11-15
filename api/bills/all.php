@@ -19,6 +19,7 @@ if ($num > 0) {
             "billDate" => $billDate,
             "billPrice" => $billPrice,
             "isLate" => $isLate,
+            "isPaid" => $isPaid,
             "storeId" => $storeId,
             "storeName" => $storeName,
             "storeWebsite" => $website,

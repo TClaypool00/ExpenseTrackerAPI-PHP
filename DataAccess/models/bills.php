@@ -3,7 +3,7 @@ class Bills
 {
     private $conn;
     private $table_name = "bills";
-    private $select_all = "SELECT bills.billId, bills.billName, bills.billDate, bills.billPrice, bills.endDate, bills.isLate, bills.userId, bills.storeId, storeunion.storeName, storeunion.website FROM ";
+    private $select_all = "SELECT bills.billId, bills.billName, bills.billDate, bills.billPrice, bills.isLate, bills.userId, bills.storeId, bills.isPaid, storeunion.storeName, storeunion.website FROM ";
     private $inner_join = " INNER JOIN storeunion ON bills.storeId = storeunion.storeId";
     private $order_by = " ORDER BY billDate ASC";
     private $and_user = " AND userId =";
@@ -15,6 +15,7 @@ class Bills
     public $billPrice;
     public $isLate;
     public $userId;
+    public $isPaid;
     public $storeId;
     public $storeName;
     public $website;
@@ -111,6 +112,7 @@ class Bills
         $this->billDate = $row["billDate"] ?? null;
         $this->isLate = $row["isLate"] ?? null;
         $this->userId = $row["userId"] ?? null;
+        $this->isPaid = $row["isPaid"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
         $this->storeName = $row["storeName"] ?? null;
         $this->webiste = $row["website"] ?? null;
@@ -124,6 +126,7 @@ class Bills
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
+                isPaid = :isPaid,
                 userId = :userId,
                 storeId = :storeId';
 
@@ -134,6 +137,7 @@ class Bills
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->isPaid = htmlspecialchars(strip_tags($this->isPaid));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
@@ -141,6 +145,7 @@ class Bills
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':isPaid', $this->isPaid);
         $stmt->bindParam(':userId', $this->userId);
         $stmt->bindParam(':storeId', $this->storeId);
 
@@ -159,6 +164,7 @@ class Bills
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
+                isPaid = :isPaid,
                 userId = :userId,
                 storeId = :storeId
             WHERE
@@ -171,6 +177,7 @@ class Bills
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
+        $this->isPaid = htmlspecialchars(strip_tags($this->isPaid));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
@@ -178,6 +185,7 @@ class Bills
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
+        $stmt->bindParam(':isPaid', $this->isPaid);
         $stmt->bindParam(':userId', $this->userId);
         $stmt->bindParam(':storeId', $this->storeId);
 
