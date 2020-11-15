@@ -6,6 +6,7 @@ class Bills
     private $select_all = "SELECT bills.billId, bills.billName, bills.billDate, bills.billPrice, bills.endDate, bills.isLate, bills.userId, bills.storeId, storeunion.storeName, storeunion.website FROM ";
     private $inner_join = " INNER JOIN storeunion ON bills.storeId = storeunion.storeId";
     private $order_by = " ORDER BY billDate ASC";
+    private $and_user = " AND userId =";
 
     // Properties
     public $billId;
@@ -13,7 +14,6 @@ class Bills
     public $billDate;
     public $billPrice;
     public $isLate;
-    public $endDate;
     public $userId;
     public $storeId;
     public $storeName;
@@ -50,13 +50,13 @@ class Bills
                 $this->storeId = $_GET["storeId"];
                 $this->userId = $_GET["userId"];
                 $query = $this->select_all . $this->table_name . $this->inner_join .  " 
-                WHERE storeId = " . $this->storeId . " AND userId = " . $this->userId;
+                WHERE storeId = " . $this->storeId . $this->and_user . $this->userId;
                 break;
             case isset($_GET["storeId"]) && isset($_GET["userId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
                 $this->storeId = $_GET["storeId"];
                 $this->userId = $_GET["userId"];
-                $query = $this->select_all . $this->table_name . $this->inner_join . " WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND storeId = " . $this->storeId . " AND userId = " . $this->userId;
+                $query = $this->select_all . $this->table_name . $this->inner_join . " WHERE billName LIKE '%$search%' OR billDate LIKE '%$search%' OR billPrice LIKE '%$search%' OR OR isLate LIKE '%$search%' AND storeId = " . $this->storeId . $this->and_user . $this->userId;
                 break;
             case isset($_GET["billName"]):
                 $this->billName = $_GET["billName"];
@@ -73,10 +73,11 @@ class Bills
                 $query = $this->select_all . $this->table_name . $this->inner_join . " 
                 WHERE billPrice LIKE '%" . $this->billPrice . "%'";
                 break;
-            case isset($_GET["isLate"]):
+            case isset($_GET["isLate"]) && isset($_GET["userId"]):
                 $this->isLate = $_GET["isLate"];
+                $this->userId = $_GET["userId"];
                 $query = $this->select_all . $this->table_name . $this->inner_join . " 
-                WHERE isLate LIKE '%" . $this->isLate . "%'";
+                WHERE isLate =" . $this->isLate . $this->userId . $this->userId;
                 break;
             default:
                 $query = $this->select_all . $this->table_name . $this->inner_join;
@@ -109,7 +110,6 @@ class Bills
         $this->billPrice = $row["billPrice"] ?? null;
         $this->billDate = $row["billDate"] ?? null;
         $this->isLate = $row["isLate"] ?? null;
-        $this->endDate = $row['endDate'] ?? null;
         $this->userId = $row["userId"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
         $this->storeName = $row["storeName"] ?? null;
@@ -124,7 +124,6 @@ class Bills
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
-                endDate = :endDate,
                 userId = :userId,
                 storeId = :storeId';
 
@@ -135,7 +134,6 @@ class Bills
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
-        $this->endDate = htmlspecialchars(strip_tags($this->endDate));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
@@ -143,7 +141,6 @@ class Bills
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
-        $stmt->bindParam(':endDate', $this->endDate);
         $stmt->bindParam(':userId', $this->userId);
         $stmt->bindParam(':storeId', $this->storeId);
 
@@ -162,7 +159,6 @@ class Bills
                 billPrice = :billPrice,
                 billDate = :billDate,
                 isLate = :isLate,
-                endDate = :endDate,
                 userId = :userId,
                 storeId = :storeId
             WHERE
@@ -175,7 +171,6 @@ class Bills
         $this->billPrice = htmlspecialchars(strip_tags($this->billPrice));
         $this->billDate = htmlspecialchars(strip_tags($this->billDate));
         $this->isLate = htmlspecialchars(strip_tags($this->isLate));
-        $this->endDate = htmlspecialchars(strip_tags($this->endDate));
         $this->userId = htmlspecialchars(strip_tags($this->userId));
         $this->storeId = htmlspecialchars(strip_tags($this->storeId));
 
@@ -183,7 +178,6 @@ class Bills
         $stmt->bindParam(':billPrice', $this->billPrice);
         $stmt->bindParam(':billDate', $this->billDate);
         $stmt->bindParam(':isLate', $this->isLate);
-        $stmt->bindParam(':endDate', $this->endDate);
         $stmt->bindParam(':userId', $this->userId);
         $stmt->bindParam(':storeId', $this->storeId);
 
