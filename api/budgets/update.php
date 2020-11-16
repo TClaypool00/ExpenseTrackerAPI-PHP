@@ -12,9 +12,10 @@ $budget->userId = $data->userId;
 $total_bill = $budget->getTotalBillAmt();
 $total_sub = $budget->getTotalSubAmt();
 $total_loan = $budget->getTotalLoanAmt();
+$total_misc = $budget->getMisc();
 $salary = $budget->getSalary();
 
-$total = $total_bill + $total_sub + $total_loan;
+$total = $total_bill + $total_sub + $total_loan - $total_misc;
 
 $budget->totalBills = $total;
 $budget->moneyLeft = $salary - $total;

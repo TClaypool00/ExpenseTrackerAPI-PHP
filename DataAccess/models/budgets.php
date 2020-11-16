@@ -175,6 +175,12 @@ class Budgets
         return $this->extractQuery($query);
     }
 
+    public function getMisc() {
+        $query = "SELECT SUM(misc.price) AS value_sum FROM misc WHERE misc.userId = :userId";
+
+        return $this->extractQuery($query);
+    }
+
     public function budgetExist() {
         $query = "SELECT budget.budgetId FROM "  . $this->table_name . "
             WHERE userId = :userId";
