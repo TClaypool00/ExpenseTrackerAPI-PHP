@@ -4,7 +4,9 @@ include "../../partialFiles/get_by_id_headers.php";
 // Creating a new instance of budget and DB obj
 include "../../partialFiles/objects_partial_files/new_budget.php";
 
-$budget->budgetId = isset($_GET["budgetId"]) ? $_GET["budgetId"] : die();
+$budget->budgetId = isset($_GET["budgetId"]) ? $_GET["budgetId"] : null;
+$budget->userId = isset($_GET["userId"]) ? $_GET["userId"] : null;
+
 $budget->getById();
 
 if($budget->totalBills != null) {

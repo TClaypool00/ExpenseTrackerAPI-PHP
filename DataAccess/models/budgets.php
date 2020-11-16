@@ -55,7 +55,15 @@ class Budgets
 
     public function getById()
     {
-        $query = $this->select_all . $this->table_name . " WHERE budgetId = " . $this->budgetId;
+        $query = $this->select_all . $this->table_name;
+
+        if($this->budgetId == null) {
+            $query = $query . " WHERE userId=" . $this->userId;
+        } elseif($this->userId == null) {
+            $query = $query . " WHERE budgetId=" . $this->budgetId;
+        } else {
+            die();
+        }
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
