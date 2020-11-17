@@ -6,6 +6,8 @@ include "../../partialFiles/objects_partial_files/new_budget.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
+$today = date('Y-m-d');
+
 $budget->budgetId = isset($_GET["budgetId"]) ? $_GET["budgetId"] : die();
 $budget->userId = $data->userId;
 
@@ -15,11 +17,16 @@ $total_loan = $budget->getTotalLoanAmt();
 $total_misc = $budget->getMisc();
 $salary = $budget->getSalary();
 
-$total = $total_bill + $total_sub + $total_loan - $total_misc;
+$total = $total_bill + $total_sub + $total_loan;
 
 $budget->totalBills = $total;
-$budget->moneyLeft = $salary - $total;
 $budget->savingsMoney = $data->savingsMoney;
+
+if($today == date("Y-m-01")){
+    $budget->moneyLeft = $salary - $total  - $budget->savingsMoney;
+} else {
+    $budget->moneyLeft = $salary - $total - $total_misc - $budget->savingsMoney;
+}
 
 if($budget->update()) {
     http_response_code(200);

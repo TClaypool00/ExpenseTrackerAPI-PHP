@@ -176,7 +176,7 @@ class Budgets
     }
 
     public function getMisc() {
-        $query = "SELECT SUM(misc.price) AS value_sum FROM misc WHERE misc.userId = :userId";
+        $query = "SELECT SUM(misc.price) AS value_sum FROM misc WHERE misc.userId = :userId AND MONTH(misc.date) = MONTH(CURRENT_DATE()) AND YEAR(misc.date) = YEAR(CURRENT_DATE())";
 
         return $this->extractQuery($query);
     }
