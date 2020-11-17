@@ -115,7 +115,7 @@ class Bills
         $this->isPaid = $row["isPaid"] ?? null;
         $this->storeId = $row["storeId"] ?? null;
         $this->storeName = $row["storeName"] ?? null;
-        $this->webiste = $row["website"] ?? null;
+        $this->website = $row["website"] ?? null;
     }
 
     public function create()
