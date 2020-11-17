@@ -34,7 +34,7 @@ class Misc
                 break;
             case isset($_GET["userId"]):
                 $this->userId = $_GET["userId"];
-                $query = $query . " WHERE userId = " . $this->userId;
+                $query = $query . " WHERE userId = " . $this->userId . ' AND MONTH(misc.date) = MONTH(CURRENT_DATE()) AND YEAR(misc.date) = YEAR(CURRENT_DATE())';
                 break;
             case isset($_GET["userId"]) && isset($_GET["search"]):
                 $search = $_GET["search"];
