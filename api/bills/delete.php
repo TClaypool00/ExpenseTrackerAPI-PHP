@@ -1,5 +1,5 @@
 <?php
-include "../../partialFiles/update_headers.php";
+include "../../partialFiles/delete_headers.php";
 
 include "../../partialFiles/objects_partial_files/newBill.php";
 
