@@ -21,5 +21,5 @@ if ($reply->replyBody != null) {
     echo json_encode($reply_arr);
 } else {
     http_response_code(404);
-    echo json_encode(array("message" => "Reply with an id of " . $reply->replyiId . " was not found."));
+    echo json_encode(array("message" => "Reply with an id of " . $_GET["replyId"] . " was not found."));
 }

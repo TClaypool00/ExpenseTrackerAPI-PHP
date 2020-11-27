@@ -15,7 +15,7 @@ if ($num > 0) {
 
         $reply_item = array(
             "replyId" => $replyId,
-            "replyBody" => $replybody,
+            "replyBody" => $replyBody,
             "date" => $date,
             "postId" => $postId,
             "userId" => $userId
