@@ -39,13 +39,13 @@ class Posts
     }
 
     public function getbyId() {
-        $query = $this->select_all . $this->table_name . "WHERE
+        $query = $this->select_all . $this->table_name . "
         WHERE
             postId = " . $this->postId;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
-        $row = $stmt->fetch(PDo::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $this->postId = $row["postId"] ?? null;
         $this->title = $row["title"] ?? null;

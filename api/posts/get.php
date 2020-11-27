@@ -21,5 +21,5 @@ if ($post->title != null) {
     echo json_encode($post_arr);
 } else {
     http_response_code(404);
-    echo json_encode(array("message" => "Post with an id of " . $post->postId . " can not be found."));
+    echo json_encode(array("message" => "Post with an id of " . $_GET["postId"]. " can not be found."));
 }
