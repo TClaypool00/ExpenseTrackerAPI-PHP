@@ -18,7 +18,9 @@ if ($num > 0) {
             "title" => $title,
             "postBody" => $postBody,
             "date" => $date,
-            "userId" => $userId
+            "userId" => $userId,
+            "userFirstName" => $firstName,
+            "userLastName" => $lastName
         );
 
         array_push($posts_arr, $post_item);

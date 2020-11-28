@@ -2,8 +2,9 @@
 class Posts
 {
     private $conn;
-    private $table_name = "posts ";
-    private $select_all = "SELECT * FROM ";
+    private $table_name = "posts p ";
+    private $select_all = "SELECT p.postId, p.title, p.postBody, p.date, p.userId, u.firstName, u.lastName FROM ";
+    private $inner_join = "INNER JOIN users u ON p.userId = u.userId ";
     private $order_by = "ORDER BY date ASC";
 
     public $postId;
@@ -11,6 +12,8 @@ class Posts
     public $postBody;
     public $date;
     public $userId;
+    public $firstName;
+    public $lastName;
 
     public function __construct($db)
     {
@@ -21,14 +24,14 @@ class Posts
         switch(isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
-                $query = $this->select_all . $this->table_name . "WHERE title LIKE '%$search%' OR postBody LIKE '%$search%' OR date LIKE '%$search%'";
+                $query = $this->select_all . $this->table_name . $this->inner_join . "WHERE title LIKE '%$search%' OR postBody LIKE '%$search%' OR date LIKE '%$search%'";
             break;
             case isset($_GET["userId"]):
                 $this->userId = $_GET["userId"];
-                $query = $this->select_all . $this->table_name . "WHERE userId = " . $this->userId;
+                $query = $this->select_all . $this->table_name . $this->inner_join . "WHERE userId = " . $this->userId;
             break;
             default:
-                $query = $this->select_all . $this->table_name;
+                $query = $this->select_all . $this->table_name . $this->inner_join;
             break;
         }
 
@@ -39,7 +42,7 @@ class Posts
     }
 
     public function getbyId() {
-        $query = $this->select_all . $this->table_name . "
+        $query = $this->select_all . $this->table_name . $this->inner_join . "
         WHERE
             postId = " . $this->postId;
         $stmt = $this->conn->prepare($query);
@@ -52,6 +55,8 @@ class Posts
         $this->postBody = $row["postBody"] ?? null;
         $this->date = $row["date"] ?? null;
         $this->userId = $row["userId"] ?? null;
+        $this->firstName = $row["firstName"] ?? null;
+        $this->lastName = $row["lastName"] ?? null;
     }
 
     public function create() {

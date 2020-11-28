@@ -18,7 +18,9 @@ if ($num > 0) {
             "replyBody" => $replyBody,
             "date" => $date,
             "postId" => $postId,
-            "userId" => $userId
+            "userId" => $userId,
+            "userFirstName" => $firstName,
+            "userLastName" => $lastName
         );
 
         array_push($reply_arr, $reply_item);

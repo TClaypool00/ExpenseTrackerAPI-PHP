@@ -14,7 +14,9 @@ if ($reply->replyBody != null) {
         "replyBody" => $reply->replyBody,
         "date" => $reply->date,
         "postId" => $reply->postId,
-        "userId" => $reply->userId
+        "userId" => $reply->userId,
+        "userFirstName" => $reply->firstName,
+        "userLastName" => $reply->lastName
     );
 
     http_response_code(200);

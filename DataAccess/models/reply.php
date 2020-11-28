@@ -2,8 +2,9 @@
 class Reply
 {
     private $conn;
-    private $table_name = " reply ";
-    private $select_all = "SELECT * FROM";
+    private $table_name = " reply r ";
+    private $select_all = "SELECT r.replyId, r.replyBody, r.date, r.postId, r.userId, u.firstName, u.lastName FROM";
+    private $inner_join = "INNER JOIN users u ON r.userId=u.userId ";
     private $order_by = " ORDER BY date ASC";
 
     public $replyiId;
@@ -11,6 +12,8 @@ class Reply
     public $date;
     public $postId;
     public $userId;
+    public $firstName;
+    public $lastName;
 
     public function __construct($db)
     {
@@ -48,9 +51,9 @@ class Reply
     public function getAll() {
         if (isset($_GET["postId"])) {
             $this->postId = $_GET["postId"];
-            $query = $this->postId . $this->table_name . "WHERE postId=" . $this->postId;
+            $query = $this->postId . $this->table_name . $this->inner_join . "WHERE postId=" . $this->postId;
         } else {
-            $query = $this->select_all . $this->table_name;
+            $query = $this->select_all . $this->table_name . $this->inner_join;
         }
 
         $stmt = $this->prepareQuery($query . $this->order_by);
@@ -61,7 +64,7 @@ class Reply
     }
 
     public function getById() {
-        $query = $this->select_all . $this->table_name . "
+        $query = $this->select_all . $this->table_name . $this->inner_join . "
             WHERE replyId=" . $this->replyiId;
 
         $stmt = $this->prepareQuery($query);
@@ -75,6 +78,8 @@ class Reply
         $this->date = $row["date"] ?? null;
         $this->postId = $row["postId"] ?? null;
         $this->userId = $row["userId"] ?? null;
+        $this->firstName = $row["firstName"] ?? null;
+        $this->lastName = $row["lastName"] ?? null;
     }
 
     public function create() {

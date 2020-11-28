@@ -14,7 +14,9 @@ if ($post->title != null) {
         "title" => $post->title,
         "postBody" => $post->postBody,
         "date" => $post->date,
-        "userId" => $post->userId
+        "userId" => $post->userId,
+        "userFirstName" => $post->firstName,
+        "userLastName" => $post->lastName
     );
 
     http_response_code(200);
