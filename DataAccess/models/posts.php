@@ -21,7 +21,7 @@ class Posts
         switch(isset($_GET)) {
             case isset($_GET["search"]):
                 $search = $_GET["search"];
-                $query = $this->select_all . $this->table_name . "WHERE title LIKE'%$search%' OR postBody LIKE '%$search%' LIKE date '%$search%'";
+                $query = $this->select_all . $this->table_name . "WHERE title LIKE '%$search%' OR postBody LIKE '%$search%' OR date LIKE '%$search%'";
             break;
             case isset($_GET["userId"]):
                 $this->userId = $_GET["userId"];
