@@ -49,11 +49,13 @@ class Reply
     }
 
     public function getAll() {
+        $query = $this->select_all . $this->table_name . $this->inner_join;
+        
         if (isset($_GET["postId"])) {
             $this->postId = $_GET["postId"];
-            $query = $this->postId . $this->table_name . $this->inner_join . "WHERE postId=" . $this->postId;
+            $query = $query . "WHERE postId=" . $this->postId;
         } else {
-            $query = $this->select_all . $this->table_name . $this->inner_join;
+            $query;
         }
 
         $stmt = $this->prepareQuery($query . $this->order_by);
